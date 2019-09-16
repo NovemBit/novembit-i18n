@@ -1,0 +1,35 @@
+{
+  "name": "novembit/wp-i18n",
+  "description": "WordPress i18n.",
+  "keywords": [
+    "i18n",
+    "multilingual"
+  ],
+  "license": [
+    "GPL-3.0-or-later"
+  ],
+  "minimum-stability": "stable",
+  "type": "project",
+  "require": {
+    "php": ">=5.6",
+    "novembit/i18n": "dev-master"
+  },
+  "require-dev": {
+  },
+  "config": {
+    "process-timeout": 1800,
+    "fxp-asset": {
+      "enabled": false
+    }
+  },
+  "scripts": {
+  },
+  "extra": {
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://asset-packagist.org"
+    }
+  ]
+}
