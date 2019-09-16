@@ -8,7 +8,7 @@
   "license": [
     "GPL-3.0-or-later"
   ],
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
   "type": "project",
   "require": {
     "php": ">=5.6",
