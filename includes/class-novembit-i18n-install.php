@@ -4,7 +4,7 @@ defined( 'ABSPATH' ) || exit;
 
 class NovemBit_i18n_Install {
 
-	private static $filename = '00000001_novembit_i18n.php';
+	private static $filename = '0_novembit_i18n.php';
 
 	/**
 	 * @throws Exception
@@ -14,10 +14,6 @@ class NovemBit_i18n_Install {
 	    self::migration();
 
 	    self::install_mu_plugin();
-
-		WPPF::setProfilerStatus( WPPF_Hook_Profiler::class, WPPF::PROFILER_ACTIVE );
-		WPPF::setProfilerStatus( WPPF_Request_Profiler::class, WPPF::PROFILER_ACTIVE );
-
 	}
 
 	public function uninstall(){
@@ -37,7 +33,7 @@ class NovemBit_i18n_Install {
 			add_action( 'admin_notices', function () {
 				?>
                 <div class="notice notice-success is-dismissible">
-                    <p><?php _e( 'Can\'t install mu-plugin file!', 'wp-profiler' ); ?></p>
+                    <p><?php _e( 'Can\'t install mu-plugin file!', 'novembit-i18n' ); ?></p>
                 </div>
 				<?php
 			} );
@@ -63,10 +59,6 @@ class NovemBit_i18n_Install {
 	 * @throws Exception
 	 */
 	private static function migration(){
-
-	    WPPF_Bootstrap::init();
-
-		DevLog\DataMapper\Migration::mysql();
 
     }
 
