@@ -42,7 +42,7 @@ class NovemBit_i18n_bootstrap
                         'class' => NovemBit\i18n\component\translation\type\URL::class,
                         'url_validation_rules' => [
                             'host' => [
-                                '^$|^swanson\.co\.uk$|^wp\.me$',
+                                '^$|^swanson\.co\.uk$|^swanson\.fr$',
                             ]
                         ]
                     ],
@@ -105,6 +105,8 @@ class NovemBit_i18n_bootstrap
                 'languages' => [
                     'class' => NovemBit\i18n\component\Languages::class,
                     'accept_languages' => ['ar', 'hy', 'fr', 'it', 'de', 'ru'],
+                    'from_language'=>'en',
+                    'default_language'=>'hy',
                     'path_exclusion_patterns' => [
                         '.*\.php',
                         '.*\.jpg',
@@ -155,6 +157,7 @@ class NovemBit_i18n_bootstrap
      */
     public static function i18n_redirect_fix($url)
     {
+
         $i18n = Module::instance();
         $language = $i18n->request->getLanguage();
         if ($language !== null && $language != $i18n->languages->from_language) {
