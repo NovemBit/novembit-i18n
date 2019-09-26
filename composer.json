@@ -25,11 +25,5 @@
   "scripts": {
   },
   "extra": {
-  },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "git@github.com:NovemBit/i18n.git"
-    }
-  ]
+  }
 }
