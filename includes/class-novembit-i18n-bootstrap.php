@@ -27,11 +27,18 @@ class NovemBit_i18n_bootstrap
                         'exclusions' => ['barev', 'barev duxov', "hayer", 'Hello'],
                         'validation' => true,
                         'save_translations' => true*/
+
                         'class' => NovemBit\i18n\component\translation\method\Google::class,
                         'api_key' => 'AIzaSyA3STDoHZLxiaXXgmmlLuQGdX6f9HhXglA',
                         'exclusions' => ['barev', 'barev duxov', "hayer", 'Hello'],
                         'validation' => true,
-                        'save_translations' => true
+                        'save_translations' => true,
+
+
+                        /*'class' => NovemBit\i18n\component\translation\method\Dummy::class,
+                        'exclusions' => ['barev', 'barev duxov', "hayer", 'Hello'],
+                        'validation' => true,
+                        'save_translations' => true*/
                     ],
                     'text' => [
                         'class' => NovemBit\i18n\component\translation\type\Text::class,
@@ -104,9 +111,9 @@ class NovemBit_i18n_bootstrap
                 ],
                 'languages' => [
                     'class' => NovemBit\i18n\component\Languages::class,
-                    'accept_languages' => ['ar', 'hy', 'fr', 'it', 'de', 'ru'],
-                    'from_language'=>'en',
-                    'default_language'=>'hy',
+                    'accept_languages' => ['ar', 'hy', 'fr', 'it', 'de', 'ru','en'],
+                    'from_language' => 'en',
+                    'default_language' => 'hy',
                     'path_exclusion_patterns' => [
                         '.*\.php',
                         '.*\.jpg',
@@ -115,6 +122,9 @@ class NovemBit_i18n_bootstrap
                 ],
                 'request' => [
                     'class' => NovemBit\i18n\component\Request::class,
+                    'default_host_language'=>[
+                        'swanson.fr'=>'fr'
+                    ]
                 ],
                 'rest' => [
                     'class' => NovemBit\i18n\component\Rest::class,
@@ -160,9 +170,13 @@ class NovemBit_i18n_bootstrap
 
         $i18n = Module::instance();
         $language = $i18n->request->getLanguage();
-        if ($language !== null && $language != $i18n->languages->from_language) {
+        if ($language !== null) {
             $url = $i18n->request->getTranslation()->url->translate([$url])[$url][$language];
-            $url = ltrim($url, '/');
+            $parts = parse_url($url);
+            if (isset($parts['host'])) {
+                return $url;
+            }
+            $url = '/' . ltrim($url, '/');
         }
         return $url;
     }
