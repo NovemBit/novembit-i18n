@@ -16,6 +16,7 @@
     "novembit/i18n": "dev-master"
   },
   "require-dev": {
+    "phpunit/phpunit": "^8"
   },
   "config": {
     "process-timeout": 1800,

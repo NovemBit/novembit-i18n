@@ -14,12 +14,10 @@ class NovemBit_i18n_bootstrap
 
         self::defineConstants();
 
-        $sqlite_db = __DIR__ . '/../vendor/novembit/i18n/runtime/db/BLi18n.db';
-
         NovemBit\i18n\Module::instance(
             [
                 'translation' => [
-                    'class' => NovemBit\i18n\component\Translation::class,
+                    'class' => NovemBit\i18n\component\translation\Translation::class,
                     'method' => [
                         /*'class' => NovemBit\i18n\component\translation\method\RestMethod::class,
                         'remote_host'=>'i18n.adcleandns.com',
@@ -110,10 +108,17 @@ class NovemBit_i18n_bootstrap
                     ]
                 ],
                 'languages' => [
-                    'class' => NovemBit\i18n\component\Languages::class,
-                    'accept_languages' => ['ar', 'hy', 'fr', 'it', 'de', 'ru','en'],
+                    'class' => NovemBit\i18n\component\Languages\Languages::class,
+                    'accept_languages' => ['ar', 'hy', 'fr', 'it', 'de', 'ru', 'en'],
                     'from_language' => 'en',
-                    'default_language' => 'hy',
+                    'default_language' => [
+                        'swanson.fr' => 'fr',
+                        'swanson.am' => 'hy',
+                        'swanson.it' => 'it',
+                        'swanson.ru' => 'ru',
+                        'swanson.co.uk' => 'hy',
+                        'default' => 'en'
+                    ],
                     'path_exclusion_patterns' => [
                         '.*\.php',
                         '.*\.jpg',
@@ -121,26 +126,39 @@ class NovemBit_i18n_bootstrap
                     ],
                 ],
                 'request' => [
-                    'class' => NovemBit\i18n\component\Request::class,
-                    'default_host_language'=>[
-                        'swanson.fr'=>'fr'
+                    'class' => NovemBit\i18n\component\Request\Request::class,
+                    'exclusions'=>[
+                        function($request){
+                            if(
+                                is_admin()
+                                && !wp_doing_ajax()
+                                && ( isset($GLOBALS['pagenow']) && $GLOBALS['pagenow'] != 'wp-login.php' )
+                            ){
+                                return true;
+                            }
+                            return false;
+                        }
                     ]
                 ],
                 'rest' => [
-                    'class' => NovemBit\i18n\component\Rest::class,
+                    'class' => NovemBit\i18n\component\Rest\Rest::class,
                     'api_keys' => [
                         'demo_key_123'
                     ]
                 ],
                 'db' => [
-                    'class' => NovemBit\i18n\system\components\DB::class,
-                    'pdo' => 'sqlite:' . $sqlite_db,
-                    /*'pdo'      => 'mysql:host=localhost;dbname=swanson',
-                    'username' => "root",
-                    'password' => "Novem9bit",
-                    'config'   => [
-                        \PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => false
-                    ]*/
+                    'class' => NovemBit\i18n\system\component\DB::class,
+                    'connection' => [
+                        'dsn' => 'mysql:host=localhost;dbname=activerecord',
+                        'username' => 'top',
+                        'password' => 'top',
+                        'charset' => 'utf8mb4',
+                        'tablePrefix' => 'i18n_',
+                        /*'enableQueryCache' => true,
+                        'enableSchemaCache' => true,
+                        'schemaCacheDuration' => 3000,
+                        'schemaCache' => 'cache',*/
+                    ],
                 ]
             ]
         );
