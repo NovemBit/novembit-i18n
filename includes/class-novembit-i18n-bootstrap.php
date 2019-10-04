@@ -127,18 +127,31 @@ class NovemBit_i18n_bootstrap
                 ],
                 'request' => [
                     'class' => NovemBit\i18n\component\Request\Request::class,
-                    'exclusions'=>[
-                        function($request){
-                            if(
-                                is_admin()
-                                && !wp_doing_ajax()
-                                && ( isset($GLOBALS['pagenow']) && $GLOBALS['pagenow'] != 'wp-login.php' )
-                            ){
+                    'exclusions' => [
+                        function ($request) {
+
+                            if (
+                                (
+                                    is_admin()
+                                    && !wp_doing_ajax()
+                                )
+                                && (
+                                    !isset($GLOBALS['pagenow']) ||
+                                    (isset($GLOBALS['pagenow']) && $GLOBALS['pagenow'] != 'wp-login.php')
+                                )
+                            ) {
                                 return true;
                             }
                             return false;
                         }
-                    ]
+                    ],
+                    'on_page_not_found' => function () {
+                        add_action('wp', function () {
+                            global $wp_query;
+                            $wp_query->set_404();
+                            status_header(404);
+                        });
+                    }
                 ],
                 'rest' => [
                     'class' => NovemBit\i18n\component\Rest\Rest::class,
