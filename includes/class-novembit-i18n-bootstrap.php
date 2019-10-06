@@ -108,7 +108,7 @@ class NovemBit_i18n_bootstrap
                     ]
                 ],
                 'languages' => [
-                    'class' => NovemBit\i18n\component\Languages\Languages::class,
+                    'class' => NovemBit\i18n\component\languages\Languages::class,
                     'accept_languages' => ['ar', 'hy', 'fr', 'it', 'de', 'ru', 'en'],
                     'from_language' => 'en',
                     'default_language' => [
