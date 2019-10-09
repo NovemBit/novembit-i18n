@@ -1,23 +1,31 @@
 <?php
+namespace NovemBit\wp\plugins\i18n;
 
+use Exception;
+use NovemBit\i18n\component\languages\Languages;
+use NovemBit\i18n\component\request\Request;
+use NovemBit\i18n\component\rest\Rest;
+use NovemBit\i18n\component\translation\method\Google;
+use NovemBit\i18n\component\translation\Translation;
+use NovemBit\i18n\component\translation\type\HTML;
+use NovemBit\i18n\component\translation\type\JSON;
+use NovemBit\i18n\component\translation\type\Text;
+use NovemBit\i18n\component\translation\type\URL;
 use NovemBit\i18n\Module;
+use NovemBit\i18n\system\component\DB;
 
-defined('ABSPATH') || exit;
-
-class NovemBit_i18n_bootstrap
+class Bootstrap
 {
 
     public static function init()
     {
 
-        self::includeFiles();
-
         self::defineConstants();
 
-        NovemBit\i18n\Module::instance(
+        Module::instance(
             [
                 'translation' => [
-                    'class' => NovemBit\i18n\component\translation\Translation::class,
+                    'class' => Translation::class,
                     'method' => [
                         /*'class' => NovemBit\i18n\component\translation\method\RestMethod::class,
                         'remote_host'=>'i18n.adcleandns.com',
@@ -26,7 +34,7 @@ class NovemBit_i18n_bootstrap
                         'validation' => true,
                         'save_translations' => true*/
 
-                        'class' => NovemBit\i18n\component\translation\method\Google::class,
+                        'class' => Google::class,
                         'api_key' => 'AIzaSyA3STDoHZLxiaXXgmmlLuQGdX6f9HhXglA',
                         'exclusions' => ['barev', 'barev duxov', "hayer", 'Hello'],
                         'validation' => true,
@@ -39,12 +47,12 @@ class NovemBit_i18n_bootstrap
                         'save_translations' => true*/
                     ],
                     'text' => [
-                        'class' => NovemBit\i18n\component\translation\type\Text::class,
+                        'class' => Text::class,
                         'save_translations' => true,
 //                'exclusions' => [ "Hello"],
                     ],
                     'url' => [
-                        'class' => NovemBit\i18n\component\translation\type\URL::class,
+                        'class' => URL::class,
                         'url_validation_rules' => [
                             'host' => [
                                 '^$|^swanson\.co\.uk$|^swanson\.fr$',
@@ -52,7 +60,7 @@ class NovemBit_i18n_bootstrap
                         ]
                     ],
                     'html' => [
-                        'class' => NovemBit\i18n\component\translation\type\HTML::class,
+                        'class' => HTML::class,
                         'fields_to_translate' => [
                             ['rule' => ['tags' => ['title']], 'text' => 'text'],
                             ['rule' => ['tags' => ['button']], 'attrs' => ['data-value' => 'text'], 'text' => 'text'],
@@ -103,12 +111,12 @@ class NovemBit_i18n_bootstrap
                         'save_translations' => false,
                     ],
                     'json' => [
-                        'class' => NovemBit\i18n\component\translation\type\JSON::class,
+                        'class' => JSON::class,
                         'save_translations' => false
                     ]
                 ],
                 'languages' => [
-                    'class' => NovemBit\i18n\component\languages\Languages::class,
+                    'class' => Languages::class,
                     'accept_languages' => ['ar', 'hy', 'fr', 'it', 'de', 'ru', 'en'],
                     'from_language' => 'en',
                     'default_language' => [
@@ -116,7 +124,7 @@ class NovemBit_i18n_bootstrap
                         'swanson.am' => 'hy',
                         'swanson.it' => 'it',
                         'swanson.ru' => 'ru',
-                        'swanson.co.uk' => 'hy',
+                        'swanson.co.uk' => 'en',
                         'default' => 'en'
                     ],
                     'path_exclusion_patterns' => [
@@ -126,7 +134,7 @@ class NovemBit_i18n_bootstrap
                     ],
                 ],
                 'request' => [
-                    'class' => NovemBit\i18n\component\Request\Request::class,
+                    'class' => Request::class,
                     'exclusions' => [
                         function ($request) {
 
@@ -150,21 +158,22 @@ class NovemBit_i18n_bootstrap
                             global $wp_query;
                             $wp_query->set_404();
                             status_header(404);
+                            return false;
                         });
                     }
                 ],
                 'rest' => [
-                    'class' => NovemBit\i18n\component\Rest\Rest::class,
+                    'class' => Rest::class,
                     'api_keys' => [
                         'demo_key_123'
                     ]
                 ],
                 'db' => [
-                    'class' => NovemBit\i18n\system\component\DB::class,
+                    'class' => DB::class,
                     'connection' => [
-                        'dsn' => 'mysql:host=localhost;dbname=activerecord',
-                        'username' => 'top',
-                        'password' => 'top',
+                        'dsn' => 'mysql:host='.DB_HOST.';dbname='.DB_NAME,
+                        'username' => DB_USER,
+                        'password' => DB_PASSWORD,
                         'charset' => 'utf8mb4',
                         'tablePrefix' => 'i18n_',
                         /*'enableQueryCache' => true,
@@ -176,7 +185,7 @@ class NovemBit_i18n_bootstrap
             ]
         );
 
-        NovemBit\i18n\Module::instance()->start();
+        Module::instance()->start();
 
         add_filter('redirect_canonical', function () {
             return false;
@@ -212,19 +221,6 @@ class NovemBit_i18n_bootstrap
         return $url;
     }
 
-    /**
-     * Include composer file
-     */
-    private static function includeFiles()
-    {
-
-        /*
-         * Include composer vendor autoload.php file
-         * */
-        include_once __DIR__ . "/../vendor/autoload.php";
-
-        include_once "class-novembit-i18n.php";
-    }
 
     /**
      * Define constants

@@ -1,8 +1,8 @@
 <?php
 
-defined( 'ABSPATH' ) || exit;
+namespace NovemBit\wp\plugins\i18n;
 
-class NovemBit_i18n_Install {
+class Install {
 
 	private static $filename = '0_novembit_i18n.php';
 
