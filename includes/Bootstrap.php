@@ -1,10 +1,12 @@
 <?php
+
 namespace NovemBit\wp\plugins\i18n;
 
 use Exception;
 use NovemBit\i18n\component\languages\Languages;
 use NovemBit\i18n\component\request\Request;
 use NovemBit\i18n\component\rest\Rest;
+use NovemBit\i18n\component\translation\method\Dummy;
 use NovemBit\i18n\component\translation\method\Google;
 use NovemBit\i18n\component\translation\Translation;
 use NovemBit\i18n\component\translation\type\HTML;
@@ -13,6 +15,7 @@ use NovemBit\i18n\component\translation\type\Text;
 use NovemBit\i18n\component\translation\type\URL;
 use NovemBit\i18n\Module;
 use NovemBit\i18n\system\component\DB;
+use NovemBit\i18n\system\parsers\html\Rule;
 
 class Bootstrap
 {
@@ -40,16 +43,16 @@ class Bootstrap
                         'validation' => true,
                         'save_translations' => true,
 
-
-                        /*'class' => NovemBit\i18n\component\translation\method\Dummy::class,
-                        'exclusions' => ['barev', 'barev duxov', "hayer", 'Hello'],
-                        'validation' => true,
-                        'save_translations' => true*/
+                        /*
+                                                'class' => Dummy::class,
+                                                'exclusions' => ['barev', 'barev duxov', "hayer", 'Hello'],
+                                                'validation' => true,
+                                                'save_translations' => true*/
                     ],
                     'text' => [
                         'class' => Text::class,
                         'save_translations' => true,
-//                'exclusions' => [ "Hello"],
+                        /*'exclusions' => [ "Hello"],*/
                     ],
                     'url' => [
                         'class' => URL::class,
@@ -77,6 +80,20 @@ class Bootstrap
                                 'rule' => ['tags' => ['input', 'textarea']],
                                 'attrs' => ['placeholder' => 'text']
                             ],
+                            /*vaa_cap_publish_ebay_listings*/
+                            [
+                                'rule' => [
+                                    'tags' => [
+                                        '/label/'
+                                    ],
+                                    'attrs'=>[
+                                        'for'=>['/(\b(?!vaa_cap_publish_ebay_listings)\b\S+)/']
+                                    ],
+                                    'mode'=>Rule::REGEX
+                                ],
+                                'attrs' => ['title' => 'text', 'alt' => 'text', 'data-tooltip' => 'text'],
+                                'text' => 'text'
+                            ],
                             [
                                 'rule' => [
                                     'tags' => [
@@ -85,7 +102,6 @@ class Bootstrap
                                         'italic',
                                         'i',
                                         'b',
-                                        'label',
                                         'span',
                                         'h1',
                                         'h2',
@@ -158,7 +174,6 @@ class Bootstrap
                             global $wp_query;
                             $wp_query->set_404();
                             status_header(404);
-                            return false;
                         });
                     }
                 ],
@@ -171,7 +186,7 @@ class Bootstrap
                 'db' => [
                     'class' => DB::class,
                     'connection' => [
-                        'dsn' => 'mysql:host='.DB_HOST.';dbname='.DB_NAME,
+                        'dsn' => 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME,
                         'username' => DB_USER,
                         'password' => DB_PASSWORD,
                         'charset' => 'utf8mb4',
@@ -185,7 +200,9 @@ class Bootstrap
             ]
         );
 
+//        add_action('init',function (){
         Module::instance()->start();
+//        });
 
         add_filter('redirect_canonical', function () {
             return false;
