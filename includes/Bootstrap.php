@@ -44,10 +44,10 @@ class Bootstrap
                         'save_translations' => true,
 
                         /*
-                                                'class' => Dummy::class,
-                                                'exclusions' => ['barev', 'barev duxov', "hayer", 'Hello'],
-                                                'validation' => true,
-                                                'save_translations' => true*/
+                        'class' => Dummy::class,
+                        'exclusions' => ['barev', 'barev duxov', "hayer", 'Hello'],
+                        'validation' => true,
+                        'save_translations' => true*/
                     ],
                     'text' => [
                         'class' => Text::class,
@@ -65,6 +65,23 @@ class Bootstrap
                     'html' => [
                         'class' => HTML::class,
                         'fields_to_translate' => [
+                            [
+                                'rule' => [
+                                    'tags' => ['/a/'],
+                                    'texts' => [
+                                        '/^(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})$/'
+                                    ],
+                                    'mode' => Rule::REGEX
+                                ],
+                                'text' => 'url',
+                                'attrs' => [
+                                    'title' => 'text',
+                                    'alt' => 'text',
+                                    'href' => 'url',
+                                    'data-tooltip' => 'text',
+                                    'data-tip' => 'text'
+                                ],
+                            ],
                             ['rule' => ['tags' => ['title']], 'text' => 'text'],
                             ['rule' => ['tags' => ['button']], 'attrs' => ['data-value' => 'text'], 'text' => 'text'],
                             [
@@ -73,7 +90,13 @@ class Bootstrap
                             ],
                             [
                                 'rule' => ['tags' => ['a']],
-                                'attrs' => ['href' => 'url', 'data-tooltip' => 'text'],
+                                'attrs' => [
+                                    'title' => 'text',
+                                    'alt' => 'text',
+                                    'href' => 'url',
+                                    'data-tooltip' => 'text',
+                                    'data-tip' => 'text'
+                                ],
                                 'text' => 'text'
                             ],
                             [
@@ -81,7 +104,7 @@ class Bootstrap
                                 'attrs' => ['placeholder' => 'text']
                             ],
                             /*vaa_cap_publish_ebay_listings*/
-                            [
+                            /*[
                                 'rule' => [
                                     'tags' => [
                                         '/label/'
@@ -91,18 +114,21 @@ class Bootstrap
                                     ],
                                     'mode'=>Rule::REGEX
                                 ],
-                                'attrs' => ['title' => 'text', 'alt' => 'text', 'data-tooltip' => 'text'],
+                                'attrs' => ['title' => 'text', 'alt' => 'text', 'data-tooltip' => 'text', 'data-tip'=>'text'],
                                 'text' => 'text'
-                            ],
+                            ],*/
                             [
                                 'rule' => [
                                     'tags' => [
+                                        'title',
                                         'div',
                                         'strong',
                                         'italic',
                                         'i',
                                         'b',
+                                        'label',
                                         'span',
+                                        'em',
                                         'h1',
                                         'h2',
                                         'h3',
@@ -119,7 +145,12 @@ class Bootstrap
                                         'img'
                                     ],
                                 ],
-                                'attrs' => ['title' => 'text', 'alt' => 'text', 'data-tooltip' => 'text'],
+                                'attrs' => [
+                                    'title' => 'text',
+                                    'alt' => 'text',
+                                    'data-tooltip' => 'text',
+                                    'data-tip' => 'text'
+                                ],
                                 'text' => 'text'
                             ],
                             ['rule' => ['tags' => ['form']], 'attrs' => ['action' => 'url'], 'text' => 'text'],
