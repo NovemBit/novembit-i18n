@@ -8,6 +8,7 @@ use NovemBit\i18n\component\request\Request;
 use NovemBit\i18n\component\rest\Rest;
 use NovemBit\i18n\component\translation\method\Dummy;
 use NovemBit\i18n\component\translation\method\Google;
+use NovemBit\i18n\component\translation\method\RestMethod;
 use NovemBit\i18n\component\translation\Translation;
 use NovemBit\i18n\component\translation\type\HTML;
 use NovemBit\i18n\component\translation\type\JSON;
@@ -30,24 +31,26 @@ class Bootstrap
                 'translation' => [
                     'class' => Translation::class,
                     'method' => [
-                        /*'class' => NovemBit\i18n\component\translation\method\RestMethod::class,
+                        'class' => RestMethod::class,
                         'remote_host'=>'i18n.adcleandns.com',
+                        'ssl'=>true,
                         'api_key' => 'demo_key_123',
                         'exclusions' => ['barev', 'barev duxov', "hayer", 'Hello'],
                         'validation' => true,
-                        'save_translations' => true*/
+                        'save_translations' => true
 
-                        'class' => Google::class,
+                        /*'class' => Google::class,
                         'api_key' => 'AIzaSyA3STDoHZLxiaXXgmmlLuQGdX6f9HhXglA',
                         'exclusions' => ['barev', 'barev duxov', "hayer", 'Hello'],
                         'validation' => true,
-                        'save_translations' => true,
+                        'save_translations' => true,*/
 
                         /*
                         'class' => Dummy::class,
                         'exclusions' => ['barev', 'barev duxov', "hayer", 'Hello'],
                         'validation' => true,
                         'save_translations' => true*/
+
                     ],
                     'text' => [
                         'class' => Text::class,
