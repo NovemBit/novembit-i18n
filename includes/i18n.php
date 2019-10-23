@@ -57,8 +57,8 @@ class i18n
      */
     private function init_hooks()
     {
-        register_activation_hook(NOVEMBIT_I18N_PLUGIN_FILE, array('NovemBit_i18n_Install', 'install'));
-        register_deactivation_hook(NOVEMBIT_I18N_PLUGIN_FILE, array('NovemBit_i18n_Install', 'uninstall'));
+        register_activation_hook(NOVEMBIT_I18N_PLUGIN_FILE, array(Install::class, 'install'));
+        register_deactivation_hook(NOVEMBIT_I18N_PLUGIN_FILE, array(Install::class, 'uninstall'));
 
         add_action('plugins_loaded', array($this, 'on_plugins_loaded'), -1);
         add_action('init', array($this, 'init'), PHP_INT_MAX - 10);

@@ -6,9 +6,6 @@ class Install {
 
 	private static $filename = '0_novembit_i18n.php';
 
-	/**
-	 * @throws Exception
-	 */
 	public static function install() {
 
 	    self::migration();
@@ -37,7 +34,6 @@ class Install {
                 </div>
 				<?php
 			} );
-
 		}
 
 	}
@@ -55,11 +51,16 @@ class Install {
 
 	}
 
-	/**
-	 * @throws Exception
-	 */
 	private static function migration(){
 
+	    $sql = file_get_contents(__DIR__.'/../vendor/novembit/i18n/migrations/structure.sql');
+
+        global $wpdb;
+        try {
+            $wpdb->query($sql);
+        } catch (\Exception $exception){
+
+        }
     }
 
 }

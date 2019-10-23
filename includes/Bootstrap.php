@@ -3,9 +3,12 @@
 namespace NovemBit\wp\plugins\i18n;
 
 use Exception;
+use NovemBit\i18n\component\languages\exceptions\LanguageException;
 use NovemBit\i18n\component\languages\Languages;
+use NovemBit\i18n\component\request\exceptions\RequestException;
 use NovemBit\i18n\component\request\Request;
 use NovemBit\i18n\component\rest\Rest;
+use NovemBit\i18n\component\translation\exceptions\TranslationException;
 use NovemBit\i18n\component\translation\method\Dummy;
 use NovemBit\i18n\component\translation\method\Google;
 use NovemBit\i18n\component\translation\method\Method;
@@ -22,16 +25,19 @@ use NovemBit\i18n\system\parsers\html\Rule;
 class Bootstrap
 {
 
+    /**
+     * @throws LanguageException
+     * @throws RequestException
+     * @throws TranslationException
+     */
     public static function init()
     {
-
-        self::defineConstants();
 
         Module::instance(
             [
                 'translation' => [
                     'class' => Translation::class,
-                    'method' => [
+                    Method::NAME => [
                         'class' => Dynamic::class,
                         'type' => Method::NAME,
                         'remote_host'=>'i18n.adcleandns.com',
@@ -54,20 +60,26 @@ class Bootstrap
                         'save_translations' => true*/
 
                     ],
-                    'text' => [
+                    Text::NAME => [
                         'class' => Text::class,
                         'save_translations' => true,
                         /*'exclusions' => [ "Hello"],*/
                     ],
-                    'url' => [
+                    URL::NAME => [
                         'class' => URL::class,
                         'url_validation_rules' => [
+                            'scheme'=>[
+                                '^(https?)?$'
+                            ],
                             'host' => [
                                 '^$|^swanson\.co\.uk$|^swanson\.fr$',
+                            ],
+                            'path'=>[
+                                '^.*(?<!js|css|map|png|gif|webp|jpg|sass|less)$'
                             ]
                         ]
                     ],
-                    'html' => [
+                    HTML::NAME => [
                         'class' => HTML::class,
                         'fields_to_translate' => [
                             [
@@ -162,14 +174,35 @@ class Bootstrap
                         ],
                         'save_translations' => false,
                     ],
-                    'json' => [
+                    JSON::NAME => [
                         'class' => JSON::class,
                         'save_translations' => false
                     ]
                 ],
                 'languages' => [
                     'class' => Languages::class,
-                    'accept_languages' => ['ar', 'hy', 'fr', 'it', 'de', 'ru', 'en'],
+                    'accept_languages' => [
+                        'cs',
+                        'da',
+                        'el',
+                        'et',
+                        'es',
+                        'hr',
+                        'ja',
+                        'ko',
+                        'nl',
+                        'bg',
+                        'pl',
+                        'pt',
+                        'ro',
+                        'sl',
+                        'sv',
+                        'fr',
+                        'it',
+                        'de',
+                        'ru',
+                        'en'
+                    ],
                     'from_language' => 'en',
                     'default_language' => [
                         'swanson.fr' => 'fr',
@@ -181,8 +214,8 @@ class Bootstrap
                     ],
                     'path_exclusion_patterns' => [
                         '.*\.php',
-                        '.*\.jpg',
                         '.*wp-admin',
+                        '.*wp-json'
                     ],
                 ],
                 'request' => [
@@ -236,9 +269,8 @@ class Bootstrap
             ]
         );
 
-//        add_action('init',function (){
         Module::instance()->start();
-//        });
+
 
         add_filter('redirect_canonical', function () {
             return false;
@@ -249,6 +281,7 @@ class Bootstrap
         }, PHP_INT_MAX);
 
         add_filter('wp_redirect', [self::class, 'i18n_redirect_fix'], PHP_INT_MAX, 1);
+
         add_filter('wp_safe_redirect', [self::class, 'i18n_redirect_fix'], PHP_INT_MAX, 1);
 
     }
@@ -272,14 +305,5 @@ class Bootstrap
             $url = '/' . ltrim($url, '/');
         }
         return $url;
-    }
-
-
-    /**
-     * Define constants
-     */
-    private static function defineConstants()
-    {
-
     }
 }
