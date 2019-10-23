@@ -33,230 +33,241 @@ class Bootstrap
     public static function init()
     {
 
-        Module::instance(
-            [
-                'translation' => [
-                    'class' => Translation::class,
-                    Method::NAME => [
-                        'class' => Dynamic::class,
-                        'type' => Method::NAME,
-                        'remote_host'=>'i18n.adcleandns.com',
-                        'ssl'=>true,
-                        'api_key' => 'demo_key_123',
-                        'exclusions' => ['barev', 'barev duxov', "hayer", 'Hello'],
-                        'validation' => true,
-                        'save_translations' => true
+        add_action('init',function (){
 
-                        /*'class' => Google::class,
-                        'api_key' => 'AIzaSyA3STDoHZLxiaXXgmmlLuQGdX6f9HhXglA',
-                        'exclusions' => ['barev', 'barev duxov', "hayer", 'Hello'],
-                        'validation' => true,
-                        'save_translations' => true,*/
+            Module::instance(
+                [
+                    'translation' => [
+                        'class' => Translation::class,
+                        Method::NAME => [
+                            'class' => Dynamic::class,
+                            'type' => Method::NAME,
+                            'remote_host' => 'i18n.adcleandns.com',
+                            'ssl' => true,
+                            'api_key' => 'demo_key_123',
+                            'exclusions' => ['barev', 'barev duxov', "hayer", 'Hello'],
+                            'validation' => true,
+                            'save_translations' => true
 
-                        /*
-                        'class' => Dummy::class,
-                        'exclusions' => ['barev', 'barev duxov', "hayer", 'Hello'],
-                        'validation' => true,
-                        'save_translations' => true*/
+                            /*'class' => Google::class,
+                            'api_key' => 'AIzaSyA3STDoHZLxiaXXgmmlLuQGdX6f9HhXglA',
+                            'exclusions' => ['barev', 'barev duxov', "hayer", 'Hello'],
+                            'validation' => true,
+                            'save_translations' => true,*/
 
-                    ],
-                    Text::NAME => [
-                        'class' => Text::class,
-                        'save_translations' => true,
-                        /*'exclusions' => [ "Hello"],*/
-                    ],
-                    URL::NAME => [
-                        'class' => URL::class,
-                        'url_validation_rules' => [
-                            'scheme'=>[
-                                '^(https?)?$'
-                            ],
-                            'host' => [
-                                '^$|^swanson\.co\.uk$|^swanson\.fr$',
-                            ],
-                            'path'=>[
-                                '^.*(?<!js|css|map|png|gif|webp|jpg|sass|less)$'
+                            /*
+                            'class' => Dummy::class,
+                            'exclusions' => ['barev', 'barev duxov', "hayer", 'Hello'],
+                            'validation' => true,
+                            'save_translations' => true*/
+
+                        ],
+                        Text::NAME => [
+                            'class' => Text::class,
+                            'save_translations' => true,
+                            /*'exclusions' => [ "Hello"],*/
+                        ],
+                        URL::NAME => [
+                            'class' => URL::class,
+                            'url_validation_rules' => [
+                                'scheme' => [
+                                    '^(https?)?$'
+                                ],
+                                'host' => [
+                                    '^$|^' . preg_quote($_SERVER['HTTP_HOST']) . '$',
+                                ],
+                                'path' => [
+                                    /**
+                                     * @todo query string
+                                     * */
+                                    '^.*(?<!js|css|map|png|gif|webp|jpg|sass|less)$'
+                                ]
                             ]
+                        ],
+                        HTML::NAME => [
+                            'class' => HTML::class,
+                            'fields_to_translate' => [
+                                [
+                                    'rule' => [
+                                        'tags' => ['/a/'],
+                                        'texts' => [
+                                            '/^(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})$/'
+                                        ],
+                                        'mode' => Rule::REGEX
+                                    ],
+                                    'text' => URL::NAME,
+                                    'attrs' => [
+                                        'title' => Text::NAME,
+                                        'alt' => Text::NAME,
+                                        'href' => URL::NAME,
+                                        'data-tooltip' => Text::NAME,
+                                        'data-tip' => Text::NAME
+                                    ],
+                                ],
+                                ['rule' => ['tags' => ['title']], 'text' => Text::NAME],
+                                [
+                                    'rule' => ['tags' => ['button']],
+                                    'attrs' => ['data-value' => Text::NAME],
+                                    'text' => Text::NAME
+                                ],
+                                [
+                                    'rule' => ['tags' => ['input'], 'attrs' => ['type' => ['submit']]],
+                                    'attrs' => ['value' => Text::NAME]
+                                ],
+                                [
+                                    'rule' => ['tags' => ['a']],
+                                    'attrs' => [
+                                        'title' => Text::NAME,
+                                        'alt' => Text::NAME,
+                                        'href' => URL::NAME,
+                                        'data-tooltip' => Text::NAME,
+                                        'data-tip' => Text::NAME
+                                    ],
+                                    'text' => Text::NAME
+                                ],
+                                [
+                                    'rule' => ['tags' => ['input', 'textarea']],
+                                    'attrs' => ['placeholder' => Text::NAME]
+                                ],
+                                [
+                                    'rule' => [
+                                        'tags' => [
+                                            'title',
+                                            'div',
+                                            'strong',
+                                            'italic',
+                                            'i',
+                                            'b',
+                                            'label',
+                                            'span',
+                                            'em',
+                                            'h1',
+                                            'h2',
+                                            'h3',
+                                            'h4',
+                                            'h5',
+                                            'h6',
+                                            'li',
+                                            'p',
+                                            'time',
+                                            'th',
+                                            'td',
+                                            'option',
+                                            'nav',
+                                            'img'
+                                        ],
+                                    ],
+                                    'attrs' => [
+                                        'title' => Text::NAME,
+                                        'alt' => Text::NAME,
+                                        'data-tooltip' => Text::NAME,
+                                        'data-tip' => Text::NAME
+                                    ],
+                                    'text' => Text::NAME
+                                ],
+                                ['rule' => ['tags' => ['form']], 'attrs' => ['action' => URL::NAME], 'text' => Text::NAME],
+                            ],
+                            'save_translations' => false,
+                        ],
+                        JSON::NAME => [
+                            'class' => JSON::class,
+                            'save_translations' => false
                         ]
                     ],
-                    HTML::NAME => [
-                        'class' => HTML::class,
-                        'fields_to_translate' => [
-                            [
-                                'rule' => [
-                                    'tags' => ['/a/'],
-                                    'texts' => [
-                                        '/^(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})$/'
-                                    ],
-                                    'mode' => Rule::REGEX
-                                ],
-                                'text' => URL::NAME,
-                                'attrs' => [
-                                    'title' => Text::NAME,
-                                    'alt' => Text::NAME,
-                                    'href' => URL::NAME,
-                                    'data-tooltip' => Text::NAME,
-                                    'data-tip' => Text::NAME
-                                ],
-                            ],
-                            ['rule' => ['tags' => ['title']], 'text' => Text::NAME],
-                            ['rule' => ['tags' => ['button']], 'attrs' => ['data-value' => Text::NAME], 'text' => Text::NAME],
-                            [
-                                'rule' => ['tags' => ['input'], 'attrs' => ['type' => ['submit']]],
-                                'attrs' => ['value' => Text::NAME]
-                            ],
-                            [
-                                'rule' => ['tags' => ['a']],
-                                'attrs' => [
-                                    'title' => Text::NAME,
-                                    'alt' => Text::NAME,
-                                    'href' => URL::NAME,
-                                    'data-tooltip' => Text::NAME,
-                                    'data-tip' => Text::NAME
-                                ],
-                                'text' => Text::NAME
-                            ],
-                            [
-                                'rule' => ['tags' => ['input', 'textarea']],
-                                'attrs' => ['placeholder' => Text::NAME]
-                            ],
-                            [
-                                'rule' => [
-                                    'tags' => [
-                                        'title',
-                                        'div',
-                                        'strong',
-                                        'italic',
-                                        'i',
-                                        'b',
-                                        'label',
-                                        'span',
-                                        'em',
-                                        'h1',
-                                        'h2',
-                                        'h3',
-                                        'h4',
-                                        'h5',
-                                        'h6',
-                                        'li',
-                                        'p',
-                                        'time',
-                                        'th',
-                                        'td',
-                                        'option',
-                                        'nav',
-                                        'img'
-                                    ],
-                                ],
-                                'attrs' => [
-                                    'title' => Text::NAME,
-                                    'alt' => Text::NAME,
-                                    'data-tooltip' => Text::NAME,
-                                    'data-tip' => Text::NAME
-                                ],
-                                'text' => Text::NAME
-                            ],
-                            ['rule' => ['tags' => ['form']], 'attrs' => ['action' => URL::NAME], 'text' => Text::NAME],
+                    'languages' => [
+                        'class' => Languages::class,
+                        'accept_languages' => [
+                            'cs',
+                            'da',
+                            'el',
+                            'et',
+                            'es',
+                            'hr',
+                            'ja',
+                            'ko',
+                            'nl',
+                            'bg',
+                            'pl',
+                            'pt',
+                            'ro',
+                            'sl',
+                            'sv',
+                            'fr',
+                            'it',
+                            'de',
+                            'ru',
+                            'en'
                         ],
-                        'save_translations' => false,
+                        'from_language' => 'en',
+                        'default_language' => [
+                            'swanson.fr' => 'fr',
+                            'swanson.am' => 'hy',
+                            'swanson.it' => 'it',
+                            'swanson.ru' => 'ru',
+                            'swanson.co.uk' => 'en',
+                            'default' => 'en'
+                        ],
+                        'path_exclusion_patterns' => [
+                            '.*\.php',
+                            '.*wp-admin',
+                            '.*wp-json'
+                        ],
                     ],
-                    JSON::NAME => [
-                        'class' => JSON::class,
-                        'save_translations' => false
-                    ]
-                ],
-                'languages' => [
-                    'class' => Languages::class,
-                    'accept_languages' => [
-                        'cs',
-                        'da',
-                        'el',
-                        'et',
-                        'es',
-                        'hr',
-                        'ja',
-                        'ko',
-                        'nl',
-                        'bg',
-                        'pl',
-                        'pt',
-                        'ro',
-                        'sl',
-                        'sv',
-                        'fr',
-                        'it',
-                        'de',
-                        'ru',
-                        'en'
-                    ],
-                    'from_language' => 'en',
-                    'default_language' => [
-                        'swanson.fr' => 'fr',
-                        'swanson.am' => 'hy',
-                        'swanson.it' => 'it',
-                        'swanson.ru' => 'ru',
-                        'swanson.co.uk' => 'en',
-                        'default' => 'en'
-                    ],
-                    'path_exclusion_patterns' => [
-                        '.*\.php',
-                        '.*wp-admin',
-                        '.*wp-json'
-                    ],
-                ],
-                'request' => [
-                    'class' => Request::class,
-                    'exclusions' => [
-                        function ($request) {
+                    'request' => [
+                        'class' => Request::class,
+                        'allow_editor'=>current_user_can('administrator'),
+                        'exclusions' => [
+                            function ($request) {
 
-                            if (
-                                (
-                                    is_admin()
-                                    && !wp_doing_ajax()
-                                )
-                                && (
-                                    !isset($GLOBALS['pagenow']) ||
-                                    (isset($GLOBALS['pagenow']) && $GLOBALS['pagenow'] != 'wp-login.php')
-                                )
-                            ) {
-                                return true;
+                                if (
+                                    (
+                                        is_admin()
+                                        && !wp_doing_ajax()
+                                    )
+                                    && (
+                                        !isset($GLOBALS['pagenow']) ||
+                                        (isset($GLOBALS['pagenow']) && $GLOBALS['pagenow'] != 'wp-login.php')
+                                    )
+                                ) {
+                                    return true;
+                                }
+                                return false;
                             }
-                            return false;
+                        ],
+                        'on_page_not_found' => function () {
+                            add_action('wp', function () {
+                                global $wp_query;
+                                $wp_query->set_404();
+                                status_header(404);
+                            });
                         }
                     ],
-                    'on_page_not_found' => function () {
-                        add_action('wp', function () {
-                            global $wp_query;
-                            $wp_query->set_404();
-                            status_header(404);
-                        });
-                    }
-                ],
-                'rest' => [
-                    'class' => Rest::class,
-                    'api_keys' => [
-                        'demo_key_123'
-                    ]
-                ],
-                'db' => [
-                    'class' => DB::class,
-                    'connection' => [
-                        'dsn' => 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME,
-                        'username' => DB_USER,
-                        'password' => DB_PASSWORD,
-                        'charset' => 'utf8mb4',
-                        'tablePrefix' => 'i18n_',
-                        /*'enableQueryCache' => true,
-                        'enableSchemaCache' => true,
-                        'schemaCacheDuration' => 3000,
-                        'schemaCache' => 'cache',*/
+                    'rest' => [
+                        'class' => Rest::class,
+                        'api_keys' => [
+                            'demo_key_123'
+                        ]
                     ],
+                    'db' => [
+                        'class' => DB::class,
+                        'connection' => [
+                            'dsn' => 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME,
+                            'username' => DB_USER,
+                            'password' => DB_PASSWORD,
+                            'charset' => 'utf8mb4',
+                            'tablePrefix' => 'i18n_',
+                            /*'enableQueryCache' => true,
+                            'enableSchemaCache' => true,
+                            'schemaCacheDuration' => 3000,
+                            'schemaCache' => 'cache',*/
+                        ],
+                    ]
                 ]
-            ]
-        );
+            );
 
-        Module::instance()->start();
+            Module::instance()->start();
 
+        });
 
         add_filter('redirect_canonical', function () {
             return false;
