@@ -12,7 +12,7 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "php": ">=7.0",
+    "php": ">=7.1",
     "novembit/i18n": "dev-master"
   },
   "require-dev": {

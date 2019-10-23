@@ -90,50 +90,36 @@ class Bootstrap
                                     ],
                                     'mode' => Rule::REGEX
                                 ],
-                                'text' => 'url',
+                                'text' => URL::NAME,
                                 'attrs' => [
-                                    'title' => 'text',
-                                    'alt' => 'text',
-                                    'href' => 'url',
-                                    'data-tooltip' => 'text',
-                                    'data-tip' => 'text'
+                                    'title' => Text::NAME,
+                                    'alt' => Text::NAME,
+                                    'href' => URL::NAME,
+                                    'data-tooltip' => Text::NAME,
+                                    'data-tip' => Text::NAME
                                 ],
                             ],
-                            ['rule' => ['tags' => ['title']], 'text' => 'text'],
-                            ['rule' => ['tags' => ['button']], 'attrs' => ['data-value' => 'text'], 'text' => 'text'],
+                            ['rule' => ['tags' => ['title']], 'text' => Text::NAME],
+                            ['rule' => ['tags' => ['button']], 'attrs' => ['data-value' => Text::NAME], 'text' => Text::NAME],
                             [
                                 'rule' => ['tags' => ['input'], 'attrs' => ['type' => ['submit']]],
-                                'attrs' => ['value' => 'text']
+                                'attrs' => ['value' => Text::NAME]
                             ],
                             [
                                 'rule' => ['tags' => ['a']],
                                 'attrs' => [
-                                    'title' => 'text',
-                                    'alt' => 'text',
-                                    'href' => 'url',
-                                    'data-tooltip' => 'text',
-                                    'data-tip' => 'text'
+                                    'title' => Text::NAME,
+                                    'alt' => Text::NAME,
+                                    'href' => URL::NAME,
+                                    'data-tooltip' => Text::NAME,
+                                    'data-tip' => Text::NAME
                                 ],
-                                'text' => 'text'
+                                'text' => Text::NAME
                             ],
                             [
                                 'rule' => ['tags' => ['input', 'textarea']],
-                                'attrs' => ['placeholder' => 'text']
+                                'attrs' => ['placeholder' => Text::NAME]
                             ],
-                            /*vaa_cap_publish_ebay_listings*/
-                            /*[
-                                'rule' => [
-                                    'tags' => [
-                                        '/label/'
-                                    ],
-                                    'attrs'=>[
-                                        'for'=>['/(\b(?!vaa_cap_publish_ebay_listings)\b\S+)/']
-                                    ],
-                                    'mode'=>Rule::REGEX
-                                ],
-                                'attrs' => ['title' => 'text', 'alt' => 'text', 'data-tooltip' => 'text', 'data-tip'=>'text'],
-                                'text' => 'text'
-                            ],*/
                             [
                                 'rule' => [
                                     'tags' => [
@@ -163,14 +149,14 @@ class Bootstrap
                                     ],
                                 ],
                                 'attrs' => [
-                                    'title' => 'text',
-                                    'alt' => 'text',
-                                    'data-tooltip' => 'text',
-                                    'data-tip' => 'text'
+                                    'title' => Text::NAME,
+                                    'alt' => Text::NAME,
+                                    'data-tooltip' => Text::NAME,
+                                    'data-tip' => Text::NAME
                                 ],
-                                'text' => 'text'
+                                'text' => Text::NAME
                             ],
-                            ['rule' => ['tags' => ['form']], 'attrs' => ['action' => 'url'], 'text' => 'text'],
+                            ['rule' => ['tags' => ['form']], 'attrs' => ['action' => URL::NAME], 'text' => Text::NAME],
                         ],
                         'save_translations' => false,
                     ],
