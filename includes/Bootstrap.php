@@ -84,18 +84,44 @@ class Bootstrap
                         'html' => [
                             'class' => HTML::class,
                             'fields_to_translate' => [
+                                /*
+                                 * Json+ld translation
+                                 * */
                                 [
                                     'rule' => ['tags' => ['script'], 'attrs' => ['type' => ['application/ld+json']]],
                                     'text' => 'jsonld'
                                 ],
+                                /*
+                                 * Standard SEO meta tags
+                                 * */
                                 [
                                     'rule' => ['tags' => ['meta'], 'attrs' => ['name' => ['description']]],
                                     'attrs' => ['content'=>'text']
                                 ],
+                                /*
+                                 * Facebook open graph meta tags
+                                 * */
                                 [
-                                    'rule' => ['tags' => ['meta'], 'attrs' => ['property' => ['og:description','og:title','og:sitename']]],
+                                    'rule' => ['tags' => ['meta'], 'attrs' => ['property' => ['og:description','og:title','og:site_name']]],
                                     'attrs' => ['content'=>'text']
                                 ],
+                                [
+                                    'rule' => ['tags' => ['meta'], 'attrs' => ['property' => ['og:url']]],
+                                    'attrs' => ['content'=>'url']
+                                ],
+                                /*
+                                 * Twitter SEO meta tags
+                                 * */
+                                [
+                                    'rule' => ['tags' => ['meta'], 'attrs' => ['name' => ['twitter:description','twitter:title']]],
+                                    'attrs' => ['content'=>'text']
+                                ],
+                                /**
+                                 * Urls with url text content
+                                 * ```html
+                                 *  <a href="http://test.com"> http://test.com </a>
+                                 * ```
+                                 * */
                                 [
                                     'rule' => [
                                         'tags' => ['/a/'],
@@ -189,8 +215,9 @@ class Bootstrap
                             'type_autodetect' => false,
                             'fields_to_translate' => [
                                 '/^name$/i' => 'text',
-                                '/^(?>\w+>)+name$/i' => 'text',
-                                '/^(?>\w+>)+description$/i' => 'text'
+                                '/^(?>@?\w+>)+name$/i' => 'text',
+                                '/^(?>@?\w+>)+description$/i' => 'text',
+                                '/^(?>@?\w+>)+url/i' => 'url',
                             ]
                         ]
                     ],
@@ -221,7 +248,6 @@ class Bootstrap
                         'from_language' => 'en',
                         'default_language' => [
                             'swanson.fr' => 'fr',
-                            'swanson.am' => 'hy',
                             'swanson.it' => 'it',
                             'swanson.ru' => 'ru',
                             'swanson.co.uk' => 'en',
