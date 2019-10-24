@@ -89,6 +89,10 @@ class Bootstrap
                                     'text' => 'jsonld'
                                 ],
                                 [
+                                    'rule' => ['tags' => ['meta'], 'attrs' => ['name' => ['description']]],
+                                    'attrs' => ['content'=>'text']
+                                ],
+                                [
                                     'rule' => [
                                         'tags' => ['/a/'],
                                         'texts' => [
@@ -126,7 +130,6 @@ class Bootstrap
                                     ],
                                     'text' => 'text'
                                 ],
-
                                 [
                                     'rule' => ['tags' => ['input', 'textarea']],
                                     'attrs' => ['placeholder' => 'text']
