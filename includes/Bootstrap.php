@@ -26,22 +26,19 @@ class Bootstrap
 {
 
     /**
-     * @throws LanguageException
-     * @throws RequestException
-     * @throws TranslationException
      */
     public static function init()
     {
 
-        add_action('init',function (){
+        add_action('init', function () {
 
             Module::instance(
                 [
                     'translation' => [
                         'class' => Translation::class,
-                        Method::NAME => [
+                        'method' => [
                             'class' => Dynamic::class,
-                            'type' => Method::NAME,
+                            'type' => 'method',
                             'remote_host' => 'i18n.adcleandns.com',
                             'ssl' => true,
                             'api_key' => 'demo_key_123',
@@ -62,12 +59,12 @@ class Bootstrap
                             'save_translations' => true*/
 
                         ],
-                        Text::NAME => [
+                        'text' => [
                             'class' => Text::class,
                             'save_translations' => true,
                             /*'exclusions' => [ "Hello"],*/
                         ],
-                        URL::NAME => [
+                        'url' => [
                             'class' => URL::class,
                             'url_validation_rules' => [
                                 'scheme' => [
@@ -84,9 +81,13 @@ class Bootstrap
                                 ]
                             ]
                         ],
-                        HTML::NAME => [
+                        'html' => [
                             'class' => HTML::class,
                             'fields_to_translate' => [
+                                [
+                                    'rule' => ['tags' => ['script'], 'attrs' => ['type' => ['application/ld+json']]],
+                                    'text' => 'jsonld'
+                                ],
                                 [
                                     'rule' => [
                                         'tags' => ['/a/'],
@@ -95,39 +96,40 @@ class Bootstrap
                                         ],
                                         'mode' => Rule::REGEX
                                     ],
-                                    'text' => URL::NAME,
+                                    'text' => 'url',
                                     'attrs' => [
-                                        'title' => Text::NAME,
-                                        'alt' => Text::NAME,
-                                        'href' => URL::NAME,
-                                        'data-tooltip' => Text::NAME,
-                                        'data-tip' => Text::NAME
+                                        'title' => 'text',
+                                        'alt' => 'text',
+                                        'href' => 'url',
+                                        'data-tooltip' => 'text',
+                                        'data-tip' => 'text'
                                     ],
                                 ],
-                                ['rule' => ['tags' => ['title']], 'text' => Text::NAME],
+                                ['rule' => ['tags' => ['title']], 'text' => 'text'],
                                 [
                                     'rule' => ['tags' => ['button']],
-                                    'attrs' => ['data-value' => Text::NAME],
-                                    'text' => Text::NAME
+                                    'attrs' => ['data-value' => 'text'],
+                                    'text' => 'text'
                                 ],
                                 [
                                     'rule' => ['tags' => ['input'], 'attrs' => ['type' => ['submit']]],
-                                    'attrs' => ['value' => Text::NAME]
+                                    'attrs' => ['value' => 'text']
                                 ],
                                 [
                                     'rule' => ['tags' => ['a']],
                                     'attrs' => [
-                                        'title' => Text::NAME,
-                                        'alt' => Text::NAME,
-                                        'href' => URL::NAME,
-                                        'data-tooltip' => Text::NAME,
-                                        'data-tip' => Text::NAME
+                                        'title' => 'text',
+                                        'alt' => 'text',
+                                        'href' => 'url',
+                                        'data-tooltip' => 'text',
+                                        'data-tip' => 'text'
                                     ],
-                                    'text' => Text::NAME
+                                    'text' => 'text'
                                 ],
+
                                 [
                                     'rule' => ['tags' => ['input', 'textarea']],
-                                    'attrs' => ['placeholder' => Text::NAME]
+                                    'attrs' => ['placeholder' => 'text']
                                 ],
                                 [
                                     'rule' => [
@@ -158,20 +160,31 @@ class Bootstrap
                                         ],
                                     ],
                                     'attrs' => [
-                                        'title' => Text::NAME,
-                                        'alt' => Text::NAME,
-                                        'data-tooltip' => Text::NAME,
-                                        'data-tip' => Text::NAME
+                                        'title' => 'text',
+                                        'alt' => 'text',
+                                        'data-tooltip' => 'text',
+                                        'data-tip' => 'text'
                                     ],
-                                    'text' => Text::NAME
+                                    'text' => 'text'
                                 ],
-                                ['rule' => ['tags' => ['form']], 'attrs' => ['action' => URL::NAME], 'text' => Text::NAME],
+                                ['rule' => ['tags' => ['form']], 'attrs' => ['action' => 'url'], 'text' => 'text'],
                             ],
                             'save_translations' => false,
                         ],
-                        JSON::NAME => [
+                        'json' => [
                             'class' => JSON::class,
                             'save_translations' => false
+                        ],
+                        'jsonld' => [
+                            'class' => JSON::class,
+                            'name' => 'jsonld',
+                            'save_translations' => false,
+                            'type_autodetect' => false,
+                            'fields_to_translate' => [
+                                '/^name$/i' => 'text',
+                                '/^(?>\w+>)+name$/i' => 'text',
+                                '/^(?>\w+>)+description$/i' => 'text'
+                            ]
                         ]
                     ],
                     'languages' => [
@@ -215,7 +228,7 @@ class Bootstrap
                     ],
                     'request' => [
                         'class' => Request::class,
-                        'allow_editor'=>current_user_can('administrator'),
+                        'allow_editor' => current_user_can('administrator'),
                         'exclusions' => [
                             function ($request) {
 
