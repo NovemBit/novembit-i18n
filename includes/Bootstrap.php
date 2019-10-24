@@ -93,6 +93,10 @@ class Bootstrap
                                     'attrs' => ['content'=>'text']
                                 ],
                                 [
+                                    'rule' => ['tags' => ['meta'], 'attrs' => ['property' => ['og:description','og:title','og:sitename']]],
+                                    'attrs' => ['content'=>'text']
+                                ],
+                                [
                                     'rule' => [
                                         'tags' => ['/a/'],
                                         'texts' => [
