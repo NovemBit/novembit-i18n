@@ -1,0 +1,41 @@
+.novembit-i18n-translation-editor .loading {
+    font-size: 0.8rem;
+    color: #9b9b9b;
+}
+
+.novembit-i18n-translation-editor .label:hover .list {
+    display: block;
+}
+
+.novembit-i18n-translation-editor .label .list {
+    display: none;
+    z-index: 999;
+    position: absolute;
+    margin: 0;
+    background: #fff;
+    width: 260px;
+    columns: 2;
+    padding: 5px;
+    box-shadow: 0 0 5px #999;
+    list-style: none;
+}
+
+.novembit-i18n-translation-editor .label .list li {
+    padding: 0;
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.novembit-i18n-translation-editor .label .list li a {
+    line-height: 1em;
+}
+
+.novembit-i18n-translation-editor .label {
+    cursor: pointer;
+    font-size: 14px;
+    color: #666;
+}
+
+.novembit-i18n-translation-editor .label:hover {
+    color: #444;
+}
