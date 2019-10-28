@@ -2,6 +2,9 @@
 
 namespace NovemBit\wp\plugins\i18n;
 
+use NovemBit\wp\plugins\i18n\shortcodes\Editor;
+use NovemBit\wp\plugins\i18n\shortcodes\Switcher;
+
 class i18n
 {
 
@@ -57,11 +60,12 @@ class i18n
      */
     private function init_hooks()
     {
-        register_activation_hook(NOVEMBIT_I18N_PLUGIN_FILE, array(Install::class, 'install'));
-        register_deactivation_hook(NOVEMBIT_I18N_PLUGIN_FILE, array(Install::class, 'uninstall'));
+        register_activation_hook(NOVEMBIT_I18N_PLUGIN_FILE, [Install::class, 'install']);
+        register_deactivation_hook(NOVEMBIT_I18N_PLUGIN_FILE, [Install::class, 'uninstall']);
 
-        add_action('plugins_loaded', array($this, 'on_plugins_loaded'), -1);
-        add_action('init', array($this, 'init'), PHP_INT_MAX - 10);
+        add_action('plugins_loaded', [$this, 'on_plugins_loaded'], -1);
+
+        add_action('init', [$this, 'init'], PHP_INT_MAX - 10);
     }
 
     public function on_plugins_loaded()
@@ -72,7 +76,11 @@ class i18n
 
     public function init()
     {
-
+        /*
+         * Init short codes
+         * */
+        Switcher::init();
+        Editor::init();
     }
 
     /**

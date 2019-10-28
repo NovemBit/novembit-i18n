@@ -40,7 +40,7 @@ class Bootstrap
                             'class' => Dynamic::class,
                             'type' => 'method',
                             'remote_host' => 'i18n.adcleandns.com',
-                            'ssl' => true,
+                            'ssl' => false,
                             'api_key' => 'demo_key_123',
                             'exclusions' => ['barev', 'barev duxov', "hayer", 'Hello'],
                             'validation' => true,
@@ -96,25 +96,31 @@ class Bootstrap
                                  * */
                                 [
                                     'rule' => ['tags' => ['meta'], 'attrs' => ['name' => ['description']]],
-                                    'attrs' => ['content'=>'text']
+                                    'attrs' => ['content' => 'text']
                                 ],
                                 /*
                                  * Facebook open graph meta tags
                                  * */
                                 [
-                                    'rule' => ['tags' => ['meta'], 'attrs' => ['property' => ['og:description','og:title','og:site_name']]],
-                                    'attrs' => ['content'=>'text']
+                                    'rule' => [
+                                        'tags' => ['meta'],
+                                        'attrs' => ['property' => ['og:description', 'og:title', 'og:site_name']]
+                                    ],
+                                    'attrs' => ['content' => 'text']
                                 ],
                                 [
                                     'rule' => ['tags' => ['meta'], 'attrs' => ['property' => ['og:url']]],
-                                    'attrs' => ['content'=>'url']
+                                    'attrs' => ['content' => 'url']
                                 ],
                                 /*
                                  * Twitter SEO meta tags
                                  * */
                                 [
-                                    'rule' => ['tags' => ['meta'], 'attrs' => ['name' => ['twitter:description','twitter:title']]],
-                                    'attrs' => ['content'=>'text']
+                                    'rule' => [
+                                        'tags' => ['meta'],
+                                        'attrs' => ['name' => ['twitter:description', 'twitter:title']]
+                                    ],
+                                    'attrs' => ['content' => 'text']
                                 ],
                                 /**
                                  * Urls with url text content
@@ -328,6 +334,8 @@ class Bootstrap
         add_filter('wp_safe_redirect', [self::class, 'i18n_redirect_fix'], PHP_INT_MAX, 1);
 
     }
+
+
 
     /**
      * @param $url
