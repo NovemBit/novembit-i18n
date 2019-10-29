@@ -30,6 +30,7 @@ class Bootstrap
     public static function init()
     {
 
+
         add_action('init', function () {
 
             Module::instance(
@@ -39,16 +40,15 @@ class Bootstrap
                         'method' => [
                             'class' => Dynamic::class,
                             'type' => 'method',
-                            'remote_host' => 'i18n.adcleandns.com',
+                            'remote_host' => 'i18n.brandlight.org',
                             'ssl' => false,
-                            'api_key' => 'demo_key_123',
-                            'exclusions' => ['barev', 'barev duxov', "hayer", 'Hello'],
+                            'api_key' => 'GmYg90HtUsd187I2lJ20k7s0oIhBBBAv',
                             'validation' => true,
-                            'save_translations' => true
+                            'save_translations' => true,
+
 
                             /*'class' => Google::class,
                             'api_key' => 'AIzaSyA3STDoHZLxiaXXgmmlLuQGdX6f9HhXglA',
-                            'exclusions' => ['barev', 'barev duxov', "hayer", 'Hello'],
                             'validation' => true,
                             'save_translations' => true,*/
 
@@ -58,6 +58,41 @@ class Bootstrap
                             'validation' => true,
                             'save_translations' => true*/
 
+                            'exclusions' => [
+                                "dady",
+                                'Adidas',
+                                'Terry Naturally',
+                                'Twinlab',
+                                'Shearer Candles',
+                                'Stella Sport',
+                                'Planetary Herbals',
+                                'Reebok',
+                                'Fairhaven Health',
+                                'Garden of Life',
+                                'Dr. Mercola',
+                                'Ellyndale',
+                                'Doctor\'s Best',
+                                'Cosmesis Skin Care (by Life Extension)',
+                                'Bounce',
+                                'Now Foods',
+                                'Jarrow Formulas',
+                                'Pip & Nut',
+                                'Liberation',
+                                'PraNaturals',
+                                'Life Extension',
+                                'Regime London',
+                                'Metabolife',
+                                'Source Naturals',
+                                'Milkies',
+                                'Swanson',
+                                'Natural Factors',
+                                'Trèsutopia',
+                                'Natures Aid',
+                                'Brandlight',
+                                'Activpet',
+                            ],
+
+
                         ],
                         'text' => [
                             'class' => Text::class,
@@ -66,6 +101,7 @@ class Bootstrap
                         ],
                         'url' => [
                             'class' => URL::class,
+                            'path_translation' => true,
                             'url_validation_rules' => [
                                 'scheme' => [
                                     '^(https?)?$'
@@ -297,7 +333,8 @@ class Bootstrap
                     'rest' => [
                         'class' => Rest::class,
                         'api_keys' => [
-                            'demo_key_123'
+                            'demo_key_123',
+                            'GmYg90HtUsd187I2lJ20k7s0oIhBBBAv'
                         ]
                     ],
                     'db' => [
@@ -334,7 +371,6 @@ class Bootstrap
         add_filter('wp_safe_redirect', [self::class, 'i18n_redirect_fix'], PHP_INT_MAX, 1);
 
     }
-
 
 
     /**
