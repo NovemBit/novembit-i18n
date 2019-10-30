@@ -31,11 +31,13 @@ class Editor
             'id' => self::$name . '-' . self::$id,
             'class' =>  self::$name,
             'title' => __('Edit Translations', 'novembit-18n'),
-            'exit_label' => __('Exit Translations', 'novembit-18n')
+            'exit_label' => __('Exit Translations', 'novembit-18n'),
+            'loading_label' => __('Edit Translations', 'novembit-18n'),
+
         ), $atts);
 
         $html = sprintf(
-            "<div id=\"%s\" class=\"%s\" data-title=\"%s\" data-exit_label=\"%s\"><span class=\"loading\">Loading...</span></div>",
+            "<div id=\"%s\" class=\"%s\" data-title=\"%s\" data-exit_label=\"%s\"><span class=\"loading\">{$atts['loading_label']}</span></div>",
             $atts['id'],
             $atts['class'],
             $atts['title'],
@@ -55,7 +57,7 @@ class Editor
             true
         );
 
-        $html.=do_shortcode('['.Switcher::$name.']');
+//        $html.=do_shortcode('['.Switcher::$name.']');
 
         return $html;
     }

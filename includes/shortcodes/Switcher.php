@@ -32,10 +32,11 @@ class Switcher
             'class' => self::$name,
             'mode'=>'popup',
             'title' => __('Change language', 'novembit-18n'),
+            'loading_label' => __('Edit Translations', 'novembit-18n'),
         ), $atts);
 
         $html = sprintf(
-            "<div id=\"%s\" class=\"%s\" data-mode=\"%s\"><span class=\"loading\">Loading...</span></div>",
+            "<div id=\"%s\" class=\"%s\" data-mode=\"%s\"><span class=\"loading\">{$atts['loading_label']}</span></div>",
             $atts['id'],
             $atts['class'],
             $atts['mode']
