@@ -30,7 +30,6 @@ class Bootstrap
     public static function init()
     {
 
-
         add_action('init', function () {
 
             Module::instance(
@@ -59,7 +58,7 @@ class Bootstrap
                             'save_translations' => true*/
 
                             'exclusions' => [
-                                "dady",
+                                "vitamin",
                                 'Adidas',
                                 'Terry Naturally',
                                 'Twinlab',
@@ -107,7 +106,8 @@ class Bootstrap
                                     '^(https?)?$'
                                 ],
                                 'host' => [
-                                    '^$|^' . preg_quote($_SERVER['HTTP_HOST']) . '$',
+                                    '^$|^' . preg_quote($_SERVER['HTTP_HOST'] ?? parse_url(site_url(),
+                                            PHP_URL_HOST)) . '$',
                                 ],
                                 'path' => [
                                     /**
@@ -119,6 +119,11 @@ class Bootstrap
                         ],
                         'html' => [
                             'class' => HTML::class,
+
+                            /*
+                             * Xpath for parser
+                             * */
+                            'parser_query' => './/*[not(ancestor-or-self::*[@id=\'wpadminbar\']) and not(ancestor-or-self::*[@translate=\'no\']) and (text() or @*)]',
                             'fields_to_translate' => [
                                 /*
                                  * Json+ld translation
