@@ -32,6 +32,7 @@
 
 .novembit-i18n-language-switcher .label {
     cursor: pointer;
+    white-space: nowrap;
     font-size: 14px;
     color: #666;
 }
