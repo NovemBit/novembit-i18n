@@ -13,7 +13,7 @@ class Install {
 	    self::install_mu_plugin();
 	}
 
-	public function uninstall(){
+	public static function uninstall(){
 		self::uninstall_mu_plugin();
 	}
 
