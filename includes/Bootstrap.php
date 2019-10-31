@@ -363,12 +363,18 @@ class Bootstrap
 
         });
 
+
         add_filter('redirect_canonical', function () {
-            return false;
+            if (Module::instance()->request->isIsReady()) {
+                return false;
+            }
+            return true;
         }, PHP_INT_MAX, 2);
 
         add_action('admin_init', function () {
-            remove_action('admin_head', 'wp_admin_canonical_url');
+            if (Module::instance()->request->isIsReady()) {
+                remove_action('admin_head', 'wp_admin_canonical_url');
+            }
         }, PHP_INT_MAX);
 
         add_filter('wp_redirect', [self::class, 'i18n_redirect_fix'], PHP_INT_MAX, 1);
@@ -387,6 +393,9 @@ class Bootstrap
     {
 
         $i18n = Module::instance();
+        if (!$i18n->request->isIsReady()) {
+            return $url;
+        }
         $language = $i18n->request->getLanguage();
         if ($language !== null) {
             $url = $i18n->request->getTranslation()->url->translate([$url])[$url][$language];
