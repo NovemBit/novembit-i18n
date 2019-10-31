@@ -31,8 +31,13 @@
             let link = document.createElement('a');
 
             link.setAttribute('href', url);
-            link.innerText = window.novembit.i18n.accept_languages[lang]['name'];
-            item.appendChild(link);
+            let link_label = document.createElement('span');
+            link_label.innerText = window.novembit.i18n.accept_languages[lang]['name'];
+
+            let link_flag = document.createElement('img');
+            link_flag.src = window.novembit.i18n.accept_languages[lang]['flag'];
+            link.appendChild(link_flag);
+            link.appendChild(link_label);
 
             list.appendChild(item);
         }
