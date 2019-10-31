@@ -58,7 +58,7 @@ class Switcher
         ), $atts);
 
         $html = sprintf(
-            "<div id=\"%s\" translate=\"no\" class=\"%s\" data-mode=\"%s\"><span class=\"loading\">{$atts['loading_label']}</span></div>",
+            "<a id=\"%s\" translate=\"no\" class=\"%s\" data-mode=\"%s\"><span class=\"loading\">{$atts['loading_label']}</span></a>",
             $atts['id'],
             $atts['class'],
             $atts['mode']

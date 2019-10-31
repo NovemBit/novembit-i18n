@@ -10,7 +10,7 @@
 
         let urls = window.novembit.i18n.url_translations;
 
-        let label = document.createElement('div');
+        let label = document.createElement('a');
         label.classList.add('label');
         label.innerText = window.novembit.i18n.accept_languages[window.novembit.i18n.current_language];
 

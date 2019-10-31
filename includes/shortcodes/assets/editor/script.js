@@ -12,7 +12,7 @@
 
         let urls = window.novembit.i18n.editor.url_translations;
 
-        let label = document.createElement('div');
+        let label = document.createElement('a');
         label.classList.add('label');
 
         if (window.novembit.i18n.editor.is_editor) {
