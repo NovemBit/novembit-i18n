@@ -31,7 +31,7 @@
             let link = document.createElement('a');
 
             link.setAttribute('href', url);
-            link.innerText = window.novembit.i18n.accept_languages[lang];
+            link.innerText = window.novembit.i18n.accept_languages[lang]['name'];
             item.appendChild(link);
 
             list.appendChild(item);

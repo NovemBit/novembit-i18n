@@ -1,6 +1,6 @@
 .novembit-i18n-language-switcher .loading {
     font-size: 0.8rem;
-    color:#9b9b9b;
+    color: #9b9b9b;
 }
 
 .novembit-i18n-language-switcher .label:hover .list {
@@ -38,4 +38,9 @@
 
 .novembit-i18n-language-switcher .label:hover {
     color: #444;
+}
+
+.novembit-i18n-language-switcher .label .list li img {
+    width: 24px;
+    margin-right: 5px;
 }
