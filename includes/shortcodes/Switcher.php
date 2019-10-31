@@ -16,7 +16,28 @@ class Switcher
      */
     public static function init()
     {
+        add_action('wp_enqueue_scripts',[self::class,'renderAssets']);
+
         add_shortcode(self::$name, [self::class, 'callback']);
+    }
+
+    public static function renderAssets(){
+
+        wp_enqueue_style(
+            self::$name.'-style',
+            plugins_url('/includes/shortcodes/assets/switcher/style.css', NOVEMBIT_I18N_PLUGIN_FILE),
+            [],
+            '1.0.4'
+        );
+
+        wp_enqueue_script(
+            self::$name.'-script',
+            plugins_url('/includes/shortcodes/assets/switcher/script.js', NOVEMBIT_I18N_PLUGIN_FILE),
+            [],
+            '1.0.4',
+            true
+        );
+
     }
 
     /**
@@ -42,18 +63,6 @@ class Switcher
             $atts['mode']
         );
 
-        wp_enqueue_style(self::$name,
-            plugins_url('/includes/shortcodes/assets/switcher/style.css', NOVEMBIT_I18N_PLUGIN_FILE),
-            [],
-            '1.0.1'
-        );
-
-        wp_enqueue_script(self::$name,
-            plugins_url('/includes/shortcodes/assets/switcher/script.js', NOVEMBIT_I18N_PLUGIN_FILE),
-            [],
-            '1.0.2',
-            true
-        );
 
         return $html;
     }

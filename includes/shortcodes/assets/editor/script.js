@@ -1,5 +1,4 @@
 (function () {
-
     let switchers = document.getElementsByClassName('novembit-i18n-translation-editor');
 
     for (let i = 0; i < switchers.length; i++) {
@@ -49,7 +48,7 @@
             link_flag.src = window.novembit.i18n.accept_languages[lang]['flag'];
             link.appendChild(link_flag);
             link.appendChild(link_label);
-            
+
             item.appendChild(link);
 
             list.appendChild(item);

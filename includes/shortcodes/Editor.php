@@ -8,7 +8,7 @@ class Editor
 {
     public static $name = 'novembit-i18n-translation-editor';
 
-    private static $id = 0;
+    private static $_id = 0;
 
     public static function init()
     {
@@ -16,20 +16,37 @@ class Editor
         /**
          * @Todo remove this line. This is temporary shortcode name (Prisna legacy)
          * */
+        add_action('wp_enqueue_scripts',[self::class,'renderAssets']);
         add_shortcode('edit-translations-menu', [self::class, 'callback']);
-
         add_shortcode(self::$name, [self::class, 'callback']);
 
     }
 
+    public static function renderAssets(){
 
+        wp_enqueue_style(
+            self::$name.'-style',
+            plugins_url('/includes/shortcodes/assets/editor/style.css', NOVEMBIT_I18N_PLUGIN_FILE),
+            [],
+            '1.0.4'
+        );
+
+        wp_enqueue_script(
+            self::$name.'-script',
+            plugins_url('/includes/shortcodes/assets/editor/script.js', NOVEMBIT_I18N_PLUGIN_FILE),
+            [],
+            '1.0.4',
+            true
+        );
+
+    }
     public static function callback($atts)
     {
-        self::$id++;
+        static::$_id++;
 
         $atts = shortcode_atts(array(
-            'id' => self::$name . '-' . self::$id,
-            'class' =>  self::$name,
+            'id' => self::$name . '-' . self::$_id,
+            'class' => self::$name,
             'title' => __('Edit Translations', 'novembit-18n'),
             'exit_label' => __('Exit Translations', 'novembit-18n'),
             'loading_label' => __('Edit Translations', 'novembit-18n'),
@@ -44,20 +61,6 @@ class Editor
             $atts['exit_label']
         );
 
-        wp_enqueue_style(self::$name,
-            plugins_url('/includes/shortcodes/assets/editor/style.css', NOVEMBIT_I18N_PLUGIN_FILE),
-            [],
-            '1.0.2'
-        );
-
-        wp_enqueue_script(self::$name,
-            plugins_url('/includes/shortcodes/assets/editor/script.js', NOVEMBIT_I18N_PLUGIN_FILE),
-            [],
-            '1.0.2',
-            true
-        );
-
-//        $html.=do_shortcode('['.Switcher::$name.']');
 
         return $html;
     }
