@@ -37,14 +37,11 @@ class Bootstrap
                     'translation' => [
                         'class' => Translation::class,
                         'method' => [
-                            'class' => Dynamic::class,
-                            'type' => 'method',
+                            'class' => \NovemBit\i18n\component\translation\method\Rest::class,
                             'remote_host' => 'i18n.brandlight.org',
                             'ssl' => false,
                             'api_key' => 'GmYg90HtUsd187I2lJ20k7s0oIhBBBAv',
-                            'validation' => true,
                             'save_translations' => true,
-
 
                             /*'class' => Google::class,
                             'api_key' => 'AIzaSyA3STDoHZLxiaXXgmmlLuQGdX6f9HhXglA',
