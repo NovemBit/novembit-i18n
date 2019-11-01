@@ -362,14 +362,14 @@ class Bootstrap
 
 
         add_filter('redirect_canonical', function () {
-            if (Module::instance()->request->isIsReady()) {
+            if (Module::instance()->request->isReady()) {
                 return false;
             }
             return true;
         }, PHP_INT_MAX, 2);
 
         add_action('admin_init', function () {
-            if (Module::instance()->request->isIsReady()) {
+            if (Module::instance()->request->isReady()) {
                 remove_action('admin_head', 'wp_admin_canonical_url');
             }
         }, PHP_INT_MAX);
@@ -390,7 +390,7 @@ class Bootstrap
     {
 
         $i18n = Module::instance();
-        if (!$i18n->request->isIsReady()) {
+        if (!$i18n->request->isReady()) {
             return $url;
         }
         $language = $i18n->request->getLanguage();
