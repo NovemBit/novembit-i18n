@@ -293,7 +293,7 @@ class Bootstrap
                         'localization_config' => [
                             'swanson.co.uk' =>
                                 [
-                                    'language' => 'ru',
+                                    'language' => 'en',
                                     'country' => 'UK',
                                 ],
                             'swanson.co.ro' =>
