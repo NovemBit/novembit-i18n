@@ -317,7 +317,7 @@ class Bootstrap
                             '^.*\.si$' => ['language' => 'sl', 'country' => 'Slovenia'],
                             '^.*\.kr$' => ['language' => 'ko', 'country' => 'South Korea'],
                             '^.*\.ee$' => ['language' => 'et', 'country' => 'Estonia'],
-                            '^.*\.eu$' => ['language' => 'en', 'country' => 'UK', 'Region' => 'Europe'],
+                            '^.*\.eu$' => ['language' => 'en', 'region' => 'Europe'],
                             '^.*\.com$' => ['language' => 'en', 'country' => 'UK'],
                             '^.*\.net$' => ['language' => 'en', 'country' => 'UK'],
                             '^.*\.org$' => ['language' => 'en', 'country' => 'UK'],
