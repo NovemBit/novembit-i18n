@@ -290,18 +290,127 @@ class Bootstrap
                             'en'
                         ],
                         'from_language' => 'en',
-                        'default_language' => [
-                            'swanson.fr' => 'fr',
-                            'swanson.it' => 'it',
-                            'swanson.ru' => 'ru',
-                            'swanson.co.uk' => 'en',
-                            'default' => 'en'
+                        'localization_config' => [
+                            'swanson.co.uk' =>
+                                [
+                                    'language' => 'ru',
+                                    'country' => 'UK',
+                                ],
+                            'swanson.co.ro' =>
+                                [
+                                    'language' => 'ro',
+                                    'country' => 'Romania',
+                                ],
+                            'swanson.gr' =>
+                                [
+                                    'language' => 'el',
+                                    'country' => 'Greece',
+                                ],
+                            'swanson.sg' =>
+                                [
+                                    'language' => 'en',
+                                    'country' => 'Singapore',
+                                ],
+                            'swanson.fr' =>
+                                [
+                                    'language' => 'fr',
+                                    'country' => 'France',
+                                ],
+                            'swanson.it' =>
+                                [
+                                    'language' => 'it',
+                                    'country' => 'Italy',
+                                ],
+                            'swanson.nl' =>
+                                [
+                                    'language' => 'nl',
+                                    'country' => 'Netherlands',
+                                ],
+                            'swanson.co.de' =>
+                                [
+                                    'language' => 'de',
+                                    'country' => 'Germany',
+                                ],
+                            'swanson.ru' =>
+                                [
+                                    'language' => 'ru',
+                                    'country' => 'Russia',
+                                ],
+                            'swanson.co.dk' =>
+                                [
+                                    'language' => 'da',
+                                    'country' => 'Denmark',
+                                ],
+                            'swanson.co.cz' =>
+                                [
+                                    'language' => 'cs',
+                                    'country' => 'Czech Republic',
+                                ],
+                            'swanson.pl' =>
+                                [
+                                    'language' => 'pl',
+                                    'country' => 'Poland',
+                                ],
+                            'swanson.co.nz' =>
+                                [
+                                    'language' => 'en',
+                                    'country' => 'New Zealand',
+                                ],
+                            'swanson.si' =>
+                                [
+                                    'language' => 'sl',
+                                    'country' => 'Slovenia',
+                                ],
+                            'swanson.kr' =>
+                                [
+                                    'language' => 'ko',
+                                    'country' => 'South Korea',
+                                ],
+                            'swanson.ee' =>
+                                [
+                                    'language' => 'et',
+                                    'country' => 'Estonia',
+                                ],
+                            'healthshop.net' =>
+                                [
+                                    'language' => 'en',
+                                    'country' => 'UK',
+                                ],
+                            'healthshop.co.uk' =>
+                                [
+                                    'language' => 'en',
+                                    'country' => 'UK',
+                                ],
+                            'healthshop.eu' =>
+                                [
+                                    'language' => 'en',
+                                    'country' => 'UK',
+                                ],
+                            'brandlight.org' =>
+                                [
+                                    'language' => 'en',
+                                    'country' => 'UK',
+                                ],
+                            'brandlight.co.uk' =>
+                                [
+                                    'language' => 'en',
+                                    'country' => 'UK',
+                                ],
+                            'brandlight.net' =>
+                                [
+                                    'language' => 'en',
+                                    'country' => 'UK',
+                                ],
+                            'default' => [
+                                'language'=>'ru'
+                            ]
                         ],
                         'path_exclusion_patterns' => [
                             '.*\.php',
                             '.*wp-admin',
                             '.*wp-json'
                         ],
+
                     ],
                     'request' => [
                         'class' => Request::class,
