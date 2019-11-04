@@ -116,7 +116,16 @@ class Bootstrap
                         ],
                         'html' => [
                             'class' => HTML::class,
-
+                            'title_tag_template' => function (
+                                array $params
+                            ) {
+                                return sprintf(
+                                    '%s | %s, %s',
+                                    $params['translate'],
+                                    $params['language_name'],
+                                    $params['country'] ?? ($params['region'] ?? '')
+                                );
+                            },
                             /*
                              * Xpath for parser
                              * */
@@ -291,119 +300,27 @@ class Bootstrap
                         ],
                         'from_language' => 'en',
                         'localization_config' => [
-                            'swanson.co.uk' =>
-                                [
-                                    'language' => 'en',
-                                    'country' => 'UK',
-                                ],
-                            'swanson.co.ro' =>
-                                [
-                                    'language' => 'ro',
-                                    'country' => 'Romania',
-                                ],
-                            'swanson.gr' =>
-                                [
-                                    'language' => 'el',
-                                    'country' => 'Greece',
-                                ],
-                            'swanson.sg' =>
-                                [
-                                    'language' => 'en',
-                                    'country' => 'Singapore',
-                                ],
-                            'swanson.fr' =>
-                                [
-                                    'language' => 'fr',
-                                    'country' => 'France',
-                                ],
-                            'swanson.it' =>
-                                [
-                                    'language' => 'it',
-                                    'country' => 'Italy',
-                                ],
-                            'swanson.nl' =>
-                                [
-                                    'language' => 'nl',
-                                    'country' => 'Netherlands',
-                                ],
-                            'swanson.co.de' =>
-                                [
-                                    'language' => 'de',
-                                    'country' => 'Germany',
-                                ],
-                            'swanson.ru' =>
-                                [
-                                    'language' => 'ru',
-                                    'country' => 'Russia',
-                                ],
-                            'swanson.co.dk' =>
-                                [
-                                    'language' => 'da',
-                                    'country' => 'Denmark',
-                                ],
-                            'swanson.co.cz' =>
-                                [
-                                    'language' => 'cs',
-                                    'country' => 'Czech Republic',
-                                ],
-                            'swanson.pl' =>
-                                [
-                                    'language' => 'pl',
-                                    'country' => 'Poland',
-                                ],
-                            'swanson.co.nz' =>
-                                [
-                                    'language' => 'en',
-                                    'country' => 'New Zealand',
-                                ],
-                            'swanson.si' =>
-                                [
-                                    'language' => 'sl',
-                                    'country' => 'Slovenia',
-                                ],
-                            'swanson.kr' =>
-                                [
-                                    'language' => 'ko',
-                                    'country' => 'South Korea',
-                                ],
-                            'swanson.ee' =>
-                                [
-                                    'language' => 'et',
-                                    'country' => 'Estonia',
-                                ],
-                            'healthshop.net' =>
-                                [
-                                    'language' => 'en',
-                                    'country' => 'UK',
-                                ],
-                            'healthshop.co.uk' =>
-                                [
-                                    'language' => 'en',
-                                    'country' => 'UK',
-                                ],
-                            'healthshop.eu' =>
-                                [
-                                    'language' => 'en',
-                                    'country' => 'UK',
-                                ],
-                            'brandlight.org' =>
-                                [
-                                    'language' => 'en',
-                                    'country' => 'UK',
-                                ],
-                            'brandlight.co.uk' =>
-                                [
-                                    'language' => 'en',
-                                    'country' => 'UK',
-                                ],
-                            'brandlight.net' =>
-                                [
-                                    'language' => 'en',
-                                    'country' => 'UK',
-                                ],
-                            'default' => [
-                                'language'=>'ru'
-                            ]
+                            'default' => ['language' => 'en', 'country' => 'UK', 'region' => 'Europe'],
+                            '^.*\.uk$' => ['language' => 'en', 'country' => 'UK'],
+                            '^.*\.ro$' => ['language' => 'ro', 'country' => 'Romania'],
+                            '^.*\.gr$' => ['language' => 'el', 'country' => 'Greece'],
+                            '^.*\.sg$' => ['language' => 'en', 'country' => 'Singapore'],
+                            '^.*\.fr$' => ['language' => 'fr', 'country' => 'France'],
+                            '^.*\.it$' => ['language' => 'it', 'country' => 'Italy'],
+                            '^.*\.nl$' => ['language' => 'nl', 'country' => 'Netherlands'],
+                            '^.*\.de$' => ['language' => 'de', 'country' => 'Germany'],
+                            '^.*\.ru$' => ['language' => 'ru', 'country' => 'Russia'],
+                            '^.*\.dk$' => ['language' => 'da', 'country' => 'Denmark'],
+                            '^.*\.cz$' => ['language' => 'cs', 'country' => 'Czech Republic'],
+                            '^.*\.pl$' => ['language' => 'pl', 'country' => 'Poland'],
+                            '^.*\.nz$' => ['language' => 'en', 'country' => 'New Zealand'],
+                            '^.*\.si$' => ['language' => 'sl', 'country' => 'Slovenia'],
+                            '^.*\.kr$' => ['language' => 'ko', 'country' => 'South Korea'],
+                            '^.*\.ee$' => ['language' => 'et', 'country' => 'Estonia'],
+                            '^.*\.eu$' => ['language' => 'en', 'country' => 'UK', 'Region' => 'Europe'],
+                            '^.*\.com$' => ['language' => 'en', 'country' => 'UK'],
+                            '^.*\.net$' => ['language' => 'en', 'country' => 'UK'],
+                            '^.*\.org$' => ['language' => 'en', 'country' => 'UK'],
                         ],
                         'path_exclusion_patterns' => [
                             '.*\.php',
