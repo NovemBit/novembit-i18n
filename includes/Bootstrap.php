@@ -271,7 +271,7 @@ class Bootstrap
                                 '/^(?>@?\w+>)+name$/i' => 'text',
                                 '/^(?>@?\w+>)+description$/i' => 'text',
                                 '/^(?>@?\w+>)+url$/i' => 'url',
-                                '/^(?>@?\w+>)+\@id/i' => 'url',
+                                '/^(?>@?\w+>)+\@id$/i' => 'url',
                             ]
                         ]
                     ],
