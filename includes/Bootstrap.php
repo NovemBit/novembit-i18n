@@ -286,7 +286,7 @@ class Bootstrap
                     ],
                     'languages' => [
                         'class' => Languages::class,
-                        'accept_languages' =>i18n::getOption('accept_languages', [
+                        'accept_languages' => i18n::getOption('accept_languages', [
                             'cs',
                             'da',
                             'el',
@@ -312,6 +312,7 @@ class Bootstrap
                         'localization_config' => [
                             'default' => ['language' => 'en', 'country' => 'UK', 'region' => 'Europe'],
                             '^.*\.uk$' => ['language' => 'en', 'country' => 'UK'],
+                            '^.*\.ca$' => ['language' => 'en', 'country' => 'Canada'],
                             '^.*\.ro$' => ['language' => 'ro', 'country' => 'Romania'],
                             '^.*\.gr$' => ['language' => 'el', 'country' => 'Greece'],
                             '^.*\.sg$' => ['language' => 'en', 'country' => 'Singapore'],
@@ -391,11 +392,11 @@ class Bootstrap
                     ]
                 ]
             );
-        },10);
+        }, 10);
 
         add_action('init', function () {
 
-            if(!function_exists('\the_seo_framework')){
+            if (!function_exists('\the_seo_framework')) {
                 return;
             }
 
@@ -439,17 +440,17 @@ class Bootstrap
 
                 die;
             }
-        },10);
+        }, 10);
 
 
-        add_action('init',function (){
+        add_action('init', function () {
             Module::instance()->start();
-        },11);
+        }, 11);
 
 
         add_action('init', function () {
 
-            if(!function_exists('\the_seo_framework')){
+            if (!function_exists('\the_seo_framework')) {
                 return;
             }
 
@@ -463,7 +464,7 @@ class Bootstrap
                 die;
             }
 
-        },11);
+        }, 11);
 
 
         add_filter('redirect_canonical', function () {
