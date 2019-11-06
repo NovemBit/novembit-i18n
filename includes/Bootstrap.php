@@ -23,7 +23,6 @@ class Bootstrap
      */
     public static function init()
     {
-
         add_action('init', function () {
             Module::instance(
                 [
@@ -287,7 +286,7 @@ class Bootstrap
                     ],
                     'languages' => [
                         'class' => Languages::class,
-                        'accept_languages' => [
+                        'accept_languages' =>i18n::getOption('accept_languages', [
                             'cs',
                             'da',
                             'el',
@@ -308,7 +307,7 @@ class Bootstrap
                             'de',
                             'ru',
                             'en'
-                        ],
+                        ]),
                         'from_language' => 'en',
                         'localization_config' => [
                             'default' => ['language' => 'en', 'country' => 'UK', 'region' => 'Europe'],

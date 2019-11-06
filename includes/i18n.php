@@ -8,7 +8,7 @@ use NovemBit\wp\plugins\i18n\shortcodes\Switcher;
 class i18n
 {
 
-    const SLUG = "novembit-i18n";
+    const SLUG = "NOVEMBIT_I18N";
 
     public $version = '1.0.0';
 
@@ -92,10 +92,10 @@ class i18n
     public static function getOption($option, $default = null)
     {
         if (self::isOptionConstant($option)) {
-            return constant(self::class . "_" . $option);
+            return constant(self::SLUG . "_" . $option);
         }
 
-        return get_option(self::class . "_" . $option, $default);
+        return get_option(self::SLUG . $option, $default);
     }
 
 
@@ -106,7 +106,7 @@ class i18n
      */
     public static function isOptionConstant($option)
     {
-        $option = self::class . "_" . $option;
+        $option = self::SLUG . "_" . $option;
 
         return defined($option);
     }
@@ -120,7 +120,7 @@ class i18n
     public static function setOption($option, $value)
     {
 
-        $option = self::class . "_" . $option;
+        $option = self::SLUG . "_" . $option;
 
         if (update_option($option, $value)) {
             return true;
