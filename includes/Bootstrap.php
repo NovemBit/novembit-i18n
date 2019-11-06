@@ -96,14 +96,16 @@ class Bootstrap
                                     '^(https?)?$'
                                 ],
                                 'host' => [
-                                    '^$|^' . preg_quote($_SERVER['HTTP_HOST'] ?? parse_url(site_url(),
-                                            PHP_URL_HOST)) . '$',
+                                    sprintf("^\$|^%s$|^%s$",
+                                        preg_quote($_SERVER['HTTP_HOST']),
+                                        preg_quote(parse_url(site_url(), PHP_URL_HOST))
+                                    ),
                                 ],
                                 'path' => [
                                     /**
                                      * @todo query string
                                      * */
-                                    '^.*(?<!js|css|map|png|gif|webp|jpg|sass|less)$'
+                                    '^.*(?<!\.js|\.css|\.map|\.png|\.gif|\.webp|\.jpg|\.sass|\.less)$'
                                 ]
                             ]
                         ],
@@ -398,16 +400,6 @@ class Bootstrap
                 return;
             }
 
-            if ($_SERVER['REQUEST_URI'] == "/sitemap.xml") {
-                if (!headers_sent()) {
-                    \status_header(200);
-                    header('Content-type: text/xml; charset=utf-8', true);
-                }
-                echo \the_seo_framework()->get_view('sitemap/xml-sitemap');
-                echo "\n";
-                die;
-            }
-
             if ($_SERVER['REQUEST_URI'] == "/sitemap-index.xml") {
                 if (!headers_sent()) {
                     \status_header(200);
@@ -421,7 +413,7 @@ class Bootstrap
                 $sitemapindex = $dom->createElement('sitemapindex');
                 $sitemapindex->setAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
 
-                $sitemap_url =
+                $sitemap_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/sitemap.xml";
 
                 $urls = Module::instance()
                     ->translation
@@ -429,7 +421,7 @@ class Bootstrap
                         Module::instance()->languages->getAcceptLanguages()
                     )
                     ->url
-                    ->translate(['sitemap.xml'])['sitemap.xml'];
+                    ->translate([$sitemap_url])[$sitemap_url];
 
                 foreach ($urls as $lang => $url) {
                     $sitemap = $dom->createElement('sitemap');
