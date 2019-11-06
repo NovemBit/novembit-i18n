@@ -95,7 +95,7 @@ class Bootstrap
                                     '^(https?)?$'
                                 ],
                                 'host' => [
-                                    sprintf("^\$|^%s$|^%s$",
+                                    sprintf("^$|^%s$|^%s$",
                                         preg_quote($_SERVER['HTTP_HOST']),
                                         preg_quote(parse_url(site_url(), PHP_URL_HOST))
                                     ),
@@ -138,7 +138,7 @@ class Bootstrap
                             /*
                              * Xpath for parser
                              * */
-                            'parser_query' => './/*[not(ancestor-or-self::*[@id=\'wpadminbar\']) and not(ancestor-or-self::*[@translate=\'no\']) and (text() or @*)]',
+                            'parser_query' => './/*[not(ancestor-or-self::*[@translate="no" or @id="wpadminbar" or @id="query-monitor-main"]) and (text() or @*)]',
                             'fields_to_translate' => [
                                 /*
                                  * Json+ld translation
@@ -188,7 +188,11 @@ class Bootstrap
                                     'rule' => [
                                         'tags' => ['/a/'],
                                         'texts' => [
-                                            '/^(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})$/'
+                                            sprintf(
+                                                "/^https?:\\/\\/(%s|%s)\\/.*\$/",
+                                                preg_quote($_SERVER['HTTP_HOST']),
+                                                preg_quote(parse_url(site_url(), PHP_URL_HOST))
+                                            )
                                         ],
                                         'mode' => Rule::REGEX
                                     ],
@@ -268,7 +272,12 @@ class Bootstrap
                         ],
                         'json' => [
                             'class' => JSON::class,
-                            'save_translations' => false
+                            'save_translations' => false,
+                            'fields_to_translate'=>[
+                                '/^quantity_options>.*$/i' => 'text',
+                                '/^price_html$/i' => 'html',
+                                '/^availability_html$/i' => 'html',
+                            ]
                         ],
                         'jsonld' => [
                             'class' => JSON::class,
@@ -343,6 +352,12 @@ class Bootstrap
                     'request' => [
                         'class' => Request::class,
                         'allow_editor' => current_user_can('administrator'),
+
+                        'source_type_map' => [
+                            '/sitemap.xml/is' => 'sitemap_xml',
+                            '/sitemap-index.xml/is' => 'sitemap_xml',
+                        ],
+
                         'exclusions' => [
                             function ($request) {
 
