@@ -13,7 +13,8 @@
   "prefer-stable": true,
   "require": {
     "php": ">=7.1",
-    "novembit/i18n": "dev-master"
+    "novembit/i18n": "dev-master",
+    "ext-dom": "*"
   },
   "require-dev": {
   },

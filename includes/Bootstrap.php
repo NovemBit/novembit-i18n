@@ -3,24 +3,18 @@
 namespace NovemBit\wp\plugins\i18n;
 
 use Exception;
-use NovemBit\i18n\component\languages\exceptions\LanguageException;
 use NovemBit\i18n\component\languages\Languages;
-use NovemBit\i18n\component\request\exceptions\RequestException;
 use NovemBit\i18n\component\request\Request;
 use NovemBit\i18n\component\rest\Rest;
-use NovemBit\i18n\component\translation\exceptions\TranslationException;
-use NovemBit\i18n\component\translation\method\Dummy;
-use NovemBit\i18n\component\translation\method\Google;
-use NovemBit\i18n\component\translation\method\Method;
-use NovemBit\i18n\component\translation\rest\Dynamic;
 use NovemBit\i18n\component\translation\Translation;
 use NovemBit\i18n\component\translation\type\HTML;
 use NovemBit\i18n\component\translation\type\JSON;
 use NovemBit\i18n\component\translation\type\Text;
 use NovemBit\i18n\component\translation\type\URL;
+use NovemBit\i18n\component\translation\type\XML;
 use NovemBit\i18n\Module;
 use NovemBit\i18n\system\component\DB;
-use NovemBit\i18n\system\parsers\html\Rule;
+use NovemBit\i18n\system\parsers\xml\Rule;
 
 class Bootstrap
 {
@@ -31,7 +25,6 @@ class Bootstrap
     {
 
         add_action('init', function () {
-
             Module::instance(
                 [
                     'translation' => [
@@ -112,6 +105,21 @@ class Bootstrap
                                      * */
                                     '^.*(?<!js|css|map|png|gif|webp|jpg|sass|less)$'
                                 ]
+                            ]
+                        ],
+                        'xml' => [
+                            'class' => XML::class,
+                        ],
+                        'sitemap_xml' => [
+                            'class' => XML::class,
+                            'fields_to_translate' => [
+                                /*
+                                 * Json+ld translation
+                                 * */
+                                [
+                                    'rule' => ['tags' => ['loc']],
+                                    'text' => 'url'
+                                ],
                             ]
                         ],
                         'html' => [
@@ -267,11 +275,11 @@ class Bootstrap
                             'save_translations' => false,
                             'type_autodetect' => false,
                             'fields_to_translate' => [
-                                '/^name$/i' => 'text',
-                                '/^(?>@?\w+>)+name$/i' => 'text',
-                                '/^(?>@?\w+>)+description$/i' => 'text',
-                                '/^(?>@?\w+>)+url$/i' => 'url',
-                                '/^(?>@?\w+>)+\@id$/i' => 'url',
+                                '/^(name|description)$/i' => 'text',
+                                '/^(@id|url)/i' => 'url',
+                                '/^(?>@?\w+>)+(name|description$|reviewBody)$/i' => 'text',
+                                '/^(?>@?\w+>)+(url|@id)$/i' => 'url',
+                                /*                                '/^(?>@?\w+>)+category$/i' => 'html',*/
                             ]
                         ]
                     ],
@@ -382,10 +390,63 @@ class Bootstrap
                     ]
                 ]
             );
-
             Module::instance()->start();
-
         });
+
+        if (function_exists('the_seo_framework')) {
+            add_action('init', function () {
+                if ($_SERVER['REQUEST_URI'] == "/sitemap.xml") {
+                    if (!headers_sent()) {
+                        \status_header(200);
+                        header('Content-type: text/xml; charset=utf-8', true);
+                    }
+                    echo \the_seo_framework()->get_view('sitemap/xml-sitemap');
+                    echo "\n";
+                    die;
+                }
+
+                if ($_SERVER['REQUEST_URI'] == "/sitemap-index.xml") {
+                    if (!headers_sent()) {
+                        \status_header(200);
+                        header('Content-type: text/xml; charset=utf-8', true);
+                    }
+
+                    $dom = new \DOMDocument();
+                    $dom->version  = "1.0";
+                    $dom->encoding = "utf-8";
+
+                    $sitemapindex = $dom->createElement('sitemapindex');
+                    $sitemapindex->setAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
+
+                    $sitemap_url =
+
+                    $urls = Module::instance()
+                        ->translation
+                        ->setLanguages(
+                            Module::instance()->languages->getAcceptLanguages()
+                        )
+                        ->url
+                        ->translate(['sitemap.xml'])['sitemap.xml'];
+
+                    foreach ($urls as $lang => $url) {
+                        $sitemap = $dom->createElement('sitemap');
+                        $loc = $dom->createElement('loc');
+                        $loc->nodeValue = $url;
+                        $lastmod = $dom->createElement('lastmod');
+                        $lastmod->nodeValue = date('c');
+                        $sitemap->appendChild($loc);
+                        $sitemap->appendChild($lastmod);
+                        $sitemapindex->appendChild($sitemap);
+                    }
+
+                    $dom->appendChild($sitemapindex);
+
+                    echo $dom->saveXML();
+
+                    die;
+                }
+            });
+        }
 
 
         add_filter('redirect_canonical', function () {
