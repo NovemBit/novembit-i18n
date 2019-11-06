@@ -390,63 +390,89 @@ class Bootstrap
                     ]
                 ]
             );
+        },10);
+
+        add_action('init', function () {
+
+            if(!function_exists('\the_seo_framework')){
+                return;
+            }
+
+            if ($_SERVER['REQUEST_URI'] == "/sitemap.xml") {
+                if (!headers_sent()) {
+                    \status_header(200);
+                    header('Content-type: text/xml; charset=utf-8', true);
+                }
+                echo \the_seo_framework()->get_view('sitemap/xml-sitemap');
+                echo "\n";
+                die;
+            }
+
+            if ($_SERVER['REQUEST_URI'] == "/sitemap-index.xml") {
+                if (!headers_sent()) {
+                    \status_header(200);
+                    header('Content-type: text/xml; charset=utf-8', true);
+                }
+
+                $dom = new \DOMDocument();
+                $dom->version  = "1.0";
+                $dom->encoding = "utf-8";
+
+                $sitemapindex = $dom->createElement('sitemapindex');
+                $sitemapindex->setAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
+
+                $sitemap_url =
+
+                $urls = Module::instance()
+                    ->translation
+                    ->setLanguages(
+                        Module::instance()->languages->getAcceptLanguages()
+                    )
+                    ->url
+                    ->translate(['sitemap.xml'])['sitemap.xml'];
+
+                foreach ($urls as $lang => $url) {
+                    $sitemap = $dom->createElement('sitemap');
+                    $loc = $dom->createElement('loc');
+                    $loc->nodeValue = $url;
+                    $lastmod = $dom->createElement('lastmod');
+                    $lastmod->nodeValue = date('c');
+                    $sitemap->appendChild($loc);
+                    $sitemap->appendChild($lastmod);
+                    $sitemapindex->appendChild($sitemap);
+                }
+
+                $dom->appendChild($sitemapindex);
+
+                echo $dom->saveXML();
+
+                die;
+            }
+        },10);
+
+
+        add_action('init',function (){
             Module::instance()->start();
-        });
+        },11);
 
-        if (function_exists('the_seo_framework')) {
-            add_action('init', function () {
-                if ($_SERVER['REQUEST_URI'] == "/sitemap.xml") {
-                    if (!headers_sent()) {
-                        \status_header(200);
-                        header('Content-type: text/xml; charset=utf-8', true);
-                    }
-                    echo \the_seo_framework()->get_view('sitemap/xml-sitemap');
-                    echo "\n";
-                    die;
+
+        add_action('init', function () {
+
+            if(!function_exists('\the_seo_framework')){
+                return;
+            }
+
+            if ($_SERVER['REQUEST_URI'] == "/sitemap.xml") {
+                if (!headers_sent()) {
+                    \status_header(200);
+                    header('Content-type: text/xml; charset=utf-8', true);
                 }
+                echo \the_seo_framework()->get_view('sitemap/xml-sitemap');
+                echo "\n";
+                die;
+            }
 
-                if ($_SERVER['REQUEST_URI'] == "/sitemap-index.xml") {
-                    if (!headers_sent()) {
-                        \status_header(200);
-                        header('Content-type: text/xml; charset=utf-8', true);
-                    }
-
-                    $dom = new \DOMDocument();
-                    $dom->version  = "1.0";
-                    $dom->encoding = "utf-8";
-
-                    $sitemapindex = $dom->createElement('sitemapindex');
-                    $sitemapindex->setAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
-
-                    $sitemap_url =
-
-                    $urls = Module::instance()
-                        ->translation
-                        ->setLanguages(
-                            Module::instance()->languages->getAcceptLanguages()
-                        )
-                        ->url
-                        ->translate(['sitemap.xml'])['sitemap.xml'];
-
-                    foreach ($urls as $lang => $url) {
-                        $sitemap = $dom->createElement('sitemap');
-                        $loc = $dom->createElement('loc');
-                        $loc->nodeValue = $url;
-                        $lastmod = $dom->createElement('lastmod');
-                        $lastmod->nodeValue = date('c');
-                        $sitemap->appendChild($loc);
-                        $sitemap->appendChild($lastmod);
-                        $sitemapindex->appendChild($sitemap);
-                    }
-
-                    $dom->appendChild($sitemapindex);
-
-                    echo $dom->saveXML();
-
-                    die;
-                }
-            });
-        }
+        },11);
 
 
         add_filter('redirect_canonical', function () {
