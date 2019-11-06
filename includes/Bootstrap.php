@@ -464,6 +464,14 @@ class Bootstrap
 
         }, 11);
 
+        add_filter( 'robots_txt', function ( $output, $public ){
+            $current_domain = $_SERVER['HTTP_HOST'];
+            $default_domain = parse_url( site_url(), PHP_URL_HOST );
+            if( ! empty( $default_domain ) ){
+                $output = str_replace( $default_domain, $current_domain, $output );
+            }
+            return str_replace( 'sitemap.xml', 'sitemap-index.xml', $output );
+        }, 30, 2 );
 
         add_filter('redirect_canonical', function () {
             if (Module::instance()->request->isReady()) {
