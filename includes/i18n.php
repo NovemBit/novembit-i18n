@@ -2,6 +2,7 @@
 
 namespace NovemBit\wp\plugins\i18n;
 
+use NovemBit\i18n\Module;
 use NovemBit\wp\plugins\i18n\shortcodes\Editor;
 use NovemBit\wp\plugins\i18n\shortcodes\Switcher;
 
@@ -135,6 +136,26 @@ class i18n
     private function init_assets_version()
     {
         i18n::setOption('assets_version', $this->version);
+    }
+
+    public static function getUrlTranslation($url, $lang=null){
+
+        if(Module::instance()->request->isReady()){
+            return $url;
+        }
+
+        if($lang==null){
+            $lang = Module::instance()->request->getLanguage();
+        } elseif(!Module::instance()->languages->validateLanguage($lang)){
+            return $url;
+        }
+
+        return  Module::instance()
+                ->translation
+                ->setLanguages([$lang])
+                ->url
+                ->translate([$url])[$url][$lang]
+            ?? $url;
     }
 
 }

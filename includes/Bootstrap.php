@@ -442,11 +442,9 @@ class Bootstrap
             }
         }, 10);
 
-
         add_action('init', function () {
             Module::instance()->start();
         }, 11);
-
 
         add_action('init', function () {
 
