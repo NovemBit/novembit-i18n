@@ -150,17 +150,17 @@
     },
     {
         "name": "ezyang/htmlpurifier",
-        "version": "v4.11.0",
-        "version_normalized": "4.11.0.0",
+        "version": "v4.12.0",
+        "version_normalized": "4.12.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/ezyang/htmlpurifier.git",
-            "reference": "83ab08bc1af7d808a9e0fbf024f1c24bfd73c0a7"
+            "reference": "a617e55bc62a87eec73bd456d146d134ad716f03"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/ezyang/htmlpurifier/zipball/83ab08bc1af7d808a9e0fbf024f1c24bfd73c0a7",
-            "reference": "83ab08bc1af7d808a9e0fbf024f1c24bfd73c0a7",
+            "url": "https://api.github.com/repos/ezyang/htmlpurifier/zipball/a617e55bc62a87eec73bd456d146d134ad716f03",
+            "reference": "a617e55bc62a87eec73bd456d146d134ad716f03",
             "shasum": ""
         },
         "require": {
@@ -169,7 +169,7 @@
         "require-dev": {
             "simpletest/simpletest": "dev-master#72de02a7b80c6bb8864ef9bf66d41d2f58f826bd"
         },
-        "time": "2019-07-14T18:58:38+00:00",
+        "time": "2019-10-28T03:44:26+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -247,17 +247,17 @@
     },
     {
         "name": "google/auth",
-        "version": "v1.6.0",
-        "version_normalized": "1.6.0.0",
+        "version": "v1.6.1",
+        "version_normalized": "1.6.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/googleapis/google-auth-library-php.git",
-            "reference": "6d5455b4c0f4a58b1f1b4bdf2ba49221123698b3"
+            "reference": "45635ac69d0b95f38885531d4ebcdfcb2ebb6f36"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/googleapis/google-auth-library-php/zipball/6d5455b4c0f4a58b1f1b4bdf2ba49221123698b3",
-            "reference": "6d5455b4c0f4a58b1f1b4bdf2ba49221123698b3",
+            "url": "https://api.github.com/repos/googleapis/google-auth-library-php/zipball/45635ac69d0b95f38885531d4ebcdfcb2ebb6f36",
+            "reference": "45635ac69d0b95f38885531d4ebcdfcb2ebb6f36",
             "shasum": ""
         },
         "require": {
@@ -278,7 +278,7 @@
         "suggest": {
             "phpseclib/phpseclib": "May be used in place of OpenSSL for signing strings or for token management. Please require version ^2."
         },
-        "time": "2019-10-01T18:35:05+00:00",
+        "time": "2019-10-29T20:13:04+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -300,17 +300,17 @@
     },
     {
         "name": "google/cloud-core",
-        "version": "v1.33.1",
-        "version_normalized": "1.33.1.0",
+        "version": "v1.34.0",
+        "version_normalized": "1.34.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/googleapis/google-cloud-php-core.git",
-            "reference": "7b8773a5c6d501b3ed31655a8e243e1c17e2862e"
+            "reference": "52db21acb2da25d2d79e493842de58da7836c97f"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/googleapis/google-cloud-php-core/zipball/7b8773a5c6d501b3ed31655a8e243e1c17e2862e",
-            "reference": "7b8773a5c6d501b3ed31655a8e243e1c17e2862e",
+            "url": "https://api.github.com/repos/googleapis/google-cloud-php-core/zipball/52db21acb2da25d2d79e493842de58da7836c97f",
+            "reference": "52db21acb2da25d2d79e493842de58da7836c97f",
             "shasum": ""
         },
         "require": {
@@ -336,7 +336,7 @@
             "opis/closure": "May be used to serialize closures to process jobs in the batch daemon. Please require version ^3.",
             "symfony/lock": "Required for the Spanner cached based session pool. Please require the following commit: 3.3.x-dev#1ba6ac9"
         },
-        "time": "2019-10-02T20:38:25+00:00",
+        "time": "2019-10-28T19:05:44+00:00",
         "bin": [
             "bin/google-cloud-batch"
         ],
@@ -363,17 +363,17 @@
     },
     {
         "name": "google/cloud-translate",
-        "version": "v1.5.0",
-        "version_normalized": "1.5.0.0",
+        "version": "v1.6.0",
+        "version_normalized": "1.6.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/googleapis/google-cloud-php-translate.git",
-            "reference": "649ba9a485cd6bf233dd83a23a9793a8de0f8a1b"
+            "reference": "979af54aa0b0141fa974e86ba96ab7866c63d224"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/googleapis/google-cloud-php-translate/zipball/649ba9a485cd6bf233dd83a23a9793a8de0f8a1b",
-            "reference": "649ba9a485cd6bf233dd83a23a9793a8de0f8a1b",
+            "url": "https://api.github.com/repos/googleapis/google-cloud-php-translate/zipball/979af54aa0b0141fa974e86ba96ab7866c63d224",
+            "reference": "979af54aa0b0141fa974e86ba96ab7866c63d224",
             "shasum": ""
         },
         "require": {
@@ -390,7 +390,7 @@
             "ext-grpc": "The gRPC extension enables use of the performant gRPC transport",
             "ext-protobuf": "Provides a significant increase in throughput over the pure PHP protobuf implementation. See https://cloud.google.com/php/grpc for installation instructions."
         },
-        "time": "2019-10-04T23:23:37+00:00",
+        "time": "2019-10-28T19:05:44+00:00",
         "type": "library",
         "extra": {
             "component": {
@@ -456,17 +456,17 @@
     },
     {
         "name": "google/gax",
-        "version": "1.1.2",
-        "version_normalized": "1.1.2.0",
+        "version": "1.2.0",
+        "version_normalized": "1.2.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/googleapis/gax-php.git",
-            "reference": "4389c4103f0469f02c078250c73eaa57bdc91452"
+            "reference": "4baa6d9fb2c5f13ea46c65133848e99fe0aa5ed5"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/googleapis/gax-php/zipball/4389c4103f0469f02c078250c73eaa57bdc91452",
-            "reference": "4389c4103f0469f02c078250c73eaa57bdc91452",
+            "url": "https://api.github.com/repos/googleapis/gax-php/zipball/4baa6d9fb2c5f13ea46c65133848e99fe0aa5ed5",
+            "reference": "4baa6d9fb2c5f13ea46c65133848e99fe0aa5ed5",
             "shasum": ""
         },
         "require": {
@@ -474,7 +474,7 @@
             "google/common-protos": "^1.0",
             "google/grpc-gcp": "^0.1.0",
             "google/protobuf": "^3.7.1",
-            "grpc/grpc": "^1.4",
+            "grpc/grpc": "^1.13",
             "guzzlehttp/promises": "^1.3",
             "guzzlehttp/psr7": "^1.2",
             "php": ">=5.5"
@@ -487,7 +487,7 @@
             "sami/sami": "*",
             "squizlabs/php_codesniffer": "3.*"
         },
-        "time": "2019-09-06T18:27:35+00:00",
+        "time": "2019-10-28T20:25:44+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -592,17 +592,17 @@
     },
     {
         "name": "grpc/grpc",
-        "version": "1.22.0",
-        "version_normalized": "1.22.0.0",
+        "version": "1.25.0",
+        "version_normalized": "1.25.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/grpc/grpc-php.git",
-            "reference": "88235e786ef9b55fcb049f00c5c5202f8086a299"
+            "reference": "bdb165d6712db0cfcc35edae2d14fb2b00cabc88"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/grpc/grpc-php/zipball/88235e786ef9b55fcb049f00c5c5202f8086a299",
-            "reference": "88235e786ef9b55fcb049f00c5c5202f8086a299",
+            "url": "https://api.github.com/repos/grpc/grpc-php/zipball/bdb165d6712db0cfcc35edae2d14fb2b00cabc88",
+            "reference": "bdb165d6712db0cfcc35edae2d14fb2b00cabc88",
             "shasum": ""
         },
         "require": {
@@ -615,7 +615,7 @@
             "ext-protobuf": "For better performance, install the protobuf C extension.",
             "google/protobuf": "To get started using grpc quickly, install the native protobuf library."
         },
-        "time": "2019-07-03T19:57:39+00:00",
+        "time": "2019-11-07T00:47:40+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -635,33 +635,34 @@
     },
     {
         "name": "guzzlehttp/guzzle",
-        "version": "6.3.3",
-        "version_normalized": "6.3.3.0",
+        "version": "6.4.1",
+        "version_normalized": "6.4.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/guzzle/guzzle.git",
-            "reference": "407b0cb880ace85c9b63c5f9551db498cb2d50ba"
+            "reference": "0895c932405407fd3a7368b6910c09a24d26db11"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/guzzle/guzzle/zipball/407b0cb880ace85c9b63c5f9551db498cb2d50ba",
-            "reference": "407b0cb880ace85c9b63c5f9551db498cb2d50ba",
+            "url": "https://api.github.com/repos/guzzle/guzzle/zipball/0895c932405407fd3a7368b6910c09a24d26db11",
+            "reference": "0895c932405407fd3a7368b6910c09a24d26db11",
             "shasum": ""
         },
         "require": {
+            "ext-json": "*",
             "guzzlehttp/promises": "^1.0",
-            "guzzlehttp/psr7": "^1.4",
+            "guzzlehttp/psr7": "^1.6.1",
             "php": ">=5.5"
         },
         "require-dev": {
             "ext-curl": "*",
             "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.4 || ^7.0",
-            "psr/log": "^1.0"
+            "psr/log": "^1.1"
         },
         "suggest": {
             "psr/log": "Required for using the Log middleware"
         },
-        "time": "2018-04-22T15:46:56+00:00",
+        "time": "2019-10-23T15:58:00+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -670,12 +671,12 @@
         },
         "installation-source": "source",
         "autoload": {
-            "files": [
-                "src/functions_include.php"
-            ],
             "psr-4": {
                 "GuzzleHttp\\": "src/"
-            }
+            },
+            "files": [
+                "src/functions_include.php"
+            ]
         },
         "notification-url": "https://packagist.org/downloads/",
         "license": [
@@ -910,60 +911,18 @@
         ]
     },
     {
-        "name": "novembit/active-data",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/NovemBit/active-data.git",
-            "reference": "781969506f275a09bba4ed9a5e5ee9abf4721738"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/NovemBit/active-data/zipball/781969506f275a09bba4ed9a5e5ee9abf4721738",
-            "reference": "781969506f275a09bba4ed9a5e5ee9abf4721738",
-            "shasum": ""
-        },
-        "require": {
-            "ext-pdo": "*",
-            "php": ">=5.6"
-        },
-        "time": "2019-09-26T12:38:34+00:00",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "NovemBit\\ActiveData\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "description": "ActiveData library",
-        "keywords": [
-            "ado",
-            "data",
-            "mapper",
-            "mapping",
-            "mysql",
-            "object",
-            "orm",
-            "pdo",
-            "php",
-            "query"
-        ]
-    },
-    {
         "name": "novembit/i18n",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/NovemBit/i18n.git",
-            "reference": "b0f957b11a5ac11471c9c8d8efbaa4a063f42391"
+            "reference": "71a5e3009c8d2a93aaf3978f38ed2d347e953940"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/NovemBit/i18n/zipball/b0f957b11a5ac11471c9c8d8efbaa4a063f42391",
-            "reference": "b0f957b11a5ac11471c9c8d8efbaa4a063f42391",
+            "url": "https://api.github.com/repos/NovemBit/i18n/zipball/71a5e3009c8d2a93aaf3978f38ed2d347e953940",
+            "reference": "71a5e3009c8d2a93aaf3978f38ed2d347e953940",
             "shasum": ""
         },
         "require": {
@@ -973,15 +932,17 @@
             "ext-libxml": "*",
             "ext-mbstring": "*",
             "ext-pdo": "*",
+            "ext-simplexml": "*",
             "google/cloud-translate": "*",
-            "novembit/active-data": "dev-master",
-            "php": ">=7.0",
+            "php": ">=7.1",
             "yiisoft/yii2": "~2.0.14"
         },
         "require-dev": {
-            "phpunit/phpunit": "^8"
+            "phpmd/phpmd": "*",
+            "phpunit/phpunit": "^8",
+            "squizlabs/php_codesniffer": "*"
         },
-        "time": "2019-10-06T12:34:58+00:00",
+        "time": "2019-11-07T07:38:39+00:00",
         "type": "library",
         "installation-source": "source",
         "autoload": {
@@ -1101,27 +1062,27 @@
     },
     {
         "name": "psr/log",
-        "version": "1.1.0",
-        "version_normalized": "1.1.0.0",
+        "version": "1.1.2",
+        "version_normalized": "1.1.2.0",
         "source": {
             "type": "git",
             "url": "https://github.com/php-fig/log.git",
-            "reference": "6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd"
+            "reference": "446d54b4cb6bf489fc9d75f55843658e6f25d801"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/php-fig/log/zipball/6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd",
-            "reference": "6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd",
+            "url": "https://api.github.com/repos/php-fig/log/zipball/446d54b4cb6bf489fc9d75f55843658e6f25d801",
+            "reference": "446d54b4cb6bf489fc9d75f55843658e6f25d801",
             "shasum": ""
         },
         "require": {
             "php": ">=5.3.0"
         },
-        "time": "2018-11-20T15:27:04+00:00",
+        "time": "2019-11-01T11:05:21+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "1.0.x-dev"
+                "dev-master": "1.1.x-dev"
             }
         },
         "installation-source": "source",
@@ -1238,17 +1199,17 @@
     },
     {
         "name": "yiisoft/yii2",
-        "version": "2.0.28",
-        "version_normalized": "2.0.28.0",
+        "version": "2.0.29",
+        "version_normalized": "2.0.29.0",
         "source": {
             "type": "git",
             "url": "https://github.com/yiisoft/yii2-framework.git",
-            "reference": "80bf3a6e04a0128f753cb73ba7255d8e2ae3a02f"
+            "reference": "f972275551172a4b2e293979d77aa0c795ae36a2"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/80bf3a6e04a0128f753cb73ba7255d8e2ae3a02f",
-            "reference": "80bf3a6e04a0128f753cb73ba7255d8e2ae3a02f",
+            "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/f972275551172a4b2e293979d77aa0c795ae36a2",
+            "reference": "f972275551172a4b2e293979d77aa0c795ae36a2",
             "shasum": ""
         },
         "require": {
@@ -1264,7 +1225,7 @@
             "php": ">=5.4.0",
             "yiisoft/yii2-composer": "~2.0.4"
         },
-        "time": "2019-10-08T13:14:18+00:00",
+        "time": "2019-10-22T13:47:14+00:00",
         "bin": [
             "yii"
         ],

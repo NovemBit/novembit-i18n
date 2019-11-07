@@ -34,7 +34,6 @@ class ComposerStaticInit8fe87c32e9d736a5ed901344fec024cd
         array (
             'NovemBit\\wp\\plugins\\i18n\\' => 25,
             'NovemBit\\i18n\\' => 14,
-            'NovemBit\\ActiveData\\' => 20,
         ),
         'M' => 
         array (
@@ -95,10 +94,6 @@ class ComposerStaticInit8fe87c32e9d736a5ed901344fec024cd
         'NovemBit\\i18n\\' => 
         array (
             0 => __DIR__ . '/..' . '/novembit/i18n/src',
-        ),
-        'NovemBit\\ActiveData\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/novembit/active-data/src',
         ),
         'Monolog\\' => 
         array (
