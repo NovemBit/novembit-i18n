@@ -522,7 +522,7 @@ class Bootstrap
         }
         $language = $i18n->request->getLanguage();
         if ($language !== null) {
-            $url = $i18n->request->getTranslation()->url->translate([$url])[$url][$language];
+            $url = $i18n->request->getTranslation()->url->translate([$url])[$url][$language] ?? $url;
             $parts = parse_url($url);
             if (isset($parts['host'])) {
                 return $url;
