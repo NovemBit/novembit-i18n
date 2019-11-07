@@ -362,6 +362,14 @@ class Bootstrap
                         'exclusions' => [
                             function ($request) {
 
+                                if(self::isWPRest()){
+                                    return true;
+                                }
+
+                                /**
+                                 * If admin and not doing ajax
+                                 * And current page not wp-login.php then ignore page
+                                 * */
                                 if (
                                     (
                                         is_admin()
@@ -374,6 +382,7 @@ class Bootstrap
                                 ) {
                                     return true;
                                 }
+
                                 return false;
                             }
                         ],
@@ -427,6 +436,7 @@ class Bootstrap
             }, PHP_INT_MAX);
 
         }, 10);
+
 
         add_action('init', function () {
 
@@ -510,6 +520,14 @@ class Bootstrap
 
     }
 
+    public static function isWPRest(){
+        $rest_path = get_rest_url(null,'/','relative');
+        $url = $_SERVER['REQUEST_URI'];
+        if(substr($url, 0, strlen($rest_path)) === $rest_path){
+            return true;
+        }
+        return false;
+    }
 
     /**
      * @param $url
