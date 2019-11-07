@@ -357,6 +357,7 @@ class Bootstrap
 
                         'exclusions' => [
                             function ($request) {
+
                                 if (self::isWPRest()) {
                                     return true;
                                 }
@@ -383,7 +384,8 @@ class Bootstrap
                         ],
                         'on_page_not_found' => function () {
 
-                            self::discordNotify(self::PAGE_NOT_FOUND);
+                            //self::discordNotify(self::PAGE_NOT_FOUND);
+                            self::logMissingUrl(trim(Module::instance()->request->getDestination(),'/'));
 
                             add_action('wp', function () {
                                 global $wp_query;
@@ -514,6 +516,15 @@ class Bootstrap
             return str_replace('sitemap.xml', 'sitemap-index.xml', $output);
         }, 30, 2);
 
+    }
+
+    public static function logMissingUrl($source_url){
+        $dir = WP_CONTENT_DIR.'/novembit-i18n' ;
+        if(!is_dir($dir)){
+            mkdir($dir);
+        }
+        $file = $dir.'/wrong-urls.log';
+        file_put_contents($file,PHP_EOL.$source_url,FILE_APPEND);
     }
 
     public static function isWPRest()
