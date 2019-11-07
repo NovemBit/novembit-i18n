@@ -400,8 +400,8 @@ class Bootstrap
                             'password' => DB_PASSWORD,
                             'charset' => 'utf8mb4',
                             'tablePrefix' => 'i18n_',
-                            /*'enableQueryCache' => true,
-                            'enableSchemaCache' => true,
+                            'enableQueryCache' => true,
+                            /*'enableSchemaCache' => true,
                             'schemaCacheDuration' => 3000,
                             'schemaCache' => 'cache',*/
                         ],
