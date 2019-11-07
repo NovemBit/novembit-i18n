@@ -401,9 +401,9 @@ class Bootstrap
                             'charset' => 'utf8mb4',
                             'tablePrefix' => 'i18n_',
                             'enableQueryCache' => true,
-                           /* 'enableSchemaCache' => true,
+                            'enableSchemaCache' => true,
                             'schemaCacheDuration' => 3000,
-                            'schemaCache' => 'i18n',*/
+                            'schemaCache' => 'i18n',
                         ],
                     ]
                 ]
