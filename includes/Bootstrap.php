@@ -18,9 +18,6 @@ use NovemBit\i18n\system\parsers\xml\Rule;
 
 class Bootstrap
 {
-
-    /**
-     */
     public static function init()
     {
         add_action('init', function () {
@@ -81,7 +78,6 @@ class Bootstrap
                                 'Activpet',
                             ],
 
-
                         ],
                         'text' => [
                             'class' => Text::class,
@@ -115,9 +111,6 @@ class Bootstrap
                         'sitemap_xml' => [
                             'class' => XML::class,
                             'fields_to_translate' => [
-                                /*
-                                 * Json+ld translation
-                                 * */
                                 [
                                     'rule' => ['tags' => ['loc']],
                                     'text' => 'url'
@@ -274,7 +267,7 @@ class Bootstrap
                         'json' => [
                             'class' => JSON::class,
                             'save_translations' => false,
-                            'fields_to_translate'=>[
+                            'fields_to_translate' => [
                                 '/^quantity_options>.*$/i' => 'text',
                                 '/^price_html$/i' => 'html',
                                 '/^availability_html$/i' => 'html',
@@ -296,28 +289,31 @@ class Bootstrap
                     ],
                     'languages' => [
                         'class' => Languages::class,
-                        'accept_languages' => i18n::getOption('accept_languages', [
-                            'cs',
-                            'da',
-                            'el',
-                            'et',
-                            'es',
-                            'hr',
-                            'ja',
-                            'ko',
-                            'nl',
-                            'bg',
-                            'pl',
-                            'pt',
-                            'ro',
-                            'sl',
-                            'sv',
-                            'fr',
-                            'it',
-                            'de',
-                            'ru',
-                            'en'
-                        ]),
+                        'accept_languages' => i18n::getOption(
+                            'accept_languages',
+                            [
+                                'cs',
+                                'da',
+                                'el',
+                                'et',
+                                'es',
+                                'hr',
+                                'ja',
+                                'ko',
+                                'nl',
+                                'bg',
+                                'pl',
+                                'pt',
+                                'ro',
+                                'sl',
+                                'sv',
+                                'fr',
+                                'it',
+                                'de',
+                                'ru',
+                                'en'
+                            ]
+                        ),
                         'from_language' => 'en',
                         'localization_config' => [
                             'default' => ['language' => 'en', 'country' => 'UK', 'region' => 'Europe'],
@@ -361,8 +357,7 @@ class Bootstrap
 
                         'exclusions' => [
                             function ($request) {
-
-                                if(self::isWPRest()){
+                                if (self::isWPRest()) {
                                     return true;
                                 }
 
@@ -403,7 +398,7 @@ class Bootstrap
                     ],
                     'db' => [
                         'class' => DB::class,
-                        'connection' => [
+                        'connection' => i18n::getOption('db_connection', [
                             'dsn' => 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME,
                             'username' => DB_USER,
                             'password' => DB_PASSWORD,
@@ -413,7 +408,7 @@ class Bootstrap
                             /*'enableSchemaCache' => true,
                             'schemaCacheDuration' => 3000,
                             'schemaCache' => 'i18n',*/
-                        ],
+                        ]),
                     ]
                 ]
             );
@@ -507,22 +502,22 @@ class Bootstrap
 
         }, 11);
 
-        add_filter( 'robots_txt', function ( $output, $public ){
+        add_filter('robots_txt', function ($output, $public) {
             $current_domain = $_SERVER['HTTP_HOST'];
-            $default_domain = parse_url( site_url(), PHP_URL_HOST );
-            if( ! empty( $default_domain ) ){
-                $output = str_replace( $default_domain, $current_domain, $output );
+            $default_domain = parse_url(site_url(), PHP_URL_HOST);
+            if (!empty($default_domain)) {
+                $output = str_replace($default_domain, $current_domain, $output);
             }
-            return str_replace( 'sitemap.xml', 'sitemap-index.xml', $output );
-        }, 30, 2 );
-
+            return str_replace('sitemap.xml', 'sitemap-index.xml', $output);
+        }, 30, 2);
 
     }
 
-    public static function isWPRest(){
-        $rest_path = get_rest_url(null,'/','relative');
+    public static function isWPRest()
+    {
+        $rest_path = get_rest_url(null, '/', 'relative');
         $url = $_SERVER['REQUEST_URI'];
-        if(substr($url, 0, strlen($rest_path)) === $rest_path){
+        if (substr($url, 0, strlen($rest_path)) === $rest_path) {
             return true;
         }
         return false;
@@ -540,8 +535,20 @@ class Bootstrap
         if (!$i18n->request->isReady()) {
             return $url;
         }
+
+        $parsed = parse_url($url);
+
+        if (
+            isset($parsed['host']) &&
+            !in_array($parsed['host'],[$_SERVER['HTTP_HOST'],parse_url(site_url(),PHP_URL_HOST)])
+        ) {
+            return $url;
+        }
+
+
         $language = $i18n->request->getLanguage();
         if ($language !== null) {
+
             $url = $i18n->request->getTranslation()->url->translate([$url])[$url][$language] ?? $url;
             $parts = parse_url($url);
             if (isset($parts['host'])) {
