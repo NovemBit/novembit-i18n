@@ -413,7 +413,6 @@ class Bootstrap
 
             add_filter('wp_safe_redirect', [self::class, 'i18n_redirect_fix'], PHP_INT_MAX, 1);
 
-
             add_filter('redirect_canonical', function () {
                 if (Module::instance()->request->isReady()) {
                     return false;
