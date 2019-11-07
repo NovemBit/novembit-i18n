@@ -387,11 +387,15 @@ class Bootstrap
                             //self::discordNotify(self::PAGE_NOT_FOUND);
                             self::logMissingUrl(trim(Module::instance()->request->getDestination(),'/'));
 
-                            add_action('wp', function () {
+                            header('Location: '.site_url().Module::instance()->request->getDestination());
+
+                            exit;
+
+                            /*add_action('wp', function () {
                                 global $wp_query;
                                 $wp_query->set_404();
                                 status_header(404);
-                            });
+                            });*/
                         }
                     ],
                     'rest' => [
