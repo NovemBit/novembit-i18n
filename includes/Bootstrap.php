@@ -382,6 +382,9 @@ class Bootstrap
                             }
                         ],
                         'on_page_not_found' => function () {
+
+                            self::discordNotify(self::PAGE_NOT_FOUND);
+
                             add_action('wp', function () {
                                 global $wp_query;
                                 $wp_query->set_404();
@@ -540,7 +543,7 @@ class Bootstrap
 
         if (
             isset($parsed['host']) &&
-            !in_array($parsed['host'],[$_SERVER['HTTP_HOST'],parse_url(site_url(),PHP_URL_HOST)])
+            !in_array($parsed['host'], [$_SERVER['HTTP_HOST'], parse_url(site_url(), PHP_URL_HOST)])
         ) {
             return $url;
         }
@@ -557,5 +560,62 @@ class Bootstrap
             $url = '/' . ltrim($url, '/');
         }
         return $url;
+    }
+
+    const PAGE_NOT_FOUND = 1;
+    const GOOGLE_LIMIT_ERROR = 2;
+
+    private static $_notify_messages = [
+        self::PAGE_NOT_FOUND => '404 page not found',
+        self::GOOGLE_LIMIT_ERROR => 'Google translate limit expired',
+    ];
+
+    public static function discordNotify(int $type = self::PAGE_NOT_FOUND, array $data = []): void
+    {
+
+        $url = i18n::getOption('discord_webhook', null);
+
+        if ($url == null) {
+            return;
+        }
+
+        $fields = [
+            [
+                "name" => "HOST",
+                "value" => $_SERVER['HTTP_HOST'] ?? site_url() ?? 'Undefined',
+                "inline" => true
+            ],
+            [
+                "name" => "URI",
+                "value" => $_SERVER['ORIG_REQUEST_URI'] ?? $_SERVER['REQUEST_URI'] ?? "Undefined",
+                "inline" => true
+            ]
+        ];
+
+        foreach ($data as $key => $value) {
+            $fields[] = [
+                "name" => $key,
+                "value" => $value ?? "Undefined",
+                "inline" => false
+            ];
+        }
+
+        wp_remote_post(
+            $url,
+            [
+                'method' => 'POST',
+                'headers' => ['Content-Type' => 'application/json'],
+                'body' => json_encode(
+                    [
+                        'content' => self::$_notify_messages[$type],
+                        'embeds' => [
+                            [
+                                'fields' => $fields
+                            ]
+                        ]
+                    ]
+                )
+            ]
+        );
     }
 }
