@@ -132,8 +132,8 @@ class Bootstrap
                                 return sprintf(
                                     '%s | %s, %s',
                                     $params['translate'],
-                                    $params['language_name'],
-                                    $params['country'] ?? ($params['region'] ?? '')
+                                    $params['country'] ?? ($params['region'] ?? ''),
+                                    $params['language_native']
                                 );
                             },
                             /*
@@ -436,7 +436,6 @@ class Bootstrap
             }, PHP_INT_MAX);
 
         }, 10);
-
 
         add_action('init', function () {
 
