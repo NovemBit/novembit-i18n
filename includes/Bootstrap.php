@@ -24,6 +24,7 @@ class Bootstrap
     public static function init()
     {
         add_action('init', function () {
+
             Module::instance(
                 [
                     'translation' => [
@@ -407,6 +408,25 @@ class Bootstrap
                     ]
                 ]
             );
+
+            add_filter('wp_redirect', [self::class, 'i18n_redirect_fix'], PHP_INT_MAX, 1);
+
+            add_filter('wp_safe_redirect', [self::class, 'i18n_redirect_fix'], PHP_INT_MAX, 1);
+
+
+            add_filter('redirect_canonical', function () {
+                if (Module::instance()->request->isReady()) {
+                    return false;
+                }
+                return true;
+            }, PHP_INT_MAX, 2);
+
+            add_action('admin_init', function () {
+                if (Module::instance()->request->isReady()) {
+                    remove_action('admin_head', 'wp_admin_canonical_url');
+                }
+            }, PHP_INT_MAX);
+
         }, 10);
 
         add_action('init', function () {
@@ -488,22 +508,6 @@ class Bootstrap
             return str_replace( 'sitemap.xml', 'sitemap-index.xml', $output );
         }, 30, 2 );
 
-        add_filter('redirect_canonical', function () {
-            if (Module::instance()->request->isReady()) {
-                return false;
-            }
-            return true;
-        }, PHP_INT_MAX, 2);
-
-        add_action('admin_init', function () {
-            if (Module::instance()->request->isReady()) {
-                remove_action('admin_head', 'wp_admin_canonical_url');
-            }
-        }, PHP_INT_MAX);
-
-        add_filter('wp_redirect', [self::class, 'i18n_redirect_fix'], PHP_INT_MAX, 1);
-
-        add_filter('wp_safe_redirect', [self::class, 'i18n_redirect_fix'], PHP_INT_MAX, 1);
 
     }
 
