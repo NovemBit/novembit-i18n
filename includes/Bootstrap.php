@@ -348,6 +348,7 @@ class Bootstrap
                     ],
                     'request' => [
                         'class' => Request::class,
+                        'restore_non_translated_urls'=>false,
                         'allow_editor' => current_user_can('administrator'),
 
                         'source_type_map' => [
