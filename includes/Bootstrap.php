@@ -385,9 +385,15 @@ class Bootstrap
                         'on_page_not_found' => function () {
 
                             //self::discordNotify(self::PAGE_NOT_FOUND);
-                            self::logMissingUrl(trim(Module::instance()->request->getDestination(),'/'));
 
-                            header('Location: '.site_url().Module::instance()->request->getDestination());
+                            self::logMissingUrl(
+                                sprintf("%s -- %s",
+                                    Module::instance()->request->getLanguage(),
+                                    trim(Module::instance()->request->getDestination(), '/')
+                                )
+                            );
+
+                            header('Location: ' . site_url() . Module::instance()->request->getDestination());
 
                             exit;
 
@@ -522,13 +528,18 @@ class Bootstrap
 
     }
 
-    public static function logMissingUrl($source_url){
-        $dir = WP_CONTENT_DIR.'/novembit-i18n' ;
-        if(!is_dir($dir)){
+    public static function logMissingUrl($source_url)
+    {
+        $dir = WP_CONTENT_DIR . '/novembit-i18n';
+        if (!is_dir($dir)) {
             mkdir($dir);
         }
-        $file = $dir.'/wrong-urls.log';
-        file_put_contents($file,PHP_EOL.$source_url,FILE_APPEND);
+
+        $prefix = $_SERVER['HTTP_HOST'] ?? parse_url(site_url(),PHP_URL_HOST) ?? "undefined";
+
+        $file = $dir . '/'.$prefix.'-wrong-urls.log';
+
+        file_put_contents($file, PHP_EOL . $source_url, FILE_APPEND);
     }
 
     public static function isWPRest()
