@@ -140,9 +140,9 @@ class i18n
 
     public static function getUrlTranslation($url, $lang=null){
 
-        if(Module::instance()->request->isReady()){
+        /*if(Module::instance()->request->isReady()){
             return $url;
-        }
+        }*/
 
         if($lang==null){
             $lang = Module::instance()->request->getLanguage();
