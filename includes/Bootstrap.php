@@ -348,7 +348,7 @@ class Bootstrap
                     ],
                     'request' => [
                         'class' => Request::class,
-                        'restore_non_translated_urls'=>false,
+                        'restore_non_translated_urls'=>true,
                         'allow_editor' => current_user_can('administrator'),
 
                         'source_type_map' => [
@@ -359,7 +359,7 @@ class Bootstrap
                         'exclusions' => [
                             function ($request) {
 
-                                if (self::isWPRest()) {
+                                if (is_404() || self::isWPRest()) {
                                     return true;
                                 }
 
