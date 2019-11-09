@@ -283,6 +283,15 @@ class Bootstrap
                                 '/^(@id|url)/i' => 'url',
                                 '/^(?>@?\w+>)+(name|description$|reviewBody)$/i' => 'text',
                                 '/^(?>@?\w+>)+(url|@id)$/i' => 'url',
+                                '/^potentialAction>target$/' => function ($val, $language) {
+                                    $main_domain = parse_url($val, PHP_URL_HOST);
+                                    $current_domain = $_SERVER['HTTP_HOST'] ?? null;
+
+                                    if ($main_domain != $current_domain) {
+                                        $val = str_replace($main_domain, $current_domain, $val);
+                                    }
+                                    return $val;
+                                },
                                 /*                                '/^(?>@?\w+>)+category$/i' => 'html',*/
                             ]
                         ]
@@ -342,13 +351,14 @@ class Bootstrap
                         'path_exclusion_patterns' => [
                             '.*\.php',
                             '.*wp-admin',
-                            '.*wp-json'
+                            '.*wp-json',
+                            '(?<=^search)\/.*$'
                         ],
 
                     ],
                     'request' => [
                         'class' => Request::class,
-                        'restore_non_translated_urls'=>true,
+                        'restore_non_translated_urls' => true,
                         'allow_editor' => current_user_can('administrator'),
 
                         'source_type_map' => [
@@ -536,9 +546,9 @@ class Bootstrap
             mkdir($dir);
         }
 
-        $prefix = $_SERVER['HTTP_HOST'] ?? parse_url(site_url(),PHP_URL_HOST) ?? "undefined";
+        $prefix = $_SERVER['HTTP_HOST'] ?? parse_url(site_url(), PHP_URL_HOST) ?? "undefined";
 
-        $file = $dir . '/'.$prefix.'-wrong-urls.log';
+        $file = $dir . '/' . $prefix . '-wrong-urls.log';
 
         file_put_contents($file, PHP_EOL . $source_url, FILE_APPEND);
     }
