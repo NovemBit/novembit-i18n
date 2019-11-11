@@ -125,7 +125,7 @@ class Bootstrap
                                 return sprintf(
                                     '%s | %s, %s',
                                     $params['translate'],
-                                    $params['country'] ?? ($params['region'] ?? ''),
+                                    $params['country_native'] ?? ($params['region_native'] ?? ''),
                                     $params['language_native']
                                 );
                             },
@@ -431,6 +431,7 @@ class Bootstrap
                             'charset' => 'utf8mb4',
                             'tablePrefix' => 'i18n_',
                             'enableQueryCache' => true,
+                            'queryCacheDuration'=>10000,
                             /*'enableSchemaCache' => true,
                             'schemaCacheDuration' => 3000,
                             'schemaCache' => 'i18n',*/
