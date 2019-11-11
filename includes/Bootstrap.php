@@ -122,11 +122,12 @@ class Bootstrap
                             'title_tag_template' => function (
                                 array $params
                             ) {
+
                                 return sprintf(
                                     '%s | %s, %s',
                                     $params['translate'],
-                                    ucfirst($params['country_native'] ?? ($params['region_native'] ?? '')),
-                                    ucfirst($params['language_native'])
+                                    mb_convert_case($params['country_native'] ?? ($params['region_native'] ?? ''), MB_CASE_TITLE, "UTF-8"),
+                                    mb_convert_case(($params['language_native'] ?? $params['language_name'] ?? ''), MB_CASE_TITLE, "UTF-8")
                                 );
                             },
                             /*
