@@ -93,7 +93,7 @@ class Bootstrap
                                 ],
                                 'host' => [
                                     sprintf("^$|^%s$|^%s$",
-                                        preg_quote($_SERVER['HTTP_HOST']),
+                                        preg_quote($_SERVER['HTTP_HOST'] ?? ''),
                                         preg_quote(parse_url(site_url(), PHP_URL_HOST))
                                     ),
                                 ],
