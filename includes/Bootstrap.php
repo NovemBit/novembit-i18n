@@ -125,8 +125,8 @@ class Bootstrap
                                 return sprintf(
                                     '%s | %s, %s',
                                     $params['translate'],
-                                    $params['country_native'] ?? ($params['region_native'] ?? ''),
-                                    $params['language_native']
+                                    ucfirst($params['country_native'] ?? ($params['region_native'] ?? '')),
+                                    ucfirst($params['language_native'])
                                 );
                             },
                             /*
