@@ -13,8 +13,9 @@
   "prefer-stable": true,
   "require": {
     "php": ">=7.1",
+    "ext-dom": "*",
     "novembit/i18n": "dev-master",
-    "ext-dom": "*"
+    "ext-mbstring": "*"
   },
   "require-dev": {
   },

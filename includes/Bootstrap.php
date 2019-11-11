@@ -93,7 +93,7 @@ class Bootstrap
                                 ],
                                 'host' => [
                                     sprintf("^$|^%s$|^%s$",
-                                        preg_quote($_SERVER['HTTP_HOST']),
+                                        preg_quote($_SERVER['HTTP_HOST'] ?? ''),
                                         preg_quote(parse_url(site_url(), PHP_URL_HOST))
                                     ),
                                 ],
@@ -122,11 +122,12 @@ class Bootstrap
                             'title_tag_template' => function (
                                 array $params
                             ) {
+
                                 return sprintf(
                                     '%s | %s, %s',
                                     $params['translate'],
-                                    $params['country'] ?? ($params['region'] ?? ''),
-                                    $params['language_native']
+                                    mb_convert_case($params['country_native'] ?? ($params['region_native'] ?? ''), MB_CASE_TITLE, "UTF-8"),
+                                    mb_convert_case(($params['language_native'] ?? $params['language_name'] ?? ''), MB_CASE_TITLE, "UTF-8")
                                 );
                             },
                             /*
@@ -431,6 +432,7 @@ class Bootstrap
                             'charset' => 'utf8mb4',
                             'tablePrefix' => 'i18n_',
                             'enableQueryCache' => true,
+                            'queryCacheDuration'=>10000,
                             /*'enableSchemaCache' => true,
                             'schemaCacheDuration' => 3000,
                             'schemaCache' => 'i18n',*/
