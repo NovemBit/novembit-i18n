@@ -28,6 +28,7 @@
 
 .novembit-i18n-translation-editor .label .list li a {
     line-height: 1em;
+    vertical-align: middle;
 }
 
 .novembit-i18n-translation-editor .label {
@@ -43,4 +44,8 @@
 .novembit-i18n-translation-editor .label .list li img {
     width: 24px;
     margin-right: 5px;
+    vertical-align: middle;
+}
+.novembit-i18n-translation-editor .label .list li span {
+    vertical-align: middle;
 }
