@@ -23,11 +23,12 @@
 .novembit-i18n-translation-editor  .i18n-list li {
     padding: 0;
     margin: 0;
-    font-size: 0.9rem;
+    font-size: 0;
 }
 
 .novembit-i18n-translation-editor  .i18n-list li a {
     line-height: 1em;
+    font-size:0.9rem;
     vertical-align: middle;
 }
 
@@ -38,4 +39,7 @@
 }
 .novembit-i18n-translation-editor .i18n-list li span {
     vertical-align: middle;
+}
+.novembit-i18n-translation-editor .i18n-label{
+    cursor: pointer;
 }
