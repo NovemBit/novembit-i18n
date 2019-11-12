@@ -54,7 +54,7 @@ class Editor
         ), $atts);
 
         $html = sprintf(
-            "<a translate=\"no\" id=\"%s\" class=\"%s\" data-title=\"%s\" data-exit_label=\"%s\"><span class=\"loading\">{$atts['loading_label']}</span></a>",
+            "<a translate=\"no\" id=\"%s\" class=\"%s\" data-title=\"%s\" data-exit_label=\"%s\"><span class=\"i18n-label\">{$atts['loading_label']}</span></a>",
             $atts['id'],
             $atts['class'],
             $atts['title'],

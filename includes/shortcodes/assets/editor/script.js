@@ -8,26 +8,26 @@
         let title = switcher.dataset.title;
         let exit_label = switcher.dataset.exit_label;
 
-        switcher.getElementsByClassName('loading')[0].style.display = 'none';
+        //switcher.getElementsByClassName('loading')[0].style.display = 'none';
 
         let urls = window.novembit.i18n.editor.url_translations;
 
-        let label = document.createElement('a');
-        label.classList.add('label');
+        let label = switcher.getElementsByClassName('i18n-label');
 
         if (window.novembit.i18n.editor.is_editor) {
             let close_link = document.createElement('a');
             close_link.innerText = exit_label;
             close_link.setAttribute('href', window.novembit.i18n.orig_request_uri);
-            label.appendChild(close_link);
+            label[0].innerText = '';
+            label[0].appendChild(close_link);
         } else {
-            label.innerText = title;
+            label[0].innerText = title;
         }
 
-        switcher.appendChild(label);
+        switcher.appendChild(label[0]);
 
         let list = document.createElement('ul');
-        list.classList.add('list');
+        list.classList.add('i18n-list');
 
 
         for (let lang in urls) {
@@ -54,7 +54,7 @@
             list.appendChild(item);
         }
 
-        label.appendChild(list);
+        switcher.appendChild(list);
     }
 
 })();
