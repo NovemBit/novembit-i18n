@@ -1,51 +1,41 @@
-.novembit-i18n-translation-editor .loading {
-    font-size: 0.8rem;
-    color: #9b9b9b;
+.novembit-i18n-translation-editor {
+    position: relative;
 }
-
-.novembit-i18n-translation-editor .label:hover .list {
+.novembit-i18n-translation-editor:hover .i18n-list {
     display: block;
 }
 
-.novembit-i18n-translation-editor .label .list {
+.novembit-i18n-translation-editor .i18n-list {
     display: none;
     z-index: 999;
     position: absolute;
+    top: 100%;
+    left: 0;
     margin: 0;
     background: #fff;
     width: 300px;
     columns: 2;
-    padding: 5px;
+    padding: 10px !important;
     box-shadow: 0 0 5px #999;
     list-style: none;
 }
 
-.novembit-i18n-translation-editor .label .list li {
+.novembit-i18n-translation-editor  .i18n-list li {
     padding: 0;
     margin: 0;
     font-size: 0.9rem;
 }
 
-.novembit-i18n-translation-editor .label .list li a {
+.novembit-i18n-translation-editor  .i18n-list li a {
     line-height: 1em;
     vertical-align: middle;
 }
 
-.novembit-i18n-translation-editor .label {
-    cursor: pointer;
-    font-size: 14px;
-    color: #666;
-}
-
-.novembit-i18n-translation-editor .label:hover {
-    color: #444;
-}
-
-.novembit-i18n-translation-editor .label .list li img {
+.novembit-i18n-translation-editor .i18n-list li img {
     width: 24px;
     margin-right: 5px;
     vertical-align: middle;
 }
-.novembit-i18n-translation-editor .label .list li span {
+.novembit-i18n-translation-editor .i18n-list li span {
     vertical-align: middle;
 }
