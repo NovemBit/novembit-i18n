@@ -126,14 +126,16 @@ class Bootstrap
                                 return sprintf(
                                     '%s | %s, %s',
                                     $params['translate'],
-                                    mb_convert_case($params['country_native'] ?? ($params['region_native'] ?? ''), MB_CASE_TITLE, "UTF-8"),
-                                    mb_convert_case(($params['language_native'] ?? $params['language_name'] ?? ''), MB_CASE_TITLE, "UTF-8")
+                                    mb_convert_case($params['country_native'] ?? ($params['region_native'] ?? ''),
+                                        MB_CASE_TITLE, "UTF-8"),
+                                    mb_convert_case(($params['language_native'] ?? $params['language_name'] ?? ''),
+                                        MB_CASE_TITLE, "UTF-8")
                                 );
                             },
                             /*
                              * Xpath for parser
                              * */
-                            'parser_query' => './/*[not(ancestor-or-self::*[@translate="no" or @id="wpadminbar" or @id="query-monitor-main"]) and (text() or @*)]',
+                            'parser_query' => './/*[not(ancestor-or-self::*[@translate="no" or starts-with(@for, "payment_method_") or @id="wpadminbar" or @id="query-monitor-main"]) and (text() or @*)]',
                             'fields_to_translate' => [
                                 /*
                                  * Json+ld translation
@@ -207,7 +209,12 @@ class Bootstrap
                                     'text' => 'text'
                                 ],
                                 [
-                                    'rule' => ['tags' => ['input'], 'attrs' => ['type' => ['submit']]],
+                                    'rule' => [
+                                        'tags' => ['input'],
+                                        'attrs' => [
+                                            'type' => ['submit', 'button']
+                                        ]
+                                    ],
                                     'attrs' => ['value' => 'text']
                                 ],
                                 [
@@ -432,7 +439,7 @@ class Bootstrap
                             'charset' => 'utf8mb4',
                             'tablePrefix' => 'i18n_',
                             'enableQueryCache' => true,
-                            'queryCacheDuration'=>10000,
+                            'queryCacheDuration' => 10000,
                             /*'enableSchemaCache' => true,
                             'schemaCacheDuration' => 3000,
                             'schemaCache' => 'i18n',*/
