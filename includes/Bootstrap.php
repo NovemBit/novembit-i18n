@@ -153,6 +153,13 @@ class Bootstrap
                                     'attrs' => ['content' => 'text']
                                 ],
                                 /*
+                                 * Canonical url
+                                 * */
+                                [
+                                    'rule' => ['tags' => ['link'], 'attrs' => ['rel' => ['canonical','next']]],
+                                    'attrs' => ['href' => 'url']
+                                ],
+                                /*
                                  * Facebook open graph meta tags
                                  * */
                                 [
@@ -472,12 +479,9 @@ class Bootstrap
             Module::instance()->start();
         }, 11);
 
-        /*add_filter('woocommerce_get_country_locale',function ($array){
-            Arrays::arrayWalkWithRoute($array,function ($key,$val,$route){
-                $val.="_TEST";
-            });
-            return $array;
-        });*/
+//        add_filter('woocommerce_get_country_locale',[self::class,'woocommerceFrontendI18nArray'],PHP_INT_MAX);
+//        add_filter('woocommerce_get_country_locale_default',[self::class,'woocommerceFrontendI18nArray'],PHP_INT_MAX);
+//        add_filter('woocommerce_get_country_locale_base', [self::class, 'woocommerceFrontendI18nArray'], PHP_INT_MAX);
 
         /**
          * Seo framework
@@ -555,6 +559,29 @@ class Bootstrap
             return str_replace('sitemap.xml', 'sitemap-index.xml', $output);
         }, 30, 2);
 
+    }
+
+    public static function woocommerceFrontendI18nArray($array)
+    {
+        $to_translate = [];
+        Arrays::arrayWalkWithRoute($array, function ($key, &$val, $route) use($to_translate) {
+            if (is_string($val)) {
+                if ($key == 'label') {
+                    $to_translate[] = $val;
+                }
+            }
+        });
+
+        $translates = Module::instance()->request->getTranslation()->text->translate($to_translate);
+
+        Arrays::arrayWalkWithRoute($array, function ($key, &$val, $route) use($translates) {
+            if (is_string($val)) {
+                if ($key == 'label') {
+                    $val = $translates[$val][Module::instance()->request->getLanguage()] ?? $val;
+                }
+            }
+        });
+        return $array;
     }
 
     public static function logMissingUrl($source_url)
