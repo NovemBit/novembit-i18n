@@ -14,6 +14,7 @@ use NovemBit\i18n\component\translation\type\URL;
 use NovemBit\i18n\component\translation\type\XML;
 use NovemBit\i18n\Module;
 use NovemBit\i18n\system\component\DB;
+use NovemBit\i18n\system\helpers\Arrays;
 use NovemBit\i18n\system\parsers\xml\Rule;
 
 class Bootstrap
@@ -187,7 +188,7 @@ class Bootstrap
                                         'texts' => [
                                             sprintf(
                                                 "/^https?:\\/\\/(%s|%s)\\/.*\$/",
-                                                preg_quote($_SERVER['HTTP_HOST']),
+                                                preg_quote($_SERVER['HTTP_HOST'] ?? ''),
                                                 preg_quote(parse_url(site_url(), PHP_URL_HOST))
                                             )
                                         ],
@@ -468,6 +469,20 @@ class Bootstrap
         }, 10);
 
         add_action('init', function () {
+            Module::instance()->start();
+        }, 11);
+
+        /*add_filter('woocommerce_get_country_locale',function ($array){
+            Arrays::arrayWalkWithRoute($array,function ($key,$val,$route){
+                $val.="_TEST";
+            });
+            return $array;
+        });*/
+
+        /**
+         * Seo framework
+         * */
+        add_action('init', function () {
 
             if (!function_exists('\the_seo_framework')) {
                 return;
@@ -514,11 +529,6 @@ class Bootstrap
                 die;
             }
         }, 10);
-
-        add_action('init', function () {
-            Module::instance()->start();
-        }, 11);
-
         add_action('init', function () {
 
             if (!function_exists('\the_seo_framework')) {
@@ -536,7 +546,6 @@ class Bootstrap
             }
 
         }, 11);
-
         add_filter('robots_txt', function ($output, $public) {
             $current_domain = $_SERVER['HTTP_HOST'];
             $default_domain = parse_url(site_url(), PHP_URL_HOST);
