@@ -136,7 +136,7 @@ class Bootstrap
                             /*
                              * Xpath for parser
                              * */
-                            'parser_query' => './/*[not(ancestor-or-self::*[@translate="no" or starts-with(@for, "payment_method_") or @id="wpadminbar" or @id="query-monitor-main"]) and (text() or @*)]',
+                            'parser_query' => './/*[not(ancestor-or-self::*[@translate="no" or starts-with(@for, "payment_method_") @id="wp-vaa-canonical" or @id="wpadminbar" or @id="query-monitor-main"]) and (text() or @*)]',
                             'fields_to_translate' => [
                                 /*
                                  * Json+ld translation
