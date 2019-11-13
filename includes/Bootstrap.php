@@ -601,10 +601,15 @@ class Bootstrap
     public static function isWPRest()
     {
         $rest_path = get_rest_url(null, '/', 'relative');
-        $url = $_SERVER['REQUEST_URI'];
+
+        $rest_path = trim($rest_path,'/');
+
+        $url = trim($_SERVER['REQUEST_URI'] ?? '','/');
+
         if (substr($url, 0, strlen($rest_path)) === $rest_path) {
             return true;
         }
+
         return false;
     }
 
