@@ -284,7 +284,6 @@ class Bootstrap
                             'class' => JSON::class,
                             'save_translations' => false,
                             'fields_to_translate' => [
-                                '/^quantity_options>.*$/i' => 'text',
                                 '/^price_html$/i' => 'html',
                                 '/^availability_html$/i' => 'html',
                             ]
