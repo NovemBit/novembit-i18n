@@ -133,6 +133,44 @@ class Bootstrap
                                         MB_CASE_TITLE, "UTF-8")
                                 );
                             },
+                            'xpath_query_map'=>[
+                                'ignore' => [
+                                    'ancestor-or-self::*[@translate="no" or starts-with(@for, "payment_method_") or @id="wp-vaa-canonical" or @id="wpadminbar" or @id="query-monitor-main"]'
+                                ],
+                                'accept' => [
+                                    /**
+                                     *
+                                     * */
+                                    '//meta[@name="description"]/@content' => ['type' => 'text'],
+                                    '//link[@rel="canonical" or @rel="next"][1]/@href' => ['type' => 'url'],
+                                    '//meta[@property="og:title" or @property="og:description"]/@content' => ['type' => 'text'],
+                                    '//meta[@property="og:url"]/@content' => ['type' => 'url'],
+                                    '//meta[@name="twitter:title" or @name="twitter:description"]/@content' => ['type' => 'text'],
+                                    '//script[@type="application/ld+json"]/text()' => ['type' => 'jsonld'],
+
+                                    './/@title' => ['type' => 'text'],
+                                    './/@alt' => ['type' => 'text'],
+                                    './/@data-tooltip' => ['type' => 'text'],
+                                    './/@data-tip' => ['type' => 'text'],
+
+                                    /**
+                                     * Headings
+                                     * */
+                                    './/*[self::h1 or self::h2 or self::h3 or self::h4 or self::h5 or self::h6]/text()' => ['type' => 'text'],
+                                    './/*[self::strong or self::italic or self::i]/text()' => ['type' => 'text'],
+
+
+                                    './/*[self::title or self::a or self::p or self::span or self::div]/text()' => ['type' => 'text'],
+                                    './/*[self::label]/text()' => ['type' => 'text'],
+
+                                    './/*[self::textarea or self::input]/@placeholder' => ['type' => 'text'],
+                                    './/*[self::input[@type="button" or @type="submit"]]/@value' => ['type' => 'text'],
+                                    './/*[self::button]/text()' => ['type' => 'text'],
+
+                                    './/*/a/@href' => ['type' => 'url'],
+                                    './/*/form/@action' => ['type' => 'url'],
+                                ]
+                            ],
                             /*
                              * Xpath for parser
                              * */
