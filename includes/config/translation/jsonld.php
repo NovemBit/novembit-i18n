@@ -22,6 +22,6 @@ return
                 }
                 return $val;
             },
-            '/^(?>@?\w+>)+category$/i' => 'html',
+            '/^(?>@?\w+>)+category$/i' => 'html_fragment',
         ]
     ];

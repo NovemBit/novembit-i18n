@@ -4,10 +4,10 @@ use NovemBit\i18n\component\translation\type\XML;
 
 return [
     'class' => XML::class,
-    'fields_to_translate' => [
-        [
-            'rule' => ['tags' => ['loc']],
-            'text' => 'url'
-        ],
+    'name'=>'sitemap_xml',
+    'xpath_query_map'=>[
+        'accept'=>[
+            '/*/*/*[1]/text()'=>['type'=>'url']
+        ]
     ]
 ];

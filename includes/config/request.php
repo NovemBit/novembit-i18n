@@ -19,6 +19,10 @@ return
         'exclusions' => [
             function ($request) {
 
+                if(preg_match('/data-feed|wiki/',$_SERVER['REQUEST_URI'])){
+                    return true;
+                }
+
                 if (is_404() || Bootstrap::isWPRest()) {
                     return true;
                 }
@@ -58,10 +62,5 @@ return
 
             exit;
 
-            /*add_action('wp', function () {
-                global $wp_query;
-                $wp_query->set_404();
-                status_header(404);
-            });*/
         }
     ];
