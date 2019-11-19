@@ -106,7 +106,8 @@ class Bootstrap
                 return;
             }
 
-            if ($_SERVER['REQUEST_URI'] == "/sitemap.xml") {
+            if (preg_match('/^\/sitemap.xml/',$_SERVER['REQUEST_URI'])) {
+
                 if (!headers_sent()) {
                     \status_header(200);
                     header('Content-type: text/xml; charset=utf-8', true);
