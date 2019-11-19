@@ -1,4 +1,14 @@
 (function () {
+
+    if (
+        !window.hasOwnProperty('novembit')
+        || !window.novembit.hasOwnProperty('i18n')
+        || !window.novembit.i18n.hasOwnProperty('editor')
+    ) {
+        console.log('NovemBit i18n request editor not initialized.');
+        return;
+    }
+
     let switchers = document.getElementsByClassName('novembit-i18n-translation-editor');
 
     for (let i = 0; i < switchers.length; i++) {

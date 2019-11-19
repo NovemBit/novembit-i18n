@@ -61,7 +61,6 @@ class Editor
             $atts['exit_label']
         );
 
-
         return $html;
     }
 }
