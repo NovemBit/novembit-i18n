@@ -3,8 +3,7 @@
 return
     [
         'ignore' => [
-            'ancestor-or-self::*[@translate="no" or starts-with(@for, "payment_method_") or @id="wp-vaa-canonical" or @id="wpadminbar" or @id="query-monitor-main"]',
-            'ancestor-or-self::*[contains(@class,"dont-translate")]'
+            'ancestor-or-self::*[@translate="no" or starts-with(@for, "payment_method_") or @id="wp-vaa-canonical" or @id="wpadminbar" or @id="query-monitor-main" or contains(@class,"dont-translate")]',
         ],
         'accept' => [
             /**
@@ -20,10 +19,12 @@ return
             '//script[@type="application/ld+json"]/text()' => ['type' => 'jsonld'],
 
             /**
-             * Headings
+             * Headings|Labels|paragraphs e.t.c.
              * */
+            '//*[self::p or self::small or self::strong or self::b or self::bold or self::italic or self::i or self::td or self::th or self::li or self::lo or self::h1 or self::h1 or self::h2 or self::h3 or self::h4 or self::h5 or self::h6 or self::a or self::span or self::div or self::label]/text()'=>['type'=>'text'],
+            /**
+             * Replaced
             '//p/text()' => ['type' => 'text'],
-
             '//small/text()' => ['type' => 'text'],
             '//strong/text()' => ['type' => 'text'],
             '//b/text()' => ['type' => 'text'],
@@ -44,7 +45,9 @@ return
             '//span/text()' => ['type' => 'text'],
             '//div/text()' => ['type' => 'text'],
             '//label/text()' => ['type' => 'text'],
+            */
 
+//            '//@*[self::title or self::alt or self::data-tooltip or self::data-tip]'=>['type'=>'text'],
             '//@title' => ['type' => 'text'],
             '//@alt' => ['type' => 'text'],
             '//@data-tooltip' => ['type' => 'text'],
