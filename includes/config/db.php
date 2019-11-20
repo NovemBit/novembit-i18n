@@ -5,7 +5,6 @@ use NovemBit\wp\plugins\i18n\i18n;
 
 return
     [
-        'class' => DB::class,
         'connection' => i18n::getOption('db_connection', [
             'dsn' => 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME,
             'username' => DB_USER,

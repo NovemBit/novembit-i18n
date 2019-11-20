@@ -5,7 +5,6 @@ use NovemBit\wp\plugins\i18n\i18n;
 
 return
     [
-        'class' => Languages::class,
         'accept_languages' => i18n::getOption(
             'accept_languages',
             [

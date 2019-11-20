@@ -7,7 +7,6 @@ use NovemBit\wp\plugins\i18n\Bootstrap;
 
 return
     [
-        'class' => Request::class,
         'restore_non_translated_urls' => true,
         'allow_editor' => current_user_can('administrator'),
 
