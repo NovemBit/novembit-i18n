@@ -23,11 +23,17 @@ class Bootstrap
                     'db' => include('config/db.php')
                 ]
             );
+
+            /**
+             * Enable rest service
+             * */
+            Module::instance()->rest->start();
+
         }, 10);
 
         add_action('init', function () {
 
-            Module::instance()->start();
+            Module::instance()->request->start();
 
             if (Module::instance()->request->isReady()) {
 
@@ -127,6 +133,13 @@ class Bootstrap
             return str_replace('sitemap.xml', 'sitemap-index.xml', $output);
         }, 30, 2);
 
+    }
+
+    private static function isWPCli(){
+        if ( defined( 'WP_CLI' ) && WP_CLI ) {
+            return true;
+        }
+        return false;
     }
 
     public static function woocommerceFrontendI18nArray($array)

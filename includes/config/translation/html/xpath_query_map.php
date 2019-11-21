@@ -21,9 +21,8 @@ return
             /**
              * Headings|Labels|paragraphs e.t.c.
              * */
-            '//*[self::p or self::small or self::strong or self::b or self::bold or self::italic or self::i or self::td or self::th or self::li or self::lo or self::h1 or self::h1 or self::h2 or self::h3 or self::h4 or self::h5 or self::h6 or self::a or self::span or self::div or self::label]/text()'=>['type'=>'text'],
-            /**
-             * Replaced
+//            '//*[self::p or self::small or self::strong or self::b or self::bold or self::italic or self::i or self::td or self::th or self::li or self::lo or self::h1 or self::h1 or self::h2 or self::h3 or self::h4 or self::h5 or self::h6 or self::a or self::span or self::div or self::label]/text()'=>['type'=>'text'],
+
             '//p/text()' => ['type' => 'text'],
             '//small/text()' => ['type' => 'text'],
             '//strong/text()' => ['type' => 'text'],
@@ -45,7 +44,7 @@ return
             '//span/text()' => ['type' => 'text'],
             '//div/text()' => ['type' => 'text'],
             '//label/text()' => ['type' => 'text'],
-            */
+
 
 //            '//@*[self::title or self::alt or self::data-tooltip or self::data-tip]'=>['type'=>'text'],
             '//@title' => ['type' => 'text'],
