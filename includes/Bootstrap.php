@@ -9,6 +9,7 @@ use NovemBit\i18n\system\helpers\Arrays;
 
 class Bootstrap
 {
+
     public static function init()
     {
 
@@ -19,10 +20,23 @@ class Bootstrap
                     'translation' => include('config/translation.php'),
                     'languages' => include('config/languages.php'),
                     'request' => include('config/request.php'),
+                    'cache' => include('config/cache.php'),
                     'rest' => include('config/rest.php'),
                     'db' => include('config/db.php')
                 ]
             );
+
+            /**
+             * Implement cache deletion
+             * */
+            if (isset($_GET['novembit-i18n-action'])
+                && $_GET['novembit-i18n-action'] == 'clear-cache'
+                && current_user_can('administrator')
+            ) {
+                @Module::instance()->cache->getPool()->clear();
+                wp_redirect(wp_get_referer());
+                exit;
+            }
 
             /**
              * Enable rest service
@@ -34,6 +48,8 @@ class Bootstrap
         add_action('init', function () {
 
             Module::instance()->request->start();
+
+            add_action('admin_bar_menu', [self::class, 'adminBarMenu'], 100);
 
             if (Module::instance()->request->isReady()) {
 
@@ -112,7 +128,7 @@ class Bootstrap
                 return;
             }
 
-            if (preg_match('/^\/sitemap.xml/',$_SERVER['REQUEST_URI'])) {
+            if (preg_match('/^\/sitemap.xml/', $_SERVER['REQUEST_URI'])) {
 
                 if (!headers_sent()) {
                     \status_header(200);
@@ -133,10 +149,42 @@ class Bootstrap
             return str_replace('sitemap.xml', 'sitemap-index.xml', $output);
         }, 30, 2);
 
+
     }
 
-    private static function isWPCli(){
-        if ( defined( 'WP_CLI' ) && WP_CLI ) {
+    /**
+     * @param \WP_Admin_Bar $admin_bar
+     */
+    public static function adminBarMenu($admin_bar)
+    {
+        /** @var \WP_Admin_Bar $admin_bar */
+        $admin_bar->add_menu(array(
+            'id' => 'novembit-i18n',
+            'title' => 'NovemBit i18n',
+            'href' => '#',
+            'meta' => array(
+                'title' => __('NovemBit i18n'),
+            ),
+        ));
+
+        $admin_bar->add_menu(array(
+            'id' => 'clear-cache',
+            'parent' => 'novembit-i18n',
+            'title' => 'Clear translations cache',
+            'href' => '#',
+            'meta' => array(
+                'title' => __('Temporary cache (DB records not including).'),
+                'class' => 'clear_cache',
+                'onclick' => "if(confirm('Press Ok to delete cache.')) window.location.href='?novembit-i18n-action=clear-cache'"
+            ),
+        ));
+
+
+    }
+
+    private static function isWPCli()
+    {
+        if (defined('WP_CLI') && WP_CLI) {
             return true;
         }
         return false;
@@ -215,7 +263,7 @@ class Bootstrap
         $language = Module::instance()->request->getLanguage();
         if ($language !== null) {
 
-            $url =  Module::instance()->request->getTranslation()->url->translate([$url])[$url][$language] ?? $url;
+            $url = Module::instance()->request->getTranslation()->url->translate([$url])[$url][$language] ?? $url;
             $parts = parse_url($url);
             if (isset($parts['host'])) {
                 return $url;
