@@ -1,9 +1,11 @@
 <?php
 
 use NovemBit\i18n\component\translation\type\URL;
+use NovemBit\wp\plugins\i18n\Bootstrap;
 
 return [
     'class' => URL::class,
+    'runtime_dir'=>Bootstrap::RUNTIME_DIR,
     'path_translation' => true,
     'url_validation_rules' => [
         'scheme' => [

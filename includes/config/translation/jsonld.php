@@ -1,10 +1,12 @@
 <?php
 
 use NovemBit\i18n\component\translation\type\JSON;
+use NovemBit\wp\plugins\i18n\Bootstrap;
 
 return
     [
         'class' => JSON::class,
+        'runtime_dir'=>Bootstrap::RUNTIME_DIR,
         'name' => 'jsonld',
         'save_translations' => false,
         'type_autodetect' => false,

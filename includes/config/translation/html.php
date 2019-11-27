@@ -2,9 +2,11 @@
 
 use NovemBit\i18n\component\translation\type\HTML;
 use NovemBit\i18n\system\parsers\xml\Rule;
+use NovemBit\wp\plugins\i18n\Bootstrap;
 
 return [
     'class' => HTML::class,
+    'runtime_dir'=>Bootstrap::RUNTIME_DIR,
     'title_tag_template' => function (array $params) {
         return sprintf(
             '%s | %s, %s',
