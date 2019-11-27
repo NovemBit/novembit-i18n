@@ -170,7 +170,6 @@ class Bootstrap
         $admin_bar->add_menu(array(
             'id' => 'novembit-i18n',
             'title' => 'NovemBit i18n',
-            'href' => '#',
             'meta' => array(
                 'title' => __('NovemBit i18n'),
             ),
