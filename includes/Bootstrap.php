@@ -35,7 +35,14 @@ class Bootstrap
                 && $_GET['novembit-i18n-action'] == 'clear-cache'
                 && current_user_can('administrator')
             ) {
-//                @Module::instance()->cache->getPool()->clear();
+                @Module::instance()->getCachePool()->clear();
+                @Module::instance()->translation->getCachePool()->clear();
+                @Module::instance()->translation->text->getCachePool()->clear();
+                @Module::instance()->translation->url->getCachePool()->clear();
+                @Module::instance()->translation->html_fragment->getCachePool()->clear();
+                @Module::instance()->translation->html->getCachePool()->clear();
+                @Module::instance()->translation->xml->getCachePool()->clear();
+                @Module::instance()->translation->json->getCachePool()->clear();
                 wp_redirect(wp_get_referer());
                 exit;
             }
