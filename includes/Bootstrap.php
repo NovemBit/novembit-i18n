@@ -4,6 +4,7 @@ namespace NovemBit\wp\plugins\i18n;
 
 use Exception;
 
+use NovemBit\i18n\component\db\DB;
 use NovemBit\i18n\Module;
 use NovemBit\i18n\system\helpers\Arrays;
 
@@ -22,7 +23,17 @@ class Bootstrap
                     'request' => include('config/request.php'),
                     'cache' => include('config/cache.php'),
                     'rest' => include('config/rest.php'),
-                    'db' => include('config/db.php')
+                    'db' => [
+                        'class' => DB::class,
+                        'connection_params' => [
+                            'dbname' => DB_NAME,
+                            'user' => DB_USER,
+                            'password' => DB_PASSWORD,
+                            'host' => DB_HOST,
+                            'driver' => 'pdo_mysql',
+                            'charset'=> 'utf8mb4'
+                        ]
+                    ],
                 ]
             );
 
@@ -33,7 +44,7 @@ class Bootstrap
                 && $_GET['novembit-i18n-action'] == 'clear-cache'
                 && current_user_can('administrator')
             ) {
-                @Module::instance()->cache->getPool()->clear();
+//                @Module::instance()->cache->getPool()->clear();
                 wp_redirect(wp_get_referer());
                 exit;
             }
@@ -281,10 +292,8 @@ class Bootstrap
         self::GOOGLE_LIMIT_ERROR => 'Google translate limit expired',
     ];
 
-    public static function discordNotify(int $type = self::PAGE_NOT_FOUND, array $data = []): void
+    public static function discordNotify(string $_notify_messages, string $url, array $data = []): void
     {
-
-        $url = i18n::getOption('discord_webhook', null);
 
         if ($url == null) {
             return;
@@ -318,7 +327,7 @@ class Bootstrap
                 'headers' => ['Content-Type' => 'application/json'],
                 'body' => json_encode(
                     [
-                        'content' => self::$_notify_messages[$type],
+                        'content' => $_notify_messages,
                         'embeds' => [
                             [
                                 'fields' => $fields

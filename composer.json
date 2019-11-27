@@ -14,7 +14,7 @@
   "require": {
     "php": ">=7.1",
     "ext-dom": "*",
-    "novembit/i18n": "dev-xml2",
+    "novembit/i18n": "dev-doctrine_dbal",
     "ext-mbstring": "*"
   },
   "require-dev": {
