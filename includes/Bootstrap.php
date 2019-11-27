@@ -11,6 +11,8 @@ use NovemBit\i18n\system\helpers\Arrays;
 class Bootstrap
 {
 
+    const RUNTIME_DIR = WP_CONTENT_DIR.'/novembit-i18n';
+
     public static function init()
     {
 
@@ -21,19 +23,8 @@ class Bootstrap
                     'translation' => include('config/translation.php'),
                     'languages' => include('config/languages.php'),
                     'request' => include('config/request.php'),
-                    'cache' => include('config/cache.php'),
                     'rest' => include('config/rest.php'),
-                    'db' => [
-                        'class' => DB::class,
-                        'connection_params' => [
-                            'dbname' => DB_NAME,
-                            'user' => DB_USER,
-                            'password' => DB_PASSWORD,
-                            'host' => DB_HOST,
-                            'driver' => 'pdo_mysql',
-                            'charset'=> 'utf8mb4'
-                        ]
-                    ],
+                    'db' =>include ('config/db.php'),
                 ]
             );
 

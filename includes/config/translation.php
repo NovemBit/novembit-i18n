@@ -1,10 +1,12 @@
 <?php
 
 use NovemBit\i18n\component\translation\Translation;
+use NovemBit\wp\plugins\i18n\Bootstrap;
 
 return
     [
         'class' => Translation::class,
+        'runtime_dir'=>Bootstrap::RUNTIME_DIR,
         'method' => include('translation/method.php'),
         'text' => include('translation/text.php'),
         'url' => include('translation/url.php'),
