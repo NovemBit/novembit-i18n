@@ -14,7 +14,7 @@ return
             '/^(name|description)$/i' => 'text',
             '/^(@id|url)/i' => 'url',
             '/^(?>@?\w+>)+(name|description$|reviewBody)$/i' => 'text',
-            '/^(?>@?\w+>)+(url|@id)$/i' => 'url',
+            '/^(?>@?\w+>)+(url|@id|sameAs)$/i' => 'url',
             '/^potentialAction>target$/' => function ($val, $language) {
                 $main_domain = parse_url($val, PHP_URL_HOST);
                 $current_domain = $_SERVER['HTTP_HOST'] ?? null;
