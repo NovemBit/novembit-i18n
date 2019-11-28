@@ -4,19 +4,26 @@ namespace NovemBit\wp\plugins\i18n;
 
 use Exception;
 
-use NovemBit\i18n\component\db\DB;
 use NovemBit\i18n\Module;
 use NovemBit\i18n\system\helpers\Arrays;
+use NovemBit\wp\plugins\i18n\integrations\Integration;
+
 
 class Bootstrap
 {
 
     const RUNTIME_DIR = WP_CONTENT_DIR.'/novembit-i18n';
 
+    public static $integrations = [
+        \NovemBit\wp\plugins\i18n\integrations\AlgoliasearchWoocommerceFork\Integration::class
+    ];
+
     public static function init()
     {
 
         add_action('init', function () {
+
+            self::runIntegrations();
 
             Module::instance(
                 [
@@ -165,6 +172,14 @@ class Bootstrap
 
     }
 
+    public static function runIntegrations(){
+        foreach (self::$integrations as $integration){
+            $instance = new $integration();
+            if($instance instanceof Integration){
+                $instance->run();
+            }
+        }
+    }
     /**
      * @param \WP_Admin_Bar $admin_bar
      */
