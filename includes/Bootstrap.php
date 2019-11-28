@@ -20,6 +20,10 @@ class Bootstrap
 
             Module::instance(
                 [
+                    /**
+                     * Runtime Dir for module global instance
+                     * */
+                    'runtime_dir'=>Bootstrap::RUNTIME_DIR,
                     'translation' => include('config/translation.php'),
                     'languages' => include('config/languages.php'),
                     'request' => include('config/request.php'),
