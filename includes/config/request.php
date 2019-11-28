@@ -25,7 +25,7 @@ return
 
                 /** @var Request $request */
 
-                if(preg_match('/data-feed|wiki/',$_SERVER['REQUEST_URI'])){
+                if(preg_match('/(емисия-на-данни|data-feed|данни-подаване|zdroj-dat|projekt|datafeed|data-foder|Daten-Feed|daten-feed|Projekt|τροφοδοσία-δεδομένων|alimentación-de-datos|proyecto|andmevoog|projekti|flux-de-données|projet|feed-podataka|podaci-uvlačenja|feed-di-dati|progetto|データフィード|데이터-피드|gegevensfeed|data-toevoer|project|plik-danych|źródło-danych|feed-de-dados|projeto|flux-de-date|подача-данных|данные-подачи|проект|podajanje-podatkov|data-flöde)/i',$_SERVER['REQUEST_URI'])){
                     return true;
                 }
 

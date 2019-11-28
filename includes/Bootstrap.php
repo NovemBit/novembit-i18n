@@ -171,7 +171,7 @@ class Bootstrap
             'id' => 'novembit-i18n',
             'title' => 'NovemBit i18n',
             'meta' => array(
-                'title' => __('NovemBit i18n'),
+                'title' => 'NovemBit i18n',
             ),
         ));
 
@@ -181,7 +181,7 @@ class Bootstrap
             'title' => 'Clear translations cache',
             'href' => '#',
             'meta' => array(
-                'title' => __('Temporary cache (DB records not including).'),
+                'title' => 'Temporary cache (DB records not including).',
                 'class' => 'clear_cache',
                 'onclick' => "if(confirm('Press Ok to delete cache.')) window.location.href='?novembit-i18n-action=clear-cache'"
             ),
