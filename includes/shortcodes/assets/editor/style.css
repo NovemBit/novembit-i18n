@@ -1,11 +1,13 @@
 .novembit-i18n-translation-editor {
     position: relative;
 }
-.novembit-i18n-translation-editor:hover .i18n-list {
+
+.novembit-i18n-translation-editor:hover + .i18n-list,
+.novembit-i18n-translation-editor + .i18n-list:hover {
     display: block;
 }
 
-.novembit-i18n-translation-editor .i18n-list {
+.novembit-i18n-translation-editor + .i18n-list {
     display: none;
     z-index: 999;
     position: absolute;
@@ -20,26 +22,28 @@
     list-style: none;
 }
 
-.novembit-i18n-translation-editor  .i18n-list li {
+.novembit-i18n-translation-editor + .i18n-list li {
     padding: 0;
     margin: 0;
     font-size: 0;
 }
 
-.novembit-i18n-translation-editor  .i18n-list li a {
+.novembit-i18n-translation-editor + .i18n-list li a {
     line-height: 1em;
-    font-size:0.9rem;
+    font-size: 0.9rem;
     vertical-align: middle;
 }
 
-.novembit-i18n-translation-editor .i18n-list li img {
+.novembit-i18n-translation-editor + .i18n-list li img {
     width: 24px;
     margin-right: 5px;
     vertical-align: middle;
 }
-.novembit-i18n-translation-editor .i18n-list li span {
+
+.novembit-i18n-translation-editor + .i18n-list li span {
     vertical-align: middle;
 }
-.novembit-i18n-translation-editor .i18n-label{
+
+.novembit-i18n-translation-editor + .i18n-label {
     cursor: pointer;
 }
