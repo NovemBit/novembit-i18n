@@ -28,14 +28,14 @@ class Switcher
             self::$name . '-style',
             plugins_url('/includes/shortcodes/assets/switcher/style.css', NOVEMBIT_I18N_PLUGIN_FILE),
             [],
-            '1.0.4'
+            '1.0.5'
         );
 
         wp_enqueue_script(
             self::$name . '-script',
             plugins_url('/includes/shortcodes/assets/switcher/script.js', NOVEMBIT_I18N_PLUGIN_FILE),
             [],
-            '1.0.4',
+            '1.0.5',
             true
         );
 
