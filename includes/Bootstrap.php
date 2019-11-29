@@ -198,7 +198,6 @@ class Bootstrap
             'id' => 'clear-cache',
             'parent' => 'novembit-i18n',
             'title' => 'Clear translations cache',
-            'href' => '#',
             'meta' => array(
                 'title' => 'Temporary cache (DB records not including).',
                 'class' => 'clear_cache',
