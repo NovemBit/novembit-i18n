@@ -2,6 +2,7 @@
 
 namespace NovemBit\wp\plugins\i18n;
 
+use Cache\Adapter\Memcached\MemcachedCachePool;
 use Exception;
 
 use NovemBit\i18n\Module;
@@ -18,6 +19,25 @@ class Bootstrap
         integrations\AlgoliasearchWoocommerceFork\Integration::class
     ];
 
+    private static $_cache_pool;
+
+    public static function getCachePool()
+    {
+
+        if(!isset(self::$_cache_pool)){
+
+            if (!class_exists('Memcached')) {
+                return null;
+            }
+
+            $client = new \Memcached();
+            $client->addServer('localhost', 11211);
+            self::$_cache_pool = new MemcachedCachePool($client);
+        }
+
+        return self::$_cache_pool;
+    }
+
     public static function init()
     {
 
@@ -31,6 +51,9 @@ class Bootstrap
                      * Runtime Dir for module global instance
                      * */
                     'runtime_dir' => Bootstrap::RUNTIME_DIR,
+                    /**
+                     * Components configs
+                     * */
                     'translation' => include('config/translation.php'),
                     'languages' => include('config/languages.php'),
                     'request' => include('config/request.php'),
@@ -57,7 +80,7 @@ class Bootstrap
                     Module::instance()->translation->html->getCachePool()->clear();
                     Module::instance()->translation->xml->getCachePool()->clear();
                     Module::instance()->translation->json->getCachePool()->clear();
-                } catch (Exception $exception){
+                } catch (Exception $exception) {
                     /**
                      * Prevent warnings
                      * */

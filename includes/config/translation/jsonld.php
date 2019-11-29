@@ -7,6 +7,7 @@ return
     [
         'class' => JSON::class,
         'runtime_dir'=>Bootstrap::RUNTIME_DIR,
+        'cache_pool'=>Bootstrap::getCachePool(),
         'name' => 'jsonld',
         'save_translations' => false,
         'type_autodetect' => false,

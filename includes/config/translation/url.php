@@ -6,6 +6,7 @@ use NovemBit\wp\plugins\i18n\Bootstrap;
 return [
     'class' => URL::class,
     'runtime_dir'=>Bootstrap::RUNTIME_DIR,
+    'cache_pool'=>Bootstrap::getCachePool(),
     'path_translation' => true,
     'url_validation_rules' => [
         'scheme' => [

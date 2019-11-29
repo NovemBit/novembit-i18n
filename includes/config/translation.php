@@ -7,6 +7,7 @@ return
     [
         'class' => Translation::class,
         'runtime_dir'=>Bootstrap::RUNTIME_DIR,
+        'cache_pool'=>Bootstrap::getCachePool(),
         'method' => include('translation/method.php'),
         'text' => include('translation/text.php'),
         'url' => include('translation/url.php'),

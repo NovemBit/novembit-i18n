@@ -7,6 +7,7 @@ use NovemBit\wp\plugins\i18n\Bootstrap;
 return [
     'class' => HTML::class,
     'runtime_dir'=>Bootstrap::RUNTIME_DIR,
+    'cache_pool'=>Bootstrap::getCachePool(),
     'title_tag_template' => function (array $params) {
         return sprintf(
             '%s | %s, %s',

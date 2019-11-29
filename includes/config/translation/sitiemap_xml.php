@@ -7,6 +7,7 @@ return [
     'class' => XML::class,
     'name'=>'sitemap_xml',
     'runtime_dir'=>Bootstrap::RUNTIME_DIR,
+    'cache_pool'=>Bootstrap::getCachePool(),
     'xpath_query_map'=>[
         'accept'=>[
             '/*/*/*[1]/text()'=>['type'=>'url']

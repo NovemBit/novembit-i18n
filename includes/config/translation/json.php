@@ -7,6 +7,7 @@ return
     [
         'class' => JSON::class,
         'runtime_dir'=>Bootstrap::RUNTIME_DIR,
+        'cache_pool'=>Bootstrap::getCachePool(),
         'save_translations' => false,
         'fields_to_translate' => [
             '/^price_html$/i' => 'html',

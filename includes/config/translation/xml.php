@@ -6,5 +6,6 @@ use NovemBit\wp\plugins\i18n\Bootstrap;
 return [
     'class' => XML::class,
     'runtime_dir'=>Bootstrap::RUNTIME_DIR,
+    'cache_pool'=>Bootstrap::getCachePool(),
 
 ];
