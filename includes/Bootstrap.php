@@ -12,10 +12,10 @@ use NovemBit\wp\plugins\i18n\integrations\Integration;
 class Bootstrap
 {
 
-    const RUNTIME_DIR = WP_CONTENT_DIR.'/novembit-i18n';
+    const RUNTIME_DIR = WP_CONTENT_DIR . '/novembit-i18n';
 
     public static $integrations = [
-        \NovemBit\wp\plugins\i18n\integrations\AlgoliasearchWoocommerceFork\Integration::class
+        integrations\AlgoliasearchWoocommerceFork\Integration::class
     ];
 
     public static function init()
@@ -30,12 +30,12 @@ class Bootstrap
                     /**
                      * Runtime Dir for module global instance
                      * */
-                    'runtime_dir'=>Bootstrap::RUNTIME_DIR,
+                    'runtime_dir' => Bootstrap::RUNTIME_DIR,
                     'translation' => include('config/translation.php'),
                     'languages' => include('config/languages.php'),
                     'request' => include('config/request.php'),
                     'rest' => include('config/rest.php'),
-                    'db' =>include ('config/db.php'),
+                    'db' => include('config/db.php'),
                 ]
             );
 
@@ -46,15 +46,24 @@ class Bootstrap
                 && $_GET['novembit-i18n-action'] == 'clear-cache'
                 && current_user_can('administrator')
             ) {
-                @Module::instance()->getCachePool()->clear();
-                @Module::instance()->translation->getCachePool()->clear();
-                @Module::instance()->translation->text->getCachePool()->clear();
-                @Module::instance()->translation->url->getCachePool()->clear();
-                @Module::instance()->translation->html_fragment->getCachePool()->clear();
-                @Module::instance()->translation->html->getCachePool()->clear();
-                @Module::instance()->translation->xml->getCachePool()->clear();
-                @Module::instance()->translation->json->getCachePool()->clear();
-                wp_redirect(wp_get_referer());
+                try {
+                    Module::instance()->getCachePool()->clear();
+                    Module::instance()->request->getCachePool()->clear();
+                    Module::instance()->translation->getCachePool()->clear();
+                    Module::instance()->translation->text->getCachePool()->clear();
+                    Module::instance()->translation->url->getCachePool()->clear();
+                    Module::instance()->translation->html_fragment->getCachePool()->clear();
+                    Module::instance()->translation->html->getCachePool()->clear();
+                    Module::instance()->translation->xml->getCachePool()->clear();
+                    Module::instance()->translation->json->getCachePool()->clear();
+                } catch (Exception $exception){
+                    /**
+                     * Prevent warnings
+                     * */
+                }
+
+                wp_redirect(wp_get_referer() ?? site_url());
+
                 exit;
             }
 
@@ -172,14 +181,16 @@ class Bootstrap
 
     }
 
-    public static function runIntegrations(){
-        foreach (self::$integrations as $integration){
+    public static function runIntegrations()
+    {
+        foreach (self::$integrations as $integration) {
             $instance = new $integration();
-            if($instance instanceof Integration){
+            if ($instance instanceof Integration) {
                 $instance->run();
             }
         }
     }
+
     /**
      * @param \WP_Admin_Bar $admin_bar
      */
