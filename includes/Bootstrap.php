@@ -50,6 +50,7 @@ class Bootstrap
                     Module::instance()->getCachePool()->clear();
                     Module::instance()->request->getCachePool()->clear();
                     Module::instance()->translation->getCachePool()->clear();
+                    Module::instance()->translation->method->getCachePool()->clear();
                     Module::instance()->translation->text->getCachePool()->clear();
                     Module::instance()->translation->url->getCachePool()->clear();
                     Module::instance()->translation->html_fragment->getCachePool()->clear();
