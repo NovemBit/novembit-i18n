@@ -1,9 +1,8 @@
 <?php
 
-use NovemBit\i18n\component\db\DB;
 use NovemBit\wp\plugins\i18n\Bootstrap;
 
-return
+$config =
     [
         'runtime_dir' => Bootstrap::RUNTIME_DIR,
         'connection_params' => [
@@ -15,3 +14,9 @@ return
             'charset' => 'utf8mb4'
         ]
     ];
+
+if(Bootstrap::getCachePool()) {
+    $config['cache_pool'] = Bootstrap::getCachePool();
+}
+
+return $config;

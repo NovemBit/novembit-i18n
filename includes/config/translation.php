@@ -3,11 +3,10 @@
 use NovemBit\i18n\component\translation\Translation;
 use NovemBit\wp\plugins\i18n\Bootstrap;
 
-return
+$config =
     [
         'class' => Translation::class,
         'runtime_dir'=>Bootstrap::RUNTIME_DIR,
-        'cache_pool'=>Bootstrap::getCachePool(),
         'method' => include('translation/method.php'),
         'text' => include('translation/text.php'),
         'url' => include('translation/url.php'),
@@ -18,3 +17,7 @@ return
         'json' => include('translation/json.php'),
         'jsonld' => include('translation/jsonld.php')
     ];
+if(Bootstrap::getCachePool()) {
+    $config['cache_pool'] = Bootstrap::getCachePool();
+}
+return $config;

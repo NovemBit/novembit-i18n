@@ -4,8 +4,7 @@ use NovemBit\i18n\component\request\interfaces\Request;
 use NovemBit\i18n\Module;
 use NovemBit\wp\plugins\i18n\Bootstrap;
 
-
-return
+$config =
     [
         'runtime_dir'=>Bootstrap::RUNTIME_DIR,
         'restore_non_translated_urls' => true,
@@ -63,3 +62,7 @@ return
 
         }
     ];
+if(Bootstrap::getCachePool()) {
+    $config['cache_pool'] = Bootstrap::getCachePool();
+}
+return $config;

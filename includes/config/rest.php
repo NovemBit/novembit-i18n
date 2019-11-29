@@ -1,9 +1,8 @@
 <?php
 
-use NovemBit\i18n\component\rest\Rest;
 use NovemBit\wp\plugins\i18n\Bootstrap;
 
-return
+$config =
     [
         'runtime_dir'=>Bootstrap::RUNTIME_DIR,
         'api_keys' => [
@@ -11,3 +10,7 @@ return
             'GmYg90HtUsd187I2lJ20k7s0oIhBBBAv'
         ]
     ];
+if(Bootstrap::getCachePool()) {
+    $config['cache_pool'] = Bootstrap::getCachePool();
+}
+return $config;

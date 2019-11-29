@@ -1,10 +1,9 @@
 <?php
 
-use NovemBit\i18n\component\languages\Languages;
 use NovemBit\wp\plugins\i18n\Bootstrap;
 use NovemBit\wp\plugins\i18n\i18n;
 
-return
+$config =
     [
         'runtime_dir'=>Bootstrap::RUNTIME_DIR,
         'accept_languages' => i18n::getOption(
@@ -65,3 +64,8 @@ return
         ],
 
     ];
+if(Bootstrap::getCachePool()) {
+    $config['cache_pool'] = Bootstrap::getCachePool();
+}
+
+return $config;

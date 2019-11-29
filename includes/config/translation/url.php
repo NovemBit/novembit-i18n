@@ -3,10 +3,9 @@
 use NovemBit\i18n\component\translation\type\URL;
 use NovemBit\wp\plugins\i18n\Bootstrap;
 
-return [
+$config = [
     'class' => URL::class,
     'runtime_dir'=>Bootstrap::RUNTIME_DIR,
-    'cache_pool'=>Bootstrap::getCachePool(),
     'path_translation' => true,
     'url_validation_rules' => [
         'scheme' => [
@@ -26,3 +25,7 @@ return [
         ]
     ]
 ];
+if(Bootstrap::getCachePool()) {
+    $config['cache_pool'] = Bootstrap::getCachePool();
+}
+return $config;

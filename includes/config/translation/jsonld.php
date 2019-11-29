@@ -3,11 +3,10 @@
 use NovemBit\i18n\component\translation\type\JSON;
 use NovemBit\wp\plugins\i18n\Bootstrap;
 
-return
+$config =
     [
         'class' => JSON::class,
         'runtime_dir'=>Bootstrap::RUNTIME_DIR,
-        'cache_pool'=>Bootstrap::getCachePool(),
         'name' => 'jsonld',
         'save_translations' => false,
         'type_autodetect' => false,
@@ -28,3 +27,9 @@ return
             '/^(?>@?\w+>)+category$/i' => 'html_fragment',
         ]
     ];
+
+if(Bootstrap::getCachePool()) {
+    $config['cache_pool'] = Bootstrap::getCachePool();
+}
+
+return $config;
