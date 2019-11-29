@@ -9,7 +9,7 @@ $config =
         'runtime_dir'=>Bootstrap::RUNTIME_DIR,
         'restore_non_translated_urls' => true,
         'allow_editor' => current_user_can('administrator'),
-
+        'default_http_host'=>parse_url(site_url(),PHP_URL_HOST),
         'source_type_map' => [
             '/sitemap.xml/is' => 'sitemap_xml',
             '/sitemap-index.xml/is' => 'sitemap_xml',
