@@ -7,7 +7,7 @@ $config =
     [
         'class' => Rest::class,
         'runtime_dir'=>Bootstrap::RUNTIME_DIR,
-        'remote_host' => 'i18n.brandlight.org',
+        'remote_host' => 'dev.i18n.brandlight.org',
         'ssl' => false,
         'api_key' => 'GmYg90HtUsd187I2lJ20k7s0oIhBBBAv',
         'save_translations' => true,
