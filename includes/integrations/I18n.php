@@ -6,6 +6,7 @@ namespace NovemBit\wp\plugins\i18n\integrations;
 
 use NovemBit\i18n\Module;
 use NovemBit\wp\plugins\i18n\Bootstrap;
+use NovemBit\wp\plugins\i18n\system\Integration;
 use Psr\SimpleCache\InvalidArgumentException;
 
 class I18n extends Integration
@@ -26,13 +27,13 @@ class I18n extends Integration
 
         add_action('init', function () {
 
-            add_action('admin_bar_menu', [self::class, 'adminBarMenu'], 100);
+            add_action('admin_bar_menu', [$this, 'adminBarMenu'], 100);
 
             if (Module::instance()->request->isReady()) {
 
-                add_filter('wp_redirect', [self::class, 'redirectUrlTranslation'], PHP_INT_MAX, 1);
+                add_filter('wp_redirect', [$this, 'redirectUrlTranslation'], PHP_INT_MAX, 1);
 
-                add_filter('wp_safe_redirect', [self::class, 'redirectUrlTranslation'], PHP_INT_MAX, 1);
+                add_filter('wp_safe_redirect', [$this, 'redirectUrlTranslation'], PHP_INT_MAX, 1);
 
                 add_filter('redirect_canonical', function () {
                     return false;
@@ -75,7 +76,40 @@ class I18n extends Integration
         }
     }
 
-    public function startRequestTranslation(){
+    /**
+     * @param \WP_Admin_Bar $admin_bar
+     */
+    public function adminBarMenu($admin_bar): void
+    {
+        /** @var \WP_Admin_Bar $admin_bar */
+        $admin_bar->add_menu(array(
+            'id' => 'novembit-i18n',
+            'title' => 'NovemBit i18n',
+            'meta' => array(
+                'title' => 'NovemBit i18n',
+            ),
+        ));
+
+        $admin_bar->add_menu(array(
+            'id' => 'clear-cache',
+            'parent' => 'novembit-i18n',
+            'title' => 'Clear translations cache',
+            'meta' => array(
+                'title' => 'Temporary cache (DB records not including).',
+                'class' => 'clear_cache',
+                'onclick' => "if(confirm('Press Ok to delete cache.')) window.location.href='?novembit-i18n-action=clear-cache'"
+            ),
+        ));
+
+    }
+
+    /**
+     * Start request content translation
+     *
+     * @return void
+     * */
+    public function startRequestTranslation(): void
+    {
         Module::instance()->request->start();
     }
 
@@ -85,9 +119,8 @@ class I18n extends Integration
      * @throws \Exception
      * @throws InvalidArgumentException
      */
-    public static function redirectUrlTranslation($url)
+    public function redirectUrlTranslation($url): void
     {
-
 
         $parsed = parse_url($url);
 
@@ -111,7 +144,7 @@ class I18n extends Integration
         return $url;
     }
 
-    public function createInstance()
+    public function createInstance(): void
     {
         Module::instance(
             [

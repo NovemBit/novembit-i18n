@@ -5,6 +5,7 @@ namespace NovemBit\wp\plugins\i18n\integrations;
 
 
 use NovemBit\i18n\Module;
+use NovemBit\wp\plugins\i18n\system\Integration;
 
 class TheSEOFramework extends Integration
 {

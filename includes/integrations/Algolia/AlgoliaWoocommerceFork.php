@@ -5,7 +5,7 @@ namespace NovemBit\wp\plugins\i18n\integrations\Algolia;
 
 
 use NovemBit\i18n\Module;
-use NovemBit\wp\plugins\i18n\integrations\Integration;
+use NovemBit\wp\plugins\i18n\system\Integration;
 
 class AlgoliaWoocommerceFork extends Integration
 {
