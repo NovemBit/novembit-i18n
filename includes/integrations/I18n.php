@@ -119,7 +119,7 @@ class I18n extends Integration
      * @throws \Exception
      * @throws InvalidArgumentException
      */
-    public function redirectUrlTranslation($url): void
+    public function redirectUrlTranslation($url)
     {
 
         $parsed = parse_url($url);
