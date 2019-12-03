@@ -1,10 +1,8 @@
 <?php
 
 
-namespace NovemBit\wp\plugins\i18n\integrations;
+namespace NovemBit\wp\plugins\i18n\system;
 
-
-use NovemBit\i18n\system\exception\Exception;
 
 abstract class Integration
 {
@@ -20,7 +18,7 @@ abstract class Integration
     public static $rules = [];
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     final public static function runIntegrations()
     {
@@ -29,13 +27,14 @@ abstract class Integration
             if ($instance instanceof Integration) {
                 $instance->run();
             } else {
-                throw new Exception(sprintf("Class is not instance of '%s'.", Integration::class));
+                throw new \Exception(sprintf("Class is not instance of '%s'.", Integration::class));
             }
         }
     }
 
+
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     final public function run()
     {
