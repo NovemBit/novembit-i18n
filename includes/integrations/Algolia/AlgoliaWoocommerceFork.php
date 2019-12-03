@@ -1,3 +1,31 @@
+<?php
+
+
+namespace NovemBit\wp\plugins\i18n\integrations\Algolia;
+
+
+use NovemBit\i18n\Module;
+use NovemBit\wp\plugins\i18n\integrations\Integration;
+
+class AlgoliaWoocommerceFork extends Integration
+{
+
+    public static $plugins = [
+        'algoliasearch-woocommerce-fork/algolia-woocommerce.php'
+    ];
+
+
+    public function init(): void
+    {
+        add_action('init', [$this, 'fixPermalinkIssues'], 11);
+    }
+
+    public function fixPermalinkIssues()
+    {
+        if (Module::instance()->request->isReady()) {
+
+            add_action('wp_footer', function () {
+                $js = <<<js
 (function () {
 
     if (window.hasOwnProperty('novembit')
@@ -20,3 +48,11 @@
     }
 
 })();
+js;
+                echo sprintf('<script type="application/javascript">%s</script>',
+                    $js
+                );
+            });
+        }
+    }
+}
