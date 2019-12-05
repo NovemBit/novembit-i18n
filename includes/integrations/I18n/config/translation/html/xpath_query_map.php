@@ -40,6 +40,8 @@ return
             '//h4/text()' => ['type' => 'text'],
             '//h5/text()' => ['type' => 'text'],
             '//h6/text()' => ['type' => 'text'],
+            '//dt/text()' => ['type' => 'text'],
+            '//dd/text()' => ['type' => 'text'],
             '//a/text()' => ['type' => 'text'],
             '//span/text()' => ['type' => 'text'],
             '//div/text()' => ['type' => 'text'],
