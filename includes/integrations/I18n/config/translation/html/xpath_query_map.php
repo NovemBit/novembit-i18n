@@ -42,6 +42,7 @@ return
             '//h6/text()' => ['type' => 'text'],
             '//dt/text()' => ['type' => 'text'],
             '//dd/text()' => ['type' => 'text'],
+            '//a[starts-with(text(), "'.site_url().'")]/text()' => ['type' => 'url'],
             '//a/text()' => ['type' => 'text'],
             '//span/text()' => ['type' => 'text'],
             '//div/text()' => ['type' => 'text'],
