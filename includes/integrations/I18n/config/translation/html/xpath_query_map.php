@@ -22,7 +22,9 @@ return
              * Headings|Labels|paragraphs e.t.c.
              * */
 //            '//*[self::p or self::small or self::strong or self::b or self::bold or self::italic or self::i or self::td or self::th or self::li or self::lo or self::h1 or self::h1 or self::h2 or self::h3 or self::h4 or self::h5 or self::h6 or self::a or self::span or self::div or self::label]/text()'=>['type'=>'text'],
+            '//*[(self::a or self::strong) and starts-with(text(), "'.site_url().'")]/text()' => ['type' => 'url'],
 
+            '//input[(@id="affwp-url") and contains(@value, "'.site_url().'")]/@value'=>['type'=>'url'],
             '//p/text()' => ['type' => 'text'],
             '//small/text()' => ['type' => 'text'],
             '//strong/text()' => ['type' => 'text'],
@@ -42,7 +44,6 @@ return
             '//h6/text()' => ['type' => 'text'],
             '//dt/text()' => ['type' => 'text'],
             '//dd/text()' => ['type' => 'text'],
-            '//a[starts-with(text(), "'.site_url().'")]/text()' => ['type' => 'url'],
             '//a/text()' => ['type' => 'text'],
             '//span/text()' => ['type' => 'text'],
             '//div/text()' => ['type' => 'text'],

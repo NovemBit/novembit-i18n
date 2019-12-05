@@ -60,7 +60,8 @@ $config =
             '.*\.php',
             '.*wp-admin',
             '.*wp-json',
-            '(?<=^search)\/.*$'
+            '(?<=^search)\/.*$',
+            '^aff\/.*$'
         ],
 
     ];
