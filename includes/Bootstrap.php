@@ -3,9 +3,6 @@
 namespace NovemBit\wp\plugins\i18n;
 
 use Cache\Adapter\Memcached\MemcachedCachePool;
-use NovemBit\i18n\Module;
-use NovemBit\i18n\system\helpers\Arrays;
-
 
 class Bootstrap
 {
@@ -17,7 +14,7 @@ class Bootstrap
     public static function getCachePool()
     {
 
-        if(!isset(self::$_cache_pool)){
+        if (!isset(self::$_cache_pool)) {
 
             if (!class_exists('Memcached')) {
                 return null;
@@ -41,13 +38,6 @@ class Bootstrap
             $integration->run();
 
         }, 10);
-
-
-//        add_filter('woocommerce_get_country_locale',[self::class,'woocommerceFrontendI18nArray'],PHP_INT_MAX);
-//        add_filter('woocommerce_get_country_locale_default',[self::class,'woocommerceFrontendI18nArray'],PHP_INT_MAX);
-//        add_filter('woocommerce_get_country_locale_base', [self::class, 'woocommerceFrontendI18nArray'], PHP_INT_MAX);
-
-
     }
 
     private static function isWPCli()
@@ -56,29 +46,6 @@ class Bootstrap
             return true;
         }
         return false;
-    }
-
-    public static function woocommerceFrontendI18nArray($array)
-    {
-        $to_translate = [];
-        Arrays::arrayWalkWithRoute($array, function ($key, &$val, $route) use ($to_translate) {
-            if (is_string($val)) {
-                if ($key == 'label') {
-                    $to_translate[] = $val;
-                }
-            }
-        });
-
-        $translates = Module::instance()->request->getTranslation()->text->translate($to_translate);
-
-        Arrays::arrayWalkWithRoute($array, function ($key, &$val, $route) use ($translates) {
-            if (is_string($val)) {
-                if ($key == 'label') {
-                    $val = $translates[$val][Module::instance()->request->getLanguage()] ?? $val;
-                }
-            }
-        });
-        return $array;
     }
 
 
