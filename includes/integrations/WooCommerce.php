@@ -29,9 +29,13 @@ class WooCommerce extends Integration
     public function init(): void
     {
 
-        add_filter('woocommerce_get_country_locale',[$this,'woocommerceFrontendI18nArray'],PHP_INT_MAX);
+        /**
+         * @Todo To avoid that this part not affecting to another parts of WP
+         *
+         * */
+        /*add_filter('woocommerce_get_country_locale',[$this,'woocommerceFrontendI18nArray'],PHP_INT_MAX);
         add_filter('woocommerce_get_country_locale_default',[$this,'woocommerceFrontendI18nArray'],PHP_INT_MAX);
-        add_filter('woocommerce_get_country_locale_base', [$this, 'woocommerceFrontendI18nArray'], PHP_INT_MAX);
+        add_filter('woocommerce_get_country_locale_base', [$this, 'woocommerceFrontendI18nArray'], PHP_INT_MAX);*/
 
     }
 
