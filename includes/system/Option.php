@@ -92,7 +92,7 @@ class Option
         $method = $this->getParam('method', self::METHOD_SINGLE);
         $values = $this->getParam('values', []);
 
-        $value =$this->getValue();
+        $value = $this->getValue();
         $html = '';
 
         switch ($type) {
@@ -113,11 +113,25 @@ class Option
                     foreach ($values as $key => $_value) {
                         $html .= sprintf('<option value="%s" %s>%s</option>',
                             $key,
-                            ($_value == $value || (is_array($value) && in_array($key,$value))) ? 'selected' : '',
+                            ($_value == $value || (is_array($value) && in_array($key, $value))) ? 'selected' : '',
                             $_value
                         );
                     }
                     $html .= '</select>';
+                } elseif ($method == self::METHOD_MULTIPLE) {
+                    foreach ($this->getValue() as $key => $_value) {
+                        if (!empty($_value)) {
+                            $html .= sprintf('<div><input name="%s" type="text" value="%s"><button onclick="this.parentElement.remove()">X</button></div>',
+                                Bootstrap::getOptionName($this->getName()) . '[]',
+                                $_value
+                            );
+                        }
+                    }
+                    $html .= sprintf('<div><input name="%s" type="text"></div>',
+                        Bootstrap::getOptionName($this->getName()) . '[]'
+                    );
+                    $html .= sprintf('<div><button type="button" onclick="%s">Add new</button></div>',
+                        "var c = this.parentElement.previousSibling.cloneNode(true); c.children[0].value=''; this.parentElement.parentElement.insertBefore(c,this.parentElement);");
                 } elseif ($method != self::METHOD_MULTIPLE) {
                     $html .= sprintf('<input id="%s" type="text" name="%s" value="%s"/>',
                         $this->getName(),
@@ -130,7 +144,6 @@ class Option
                 break;
         }
 
-        $html='<div data-value="'.esc_html(json_encode($this->getValue())).'">'.$html.'</div>';
         return $html;
     }
 }
