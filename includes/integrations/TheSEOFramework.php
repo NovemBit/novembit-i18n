@@ -97,4 +97,9 @@ class TheSEOFramework extends Integration
         }, 30, 2);
 
     }
+
+    protected function adminInit(): void
+    {
+        // TODO: Implement adminInit() method.
+    }
 }

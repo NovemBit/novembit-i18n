@@ -31,4 +31,9 @@ class Algolia extends Integration
     {
 
     }
+
+    protected function adminInit(): void
+    {
+        // TODO: Implement adminInit() method.
+    }
 }
