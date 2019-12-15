@@ -55,4 +55,9 @@ js;
             });
         }
     }
+
+    protected function adminInit(): void
+    {
+        // TODO: Implement adminInit() method.
+    }
 }
