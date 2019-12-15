@@ -16,6 +16,37 @@ class Integration extends system\Integration
 
     protected function init(): void
     {
-        // TODO: Implement init() method.
+        if(is_admin()){
+            $this->adminInit();
+        }
+    }
+
+    protected function adminInit(): void
+    {
+
+        wp_enqueue_style(Bootstrap::SLUG,plugin_dir_url(NOVEMBIT_I18N_PLUGIN_FILE).'/includes/assets/style/admin.css',[],'0.1');
+
+        add_action('admin_menu', [$this, 'adminMenu']);
+
+    }
+
+    public function adminMenu()
+    {
+
+        add_menu_page(
+            __( 'NovemBit i18n', 'novembit-18n' ),
+            __( 'NovemBit i18n', 'novembit-18n' ),
+            'manage_options',
+            Bootstrap::SLUG,
+            [$this,'adminContent'],
+            'dashicons-schedule',
+            75
+        );
+    }
+
+    public function adminContent(){
+        echo '<div class="wrap">';
+        echo '<h1>NovemBit i18n internationalization plugin.</h1>';
+        echo '</div>';
     }
 }
