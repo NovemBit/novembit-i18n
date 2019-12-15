@@ -1,12 +1,12 @@
 <?php
 
 use NovemBit\wp\plugins\i18n\Bootstrap;
-use NovemBit\wp\plugins\i18n\i18n;
+use NovemBit\wp\plugins\i18n\system\Option;
 
 $config =
     [
-        'runtime_dir'=>Bootstrap::RUNTIME_DIR,
-        'accept_languages' => i18n::getOption(
+        'runtime_dir' => Bootstrap::RUNTIME_DIR,
+        'accept_languages' => new Option(
             'accept_languages',
             [
                 'cs',
@@ -29,9 +29,17 @@ $config =
                 'de',
                 'ru',
                 'en'
+            ], [
+                'type' => Option::TYPE_TEXT,
+                'method' => Option::METHOD_MULTIPLE,
+                'values' => ['en' => 'English', 'fr' => 'French', 'ru' => 'Russian', 'hy' => 'Armenian']
             ]
         ),
-        'from_language' => 'en',
+        'from_language' => new Option('from_language', 'en',[
+            'type' => Option::TYPE_TEXT,
+            'method' => Option::METHOD_SINGLE,
+            'values' => ['en' => 'English', 'fr' => 'French', 'ru' => 'Russian', 'hy' => 'Armenian']
+        ]),
         'localization_config' => [
             'default' => ['language' => 'en', 'country' => 'UK', 'region' => 'Europe'],
             '^.*\.uk$' => ['language' => 'en', 'country' => 'UK'],
@@ -65,7 +73,7 @@ $config =
         ],
 
     ];
-if(Bootstrap::getCachePool()) {
+if (Bootstrap::getCachePool()) {
     $config['cache_pool'] = Bootstrap::getCachePool();
 }
 

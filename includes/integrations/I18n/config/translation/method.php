@@ -1,15 +1,20 @@
 <?php
 
+use NovemBit\i18n\component\translation\method\Google;
 use NovemBit\i18n\component\translation\method\Rest;
 use NovemBit\wp\plugins\i18n\Bootstrap;
+use NovemBit\wp\plugins\i18n\system\Option;
 
 $config =
     [
-        'class' => Rest::class,
+        'class' => new Option('translation_method_class',Rest::class,['type'=>Option::TYPE_TEXT,'method'=>Option::METHOD_MULTIPLE,'values'=>[
+            Google::class,
+            Rest::class
+        ]]),
         'runtime_dir'=>Bootstrap::RUNTIME_DIR,
         'remote_host' => 'i18n.brandlight.org',
         'ssl' => true,
-        'api_key' => 'GmYg90HtUsd187I2lJ20k7s0oIhBBBAv',
+        'api_key' => new Option('translation_method_google_api_key','xxx',['type'=>Option::TYPE_TEXT]),
         'save_translations' => true,
 
         /*'class' => Google::class,
