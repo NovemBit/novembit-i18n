@@ -2,11 +2,16 @@
 
 use NovemBit\i18n\component\translation\type\URL;
 use NovemBit\wp\plugins\i18n\Bootstrap;
+use NovemBit\wp\plugins\i18n\system\Option;
 
 $config = [
     'class' => URL::class,
     'runtime_dir'=>Bootstrap::RUNTIME_DIR,
-    'path_translation' => true,
+    'path_translation' =>  new Option(
+        'translation_url_path_translation',
+        true,
+        ['type' => Option::TYPE_BOOL]
+    ),
     'url_validation_rules' => [
         'scheme' => [
             '^(https?)?$'
