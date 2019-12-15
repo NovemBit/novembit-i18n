@@ -6,6 +6,7 @@ namespace NovemBit\wp\plugins\i18n\integrations;
 
 use NovemBit\i18n\Module;
 use NovemBit\wp\plugins\i18n\Bootstrap;
+use NovemBit\wp\plugins\i18n\system\Option;
 use NovemBit\wp\plugins\i18n\system\Integration;
 use Psr\SimpleCache\InvalidArgumentException;
 
@@ -144,23 +145,143 @@ class I18n extends Integration
         return $url;
     }
 
+    private $options = [];
+
     public function createInstance(): void
     {
+        $this->options = [
+            /**
+             * Runtime Dir for module global instance
+             * */
+            'runtime_dir' => Bootstrap::RUNTIME_DIR,
+            /**
+             * Components configs
+             * */
+            'translation' => include(__DIR__ . '/I18n/config/translation.php'),
+            'languages' => include(__DIR__ . '/I18n/config/languages.php'),
+            'request' => include(__DIR__ . '/I18n/config/request.php'),
+            'rest' => include(__DIR__ . '/I18n/config/rest.php'),
+            'db' => include(__DIR__ . '/I18n/config/db.php'),
+        ];
+
+        $options = $this->options;
+
+        array_walk_recursive($options, function (&$item, $key) {
+            if ($item instanceof Option) {
+                $item = $item->getValue();
+            }
+        });
+
         Module::instance(
-            [
-                /**
-                 * Runtime Dir for module global instance
-                 * */
-                'runtime_dir' => Bootstrap::RUNTIME_DIR,
-                /**
-                 * Components configs
-                 * */
-                'translation' => include(__DIR__ . '/I18n/config/translation.php'),
-                'languages' => include(__DIR__ . '/I18n/config/languages.php'),
-                'request' => include(__DIR__ . '/I18n/config/request.php'),
-                'rest' => include(__DIR__ . '/I18n/config/rest.php'),
-                'db' => include(__DIR__ . '/I18n/config/db.php'),
-            ]
+            $options
         );
+
+        if (is_admin()) {
+            $this->adminInit();
+        }
+    }
+
+    public function getOptionGroup()
+    {
+        return str_replace('\\', '-', static::class);
+    }
+
+    public function registerSettings()
+    {
+        array_walk_recursive($this->options, function ($item, $key) {
+            if ($item instanceof Option) {
+                register_setting(static::getOptionGroup(), Bootstrap::getOptionName($item->getName()));
+            }
+        });
+    }
+
+    protected function adminInit(): void
+    {
+
+        add_action('admin_init', [$this, 'registerSettings']);
+
+        add_action('admin_menu', function () {
+            add_submenu_page(
+                Bootstrap::SLUG,
+                'i18n options',
+                'i18n configurations',
+                'manage_options',
+                Bootstrap::SLUG . '-integration-i18n',
+                [$this, 'adminContent'],
+                1
+            );
+        });
+    }
+
+    private static function arrayWalkWithRoute(
+        array &$arr,
+        callable $callback,
+        array $route = []
+    ): void {
+        foreach ($arr as $key => &$val) {
+            $_route = $route;
+            $_route[] = $key;
+            if (is_array($val)) {
+                self::arrayWalkWithRoute($val, $callback, $_route);
+            } else {
+                call_user_func_array($callback, [$key, &$val, $_route]);
+            }
+        }
+    }
+
+    private static function printArrayList($array)
+    {
+        echo '<ul class="' . Bootstrap::SLUG . '-admin-nested-fields">';
+
+        foreach ($array as $k => $v) {
+            if (is_array($v)) {
+                echo "<li>" . $k . "</li>";
+                self::printArrayList($v);
+                continue;
+            }
+
+            echo "<li>" . $v . "</li>";
+        }
+
+        echo "</ul>";
+    }
+
+    public function adminContent()
+    {
+
+        $_fields = [];
+        static::arrayWalkWithRoute($this->options, function ($key, $item, $route) use (&$_fields) {
+            if ($item instanceof Option) {
+                array_pop($route);
+                $label = $item->getParam('label', $item->getName());
+                $field = $item->getField();
+                $html = sprintf('<div>
+                    <div>%s</div>
+                    <div>%s</div>
+                </div>', $label, $field);
+
+                $temp = &$_fields;
+                foreach ($route as $key) {
+                    $temp = &$temp[$key];
+                }
+                $temp[] = $html;
+                unset($temp);
+            }
+        });
+
+
+        ?>
+        <div class="wrap <?php echo Bootstrap::SLUG; ?>-wrap">
+            <h1>i18n Configuration</h1>
+
+            <form method="post" action="options.php">
+                <?php settings_fields(static::getOptionGroup()); ?>
+                <?php do_settings_sections(static::getOptionGroup()); ?>
+                <?php self::printArrayList($_fields); ?>
+                <?php submit_button(); ?>
+
+            </form>
+        </div>
+        <?php
     }
 }
