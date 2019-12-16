@@ -255,11 +255,7 @@ class I18n extends Integration
                 array_pop($route);
                 $label = $item->getParam('label', $item->getName());
                 $field = $item->getField();
-                $html = sprintf('<div class="section">
-                    <div class="label">%s</div>
-                    <div class="field">%s</div>
-                </div>', $label, $field);
-
+                $html = sprintf('<div class="section"><div class="label">%s</div><div class="field">%s</div></div>', $label, $field);
                 $temp = &$_fields;
                 foreach ($route as $key) {
                     $temp = &$temp[$key];

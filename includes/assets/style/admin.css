@@ -38,3 +38,39 @@ ul.novembit-i18n-admin-nested-fields > .label {
     margin: 0;
     cursor: pointer;
 }
+
+/* Mobile Styles */
+@media only screen and (max-width: 400px) {
+    ul.novembit-i18n-admin-nested-fields .section>.field {
+        -moz-column-count: 2;
+        -moz-column-gap: 5px;
+        -webkit-column-count: 2;
+        -webkit-column-gap: 5px;
+        column-count: 2;
+        column-gap: 5px;
+    }
+}
+
+/* Tablet Styles */
+@media only screen and (min-width: 401px) and (max-width: 960px) {
+    ul.novembit-i18n-admin-nested-fields .section>.field {
+        -moz-column-count: 3;
+        -moz-column-gap: 5px;
+        -webkit-column-count: 3;
+        -webkit-column-gap: 5px;
+        column-count: 3;
+        column-gap: 5px;
+    }
+}
+
+/* Desktop Styles */
+@media only screen and (min-width: 961px) {
+    ul.novembit-i18n-admin-nested-fields .section>.field {
+        -moz-column-count: 5;
+        -moz-column-gap: 5px;
+        -webkit-column-count: 5;
+        -webkit-column-gap: 5px;
+        column-count: 5;
+        column-gap: 5px;
+    }
+}
