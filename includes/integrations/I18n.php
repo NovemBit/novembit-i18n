@@ -235,7 +235,7 @@ class I18n extends Integration
 
         foreach ($array as $k => $v) {
             if (is_array($v)) {
-                echo "<li>" . $k . "</li>";
+                echo '<li class="label">' . $k . "</li>";
                 self::printArrayList($v);
                 continue;
             }
@@ -255,9 +255,9 @@ class I18n extends Integration
                 array_pop($route);
                 $label = $item->getParam('label', $item->getName());
                 $field = $item->getField();
-                $html = sprintf('<div>
-                    <div>%s</div>
-                    <div>%s</div>
+                $html = sprintf('<div class="section">
+                    <div class="label">%s</div>
+                    <div class="field">%s</div>
                 </div>', $label, $field);
 
                 $temp = &$_fields;
@@ -279,7 +279,6 @@ class I18n extends Integration
                 <?php do_settings_sections(static::getOptionGroup()); ?>
                 <?php self::printArrayList($_fields); ?>
                 <?php submit_button(); ?>
-
             </form>
         </div>
         <?php
