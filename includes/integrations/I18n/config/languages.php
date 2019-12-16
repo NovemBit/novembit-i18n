@@ -32,12 +32,14 @@ $config =
             ], [
                 'type' => Option::TYPE_TEXT,
                 'method' => Option::METHOD_MULTIPLE,
+                'markup' => Option::MARKUP_CHECKBOX,
                 'values' => ['en' => 'English', 'fr' => 'French', 'ru' => 'Russian', 'hy' => 'Armenian']
             ]
         ),
         'from_language' => new Option('from_language', 'en',[
             'type' => Option::TYPE_TEXT,
             'method' => Option::METHOD_SINGLE,
+            'markup' => Option::MARKUP_CHECKBOX,
             'values' => ['en' => 'English', 'fr' => 'French', 'ru' => 'Russian', 'hy' => 'Armenian']
         ]),
         'localization_config' => [

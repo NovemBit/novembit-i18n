@@ -1,4 +1,40 @@
+.novembit-i18n-wrap {
+    font-size: 16px;
+}
+
+ul.novembit-i18n-admin-nested-fields > ul.novembit-i18n-admin-nested-fields > ul.novembit-i18n-admin-nested-fields {
+    display: none;
+}
+
 ul.novembit-i18n-admin-nested-fields {
+    padding: 10px 0 10px 10px;
+    font-size: 0.95em;
+    background: #00000008;
+}
+
+ul.novembit-i18n-admin-nested-fields .group {
+    margin-top: 5px;
+}
+
+ul.novembit-i18n-admin-nested-fields .group button {
+    margin: 0;
+}
+
+ul.novembit-i18n-admin-nested-fields .group > * {
+    vertical-align: top;
+}
+
+ul.novembit-i18n-admin-nested-fields .section > .label {
+    color: #007cba;
+    font-weight: normal;
+}
+
+ul.novembit-i18n-admin-nested-fields > .label {
+    background: #007cba;
     padding: 10px;
-    font-size: 0.9em;
+    color: #ffffff;
+    font-weight: bold;
+    border-bottom: solid 1px #ddd;
+    margin: 0;
+    cursor: pointer;
 }
