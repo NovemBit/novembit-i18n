@@ -26,6 +26,8 @@ class Integration extends system\Integration
 
         wp_enqueue_style(Bootstrap::SLUG,plugin_dir_url(NOVEMBIT_I18N_PLUGIN_FILE).'/includes/assets/style/admin.css',[],'0.1');
 
+        wp_enqueue_script(Bootstrap::SLUG, plugin_dir_url(NOVEMBIT_I18N_PLUGIN_FILE).'/includes/assets/scripts/admin.js',[],'0.1');
+
         add_action('admin_menu', [$this, 'adminMenu']);
 
     }
