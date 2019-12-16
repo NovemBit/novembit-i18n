@@ -1,11 +1,23 @@
 <?php
 
+use NovemBit\i18n\system\helpers\Languages;
 use NovemBit\wp\plugins\i18n\Bootstrap;
 use NovemBit\wp\plugins\i18n\system\Option;
 
+$languages = Languages::getLanguages();
+$languages_list = [];
+foreach ($languages as $language){
+    $languages_list[$language['alpha1']] = $language['name'];
+}
 $config =
     [
         'runtime_dir' => Bootstrap::RUNTIME_DIR,
+        'from_language' => new Option('from_language', 'en',[
+            'type' => Option::TYPE_TEXT,
+            'method' => Option::METHOD_SINGLE,
+            'values' => $languages_list,
+            'label'=>'From language',
+        ]),
         'accept_languages' => new Option(
             'accept_languages',
             [
@@ -33,15 +45,12 @@ $config =
                 'type' => Option::TYPE_TEXT,
                 'method' => Option::METHOD_MULTIPLE,
                 'markup' => Option::MARKUP_CHECKBOX,
-                'values' => ['en' => 'English', 'fr' => 'French', 'ru' => 'Russian', 'hy' => 'Armenian']
+                'values' => $languages_list,
+                'label'=>'To languages',
+
             ]
         ),
-        'from_language' => new Option('from_language', 'en',[
-            'type' => Option::TYPE_TEXT,
-            'method' => Option::METHOD_SINGLE,
-            'markup' => Option::MARKUP_CHECKBOX,
-            'values' => ['en' => 'English', 'fr' => 'French', 'ru' => 'Russian', 'hy' => 'Armenian']
-        ]),
+
         'localization_config' => [
             'default' => ['language' => 'en', 'country' => 'UK', 'region' => 'Europe'],
             '^.*\.uk$' => ['language' => 'en', 'country' => 'UK'],
