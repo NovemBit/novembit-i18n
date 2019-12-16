@@ -1,5 +1,5 @@
 (function () {
-    window.onload = function () {
+    document.addEventListener("DOMContentLoaded", function(event) {
         var lists = document.querySelectorAll('.novembit-i18n-admin-nested-fields>.novembit-i18n-admin-nested-fields');
         for (var i = 0; i < lists.length; i++) {
             var list = lists[i];
@@ -15,6 +15,5 @@
                 }
             });
         }
-    };
-
+    });
 })();
