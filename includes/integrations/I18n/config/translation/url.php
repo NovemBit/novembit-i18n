@@ -6,11 +6,14 @@ use NovemBit\wp\plugins\i18n\system\Option;
 
 $config = [
     'class' => URL::class,
-    'runtime_dir'=>Bootstrap::RUNTIME_DIR,
-    'path_translation' =>  new Option(
+    'runtime_dir' => Bootstrap::RUNTIME_DIR,
+    'path_translation' => new Option(
         'translation_url_path_translation',
         true,
-        ['type' => Option::TYPE_BOOL]
+        [
+            'parent' => Bootstrap::SLUG,
+            'type' => Option::TYPE_BOOL
+        ]
     ),
     'url_validation_rules' => [
         'scheme' => [
@@ -30,7 +33,7 @@ $config = [
         ]
     ]
 ];
-if(Bootstrap::getCachePool()) {
+if (Bootstrap::getCachePool()) {
     $config['cache_pool'] = Bootstrap::getCachePool();
 }
 return $config;

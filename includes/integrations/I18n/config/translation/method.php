@@ -7,19 +7,35 @@ use NovemBit\wp\plugins\i18n\system\Option;
 
 $config =
     [
-        'class' => new Option('translation_method_class', Rest::class, [
-            'type' => Option::TYPE_TEXT,
-            'method' => Option::METHOD_SINGLE,
-            'values' => [
-                Google::class => 'Google',
-                Rest::class => 'Rest'
+        'class' => new Option('translation_method_class', Rest::class,
+            [
+                'parent' => Bootstrap::SLUG,
+                'type' => Option::TYPE_TEXT,
+                'method' => Option::METHOD_SINGLE,
+                'values' => [
+                    Google::class => 'Google',
+                    Rest::class => 'Rest'
+                ],
             ]
-        ]),
+        ),
         'runtime_dir' => Bootstrap::RUNTIME_DIR,
         'remote_host' => new Option('translation_method_remote_host', 'i18n.brandlight.org',
-            ['type' => Option::TYPE_TEXT]),
-        'ssl' => new Option('translation_method_ssl', true, ['type' => Option::TYPE_BOOL]),
-        'api_key' => new Option('translation_method_api_key', 'xxx', ['type' => Option::TYPE_TEXT]),
+            [
+                'parent' => Bootstrap::SLUG,
+                'type' => Option::TYPE_TEXT
+            ]
+        ),
+        'ssl' => new Option('translation_method_ssl', true,
+            [
+                'parent' => Bootstrap::SLUG,
+                'type' => Option::TYPE_BOOL
+            ]
+        ),
+        'api_key' => new Option('translation_method_api_key', 'xxx', [
+                'parent' => Bootstrap::SLUG,
+                'type' => Option::TYPE_TEXT,
+            ]
+        ),
         'save_translations' => true,
 
         /*'class' => Google::class,
@@ -67,7 +83,12 @@ $config =
                 'Brandlight',
                 'Activpet',
             ],
-            ['type' => Option::TYPE_TEXT, 'method' => Option::METHOD_MULTIPLE]),
+            [
+                'parent' => Bootstrap::SLUG,
+                'type' => Option::TYPE_TEXT,
+                'method' => Option::METHOD_MULTIPLE
+            ]
+        ),
     ];
 if (Bootstrap::getCachePool()) {
     $config['cache_pool'] = Bootstrap::getCachePool();
