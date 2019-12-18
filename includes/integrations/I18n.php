@@ -157,8 +157,8 @@ class I18n extends Integration
             /**
              * Components configs
              * */
-            'translation' => include(__DIR__ . '/I18n/config/translation.php'),
             'languages' => include(__DIR__ . '/I18n/config/languages.php'),
+            'translation' => include(__DIR__ . '/I18n/config/translation.php'),
             'request' => include(__DIR__ . '/I18n/config/request.php'),
             'rest' => include(__DIR__ . '/I18n/config/rest.php'),
             'db' => include(__DIR__ . '/I18n/config/db.php'),
@@ -171,6 +171,10 @@ class I18n extends Integration
                 $item = $item->getValue();
             }
         });
+//
+//        echo "<textarea rows='50' cols='140'>";
+//        var_export($options);
+//        echo "</textarea>";die;
 
         Module::instance(
             $options
@@ -186,19 +190,8 @@ class I18n extends Integration
         return str_replace('\\', '-', static::class);
     }
 
-    public function registerSettings()
-    {
-        array_walk_recursive($this->options, function ($item, $key) {
-            if ($item instanceof Option) {
-                register_setting(static::getOptionGroup(), Bootstrap::getOptionName($item->getName()));
-            }
-        });
-    }
-
     protected function adminInit(): void
     {
-
-        add_action('admin_init', [$this, 'registerSettings']);
 
         add_action('admin_menu', function () {
             add_submenu_page(
@@ -235,7 +228,7 @@ class I18n extends Integration
 
         foreach ($array as $k => $v) {
             if (is_array($v)) {
-                echo '<li class="label">' . $k . "</li>";
+                echo '<li class="label">' . ucfirst($k) . "</li>";
                 self::printArrayList($v);
                 continue;
             }
@@ -249,13 +242,32 @@ class I18n extends Integration
     public function adminContent()
     {
 
+        $form_data = Option::getFormData(Bootstrap::SLUG);
+
+        if ($form_data) {
+//            echo "<textarea rows='50' cols='140'>";
+//            var_export($form_data);
+//            echo "</textarea>";die;
+            foreach ($form_data as $key => $field){
+                Bootstrap::setOption($key,$field);
+            }
+        }
+
+
+
         $_fields = [];
         static::arrayWalkWithRoute($this->options, function ($key, $item, $route) use (&$_fields) {
             if ($item instanceof Option) {
                 array_pop($route);
                 $label = $item->getParam('label', $item->getName());
+                $description = $item->getParam('description', null);
                 $field = $item->getField();
-                $html = sprintf('<div class="section"><div class="label">%s</div><div class="field">%s</div></div>', $label, $field);
+                $html = sprintf(
+                    '<div class="section"><div class="label">%s</div><div class="field">%s</div>%s</div>',
+                    $label,
+                    $field,
+                    $description != null ? sprintf('<div class="description">%s</div>', $description) : ''
+                );
                 $temp = &$_fields;
                 foreach ($route as $key) {
                     $temp = &$temp[$key];
@@ -265,15 +277,13 @@ class I18n extends Integration
             }
         });
 
-
         ?>
         <div class="wrap <?php echo Bootstrap::SLUG; ?>-wrap">
             <h1>i18n Configuration</h1>
 
-            <form method="post" action="options.php">
-                <?php settings_fields(static::getOptionGroup()); ?>
-                <?php do_settings_sections(static::getOptionGroup()); ?>
+            <form method="post" action="">
                 <?php self::printArrayList($_fields); ?>
+                <input type="hidden" name="<?php echo Bootstrap::SLUG; ?>-form" value="1">
                 <?php submit_button(); ?>
             </form>
         </div>
