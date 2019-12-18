@@ -8,7 +8,7 @@ ul.novembit-i18n-admin-nested-fields > ul.novembit-i18n-admin-nested-fields > ul
 
 ul.novembit-i18n-admin-nested-fields {
     padding: 10px 0 10px 10px;
-    font-size: 0.95em;
+    font-size: 0.90em;
     background: #00000008;
 }
 
@@ -27,6 +27,21 @@ ul.novembit-i18n-admin-nested-fields .group > * {
 ul.novembit-i18n-admin-nested-fields .section > .label {
     color: #007cba;
     font-weight: normal;
+    margin-bottom: 5px;
+}
+ul.novembit-i18n-admin-nested-fields .section > .description:before{
+    content:"\1F6C8";
+    font-size:16px;
+    color:#007cba;
+    vertical-align:bottom;
+    margin-right:5px;
+}
+ul.novembit-i18n-admin-nested-fields .section > .description {
+    color: #8c8c8c;
+    font-size:13px;
+    margin-top:5px;
+    margin-left:5px;
+    margin-bottom: 5px;
 }
 
 ul.novembit-i18n-admin-nested-fields > .label {
@@ -39,6 +54,18 @@ ul.novembit-i18n-admin-nested-fields > .label {
     cursor: pointer;
 }
 
+
+ul.novembit-i18n-admin-nested-fields .section {
+    border-bottom: solid 1px #bbb;
+    padding-bottom: 10px;
+}
+ul.novembit-i18n-admin-nested-fields .section>.field>div{
+    break-inside: avoid-column;
+    margin-bottom:5px;
+}
+ul.novembit-i18n-admin-nested-fields .section>.field .key{
+    background: #ddd;
+}
 /* Mobile Styles */
 @media only screen and (max-width: 400px) {
     ul.novembit-i18n-admin-nested-fields .section>.field {
@@ -66,11 +93,11 @@ ul.novembit-i18n-admin-nested-fields > .label {
 /* Desktop Styles */
 @media only screen and (min-width: 961px) {
     ul.novembit-i18n-admin-nested-fields .section>.field {
-        -moz-column-count: 5;
+        -moz-column-count: 4;
         -moz-column-gap: 5px;
-        -webkit-column-count: 5;
+        -webkit-column-count: 4;
         -webkit-column-gap: 5px;
-        column-count: 5;
+        column-count: 4;
         column-gap: 5px;
     }
 }
