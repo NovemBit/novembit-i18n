@@ -33,19 +33,19 @@
 .novembit-i18n-translation-dropdown + .i18n-list li a {
     line-height: 1rem;
     font-size: 1rem;
-    vertical-align: middle;
 }
 
 .novembit-i18n-translation-dropdown + .i18n-list li img {
     width: 24px;
     margin-right: 5px;
     vertical-align: middle;
-    float: left;
+    display:inline-block
 }
 
 .novembit-i18n-translation-dropdown + .i18n-list li span {
     vertical-align: middle;
     font-size: 1.3rem;
+    display:inline-block
 }
 
 .novembit-i18n-translation-dropdown + .i18n-label {
