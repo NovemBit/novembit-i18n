@@ -12,16 +12,8 @@ ul.novembit-i18n-admin-nested-fields {
     background: #00000008;
 }
 
-ul.novembit-i18n-admin-nested-fields .group {
-    margin-top: 5px;
-}
-
 ul.novembit-i18n-admin-nested-fields .group button {
     margin: 0;
-}
-
-ul.novembit-i18n-admin-nested-fields .group > * {
-    vertical-align: top;
 }
 
 ul.novembit-i18n-admin-nested-fields .section > .label {
@@ -29,18 +21,20 @@ ul.novembit-i18n-admin-nested-fields .section > .label {
     font-weight: normal;
     margin-bottom: 5px;
 }
-ul.novembit-i18n-admin-nested-fields .section > .description:before{
-    content:"\1F6C8";
-    font-size:16px;
-    color:#007cba;
-    vertical-align:bottom;
-    margin-right:5px;
+
+ul.novembit-i18n-admin-nested-fields .section > .description:before {
+    content: "\1F6C8";
+    font-size: 16px;
+    color: #007cba;
+    vertical-align: bottom;
+    margin-right: 5px;
 }
+
 ul.novembit-i18n-admin-nested-fields .section > .description {
     color: #8c8c8c;
-    font-size:13px;
-    margin-top:5px;
-    margin-left:5px;
+    font-size: 13px;
+    margin-top: 5px;
+    margin-left: 5px;
     margin-bottom: 5px;
 }
 
@@ -54,18 +48,55 @@ ul.novembit-i18n-admin-nested-fields > .label {
     cursor: pointer;
 }
 
-
 ul.novembit-i18n-admin-nested-fields .section {
     border-bottom: solid 1px #bbb;
     padding-bottom: 10px;
 }
-ul.novembit-i18n-admin-nested-fields .section>.field>div{
+
+ul.novembit-i18n-admin-nested-fields .section>.field>.group {
     break-inside: avoid-column;
-    margin-bottom:5px;
+    margin-bottom: 7px;
+    position: relative;
 }
-ul.novembit-i18n-admin-nested-fields .section>.field .key{
-    background: #ddd;
+
+ul.novembit-i18n-admin-nested-fields .section>.field>.group > * {
+    vertical-align: top;
+    margin-bottom: 3px;
 }
+
+ul.novembit-i18n-admin-nested-fields .section>.field .group > .full {
+    width: 100%;
+}
+
+ul.novembit-i18n-admin-nested-fields .section>.field > .group > .key {
+    background: #e6e6e6;
+}
+
+ul.novembit-i18n-admin-nested-fields .section>.field .group button.remove:hover {
+    background: #007cba;
+    opacity: 1;
+}
+
+ul.novembit-i18n-admin-nested-fields .section>.field .group button.remove {
+    height: 15px;
+    width: 20px;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    font-size: 0.8em;
+    opacity: 0.4;
+    background: #7b0000;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    position: absolute;
+    font-weight: bolder;
+}
+
+ul.novembit-i18n-admin-nested-fields .section>.field {
+    padding: 0 10px
+}
+
 /* Mobile Styles */
 @media only screen and (max-width: 400px) {
     ul.novembit-i18n-admin-nested-fields .section>.field {

@@ -4,7 +4,6 @@
         for (var i = 0; i < lists.length; i++) {
             var list = lists[i];
             var label = list.previousSibling;
-            console.log(label);
             label.addEventListener("click", function () {
                 if (this.nextSibling.offsetParent === null) {
                     this.nextSibling.style.display = "block";
