@@ -26,28 +26,20 @@ $config =
                 'parent' => Bootstrap::SLUG,
                 'type' => Option::TYPE_OBJECT,
                 'method' => Option::METHOD_MULTIPLE,
-                'field' => ['type' => Option::TYPE_TEXT],
+                'field' => ['type' => Option::TYPE_TEXT,'values' => [
+                    'text' => 'Text',
+                    'url' => 'URL',
+                    'sitemap_xml' => 'Sitemap XML',
+                    'xml' => 'XML',
+                    'html' => 'Html',
+                    'html_fragment' => 'Html Fragment',
+                    'json' => 'JSON',
+                    'jsonld' => "Json LD"
+                ]],
                 'label' => 'Source type map',
                 'description' => 'Test.'
             ]
         ),
-        /*'test2' => new Option(
-            'test2',
-            ['a' => ['value'], 'b' => ['value']],
-            [
-                'type' => Option::TYPE_OBJECT,
-                'method' => Option::METHOD_MULTIPLE,
-                'template' => [
-                    'a' => ['type' => Option::TYPE_TEXT],
-                    'b' => [
-                        'type' => Option::TYPE_TEXT,
-                        'values' => ['hi', 'by']
-                    ]
-                ],
-                'label' => 'Test',
-                'description' => 'Test.'
-            ]
-        ),*/
 
         'exclusions' => [
             /**
