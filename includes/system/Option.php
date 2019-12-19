@@ -8,7 +8,6 @@ use NovemBit\wp\plugins\i18n\Bootstrap;
 
 class Option
 {
-
     private $_name;
     private $_default;
 
@@ -26,7 +25,6 @@ class Option
     const METHOD_MULTIPLE = 'multiple';
 
     private $_params = [];
-
 
     public function __construct($_name, $_default = null, $_params = [])
     {
@@ -143,9 +141,9 @@ class Option
 
     private static function _maybeBoolean($str)
     {
-        if($str == '{{boolean_true}}'){
+        if ($str == '{{boolean_true}}') {
             return true;
-        } elseif($str == '{{boolean_false}}'){
+        } elseif ($str == '{{boolean_false}}') {
             return false;
         }
         return $str;
@@ -202,15 +200,16 @@ class Option
                 );
                 break;
             case self::TYPE_OBJECT:
-                $on_change = "var fields = this.parentElement.querySelectorAll('[name]'); for(var i=0; i<fields.length; i++){ var field= fields[i]; if(this.value!=null){field.removeAttribute('disabled')}; if(field.getAttribute('data-name') == null){ field.setAttribute('data-name',field.getAttribute('name')) } var attr = field.getAttribute('data-name'); attr = attr.replace('{key}',btoa(this.value)); fields[i].setAttribute('name',attr); }";
+                $on_change = "var fields = this.parentElement.querySelectorAll('[name]'); for(var i=0; i<fields.length; i++){ var field= fields[i]; if(this.value!=null){field.removeAttribute('disabled')}; if(field.getAttribute('data-name') == null){ field.setAttribute('data-name',field.getAttribute('name')) } var attr = field.getAttribute('data-name'); attr = attr.replace('{key}','{{encode_key}}'+btoa(this.value)); fields[i].setAttribute('name',attr); }";
 
                 if ($template != null && !empty($template)) {
                     foreach ($value as $key => $_value) {
-                        $html .= "<div>";
-                        $html .= sprintf('<input class="key" type="text" placeholder="key" value="%s" onchange="%s" >',
+                        $html .= '<div class="group">';
+                        $html .= '<button class="remove" onclick="this.parentElement.remove()">X</button>';
+                        $html .= sprintf('<input class="key full" type="text" placeholder="key" value="%s" onchange="%s" >',
                             htmlspecialchars($key),
                             $on_change);
-                        $html .= "<div>";
+                        $html .= '<div class="group">';
 
                         foreach ($template as $_key => $_field) {
 
@@ -227,8 +226,9 @@ class Option
                 } elseif ($field != null && !empty($field)) {
                     foreach ($value as $key => $_value) {
                         $_field = $field;
-                        $html .= "<div>";
-                        $html .= sprintf('<input class="key" type="text" placeholder="key" value="%s" onchange="%s" >',
+                        $html .= "<div class='group'>";
+                        $html .= '<button class="remove" onclick="this.parentElement.remove()">X</button>';
+                        $html .= sprintf('<input class="key full" type="text" placeholder="key" value="%s" onchange="%s" >',
                             htmlspecialchars($key),
                             $on_change);
 
@@ -242,8 +242,8 @@ class Option
                 }
 
                 $html .= "<div class='group'>";
-                $html .= sprintf('<input class="key" type="text" placeholder="key" onchange="%s">', $on_change);
-                $html .= "<div>";
+                $html .= sprintf('<input class="key full" type="text" placeholder="key" onchange="%s">', $on_change);
+                $html .= "<div class='group'>";
 
                 if ($template != null && !empty($template)) {
 
@@ -262,10 +262,8 @@ class Option
                 $html .= "</div>";
                 break;
             case self::TYPE_GROUP:
-                if ($template == null) {
-                    $html .= "<div>Missing template</div>";
-                } else {
-                    $html .= "<div>";
+                if (!empty($template)) {
+                    $html .= "<div class='group'>";
 
                     if ($method == self::METHOD_SINGLE) {
                         foreach ($template as $key => $_field) {
@@ -278,7 +276,7 @@ class Option
 
                         $last_key = count($value) + 1;
                         foreach ($value as $key => $_value) {
-                            $html .= "<div>";
+                            $html .= "<div class='group'>";
 
                             foreach ($_value as $_key => $__value) {
                                 $_field = $template[$_key];
@@ -289,7 +287,7 @@ class Option
                             $html .= "</div>";
 
                         }
-                        $html .= "<div>";
+                        $html .= '<div class="group">';
                         foreach ($template as $key => $_field) {
                             $_field['name'] = $name . '[' . $last_key . ']' . '[' . $key . ']';
                             $html .= self::_getField($_field);
@@ -305,7 +303,7 @@ class Option
                 if (!empty($values)) {
                     if ($markup == null || $markup == self::MARKUP_SELECT) {
                         $html .= sprintf('<select class="%1$s" id="%2$s" name="%3$s" %4$s %5$s %6$s %7$s>',
-                            implode(' ', [$type, $method]),
+                            implode(' ', [$type, $method, 'full']),
                             $name,
                             $name . ($method == self::METHOD_MULTIPLE ? '[]' : ''),
                             $method == self::METHOD_MULTIPLE ? 'multiple="multiple"' : '',
@@ -327,7 +325,7 @@ class Option
                             );
                         } elseif ($markup == self::MARKUP_CHECKBOX) {
                             if ($method == self::METHOD_MULTIPLE) {
-                                $html .= sprintf('<div><label><input type="checkbox" name="%1$s" value="%2$s" %3$s %4$s %5$s %6$s>%7$s</label></div>',
+                                $html .= sprintf('<div class="group"><label><input type="checkbox" name="%1$s" value="%2$s" %3$s %4$s %5$s %6$s>%7$s</label></div>',
                                     $name . ($method == self::METHOD_MULTIPLE ? '[]' : ''),
                                     htmlspecialchars($key),
                                     (($key == $value) || (is_array($value) && in_array($key, $value))) ? 'checked' : '',
@@ -337,7 +335,7 @@ class Option
                                     $_value
                                 );
                             } else {
-                                $html .= sprintf('<div><label><input type="radio" name="%1$s" value="%2$s" %3$s %4$s %5$s %6$s>%7$s</label></div>',
+                                $html .= sprintf('<div class="group"><label><input type="radio" name="%1$s" value="%2$s" %3$s %4$s %5$s %6$s>%7$s</label></div>',
                                     $name,
                                     htmlspecialchars($key),
                                     (($key == $value) || (is_array($value) && in_array($key, $value))) ? 'checked' : '',
@@ -357,23 +355,23 @@ class Option
                 } elseif ($method == self::METHOD_MULTIPLE) {
                     foreach ($value as $key => $_value) {
                         if (!empty($_value)) {
-                            $html .= sprintf('<div class="group"><input name="%1$s" type="text" value="%2$s" %3$s %4$s %5$s>%6$s</div>',
+                            $html .= sprintf('<div class="group"><input name="%1$s" class="full" type="text" value="%2$s" %3$s %4$s %5$s>%6$s</div>',
                                 $name . '[]',
                                 htmlspecialchars($_value),
                                 $data_str,
                                 $disabled_str,
                                 $readonly_str,
-                                '<button class="button button-secondary" onclick="this.parentElement.remove()">X</button>'
+                                '<button class="remove" onclick="this.parentElement.remove()">X</button>'
                             );
                         }
                     }
-                    $html .= sprintf('<div class="group" onclick="var e =this.querySelector(\'input[name]\'); e.disabled = false; e.focus()"><input name="%1$s" type="text" disabled></div>',
+                    $html .= sprintf('<div class="group" onclick="var e =this.querySelector(\'input[name]\'); e.disabled = false; e.focus()"><input name="%1$s" class="full" type="text" disabled></div>',
                         $name . '[]'
                     );
                     $html .= sprintf('<div class="group"><button class="button button-primary" type="button" onclick="%s">Add new</button></div>',
                         "var c = this.parentElement.previousSibling.cloneNode(true); c.children[0].value=''; this.parentElement.parentElement.insertBefore(c,this.parentElement);");
                 } elseif ($method != self::METHOD_MULTIPLE) {
-                    $html .= sprintf('<input id="%1$s" type="text" name="%1$s" value="%2$s" %3$s %4$s %5$s/>',
+                    $html .= sprintf('<input id="%1$s" class="full" type="text" name="%1$s" value="%2$s" %3$s %4$s %5$s/>',
                         $name,
                         htmlspecialchars($value),
                         $data_str,
@@ -423,5 +421,85 @@ class Option
             $return[$key] = $value;
         }
         return $return;
+    }
+
+    private static function printArrayList($array)
+    {
+        echo '<ul class="' . Bootstrap::SLUG . '-admin-nested-fields">';
+
+        foreach ($array as $k => $v) {
+            if (is_array($v)) {
+                echo '<li class="label">' . ucfirst($k) . "</li>";
+                self::printArrayList($v);
+                continue;
+            }
+
+            echo "<li>" . $v . "</li>";
+        }
+
+        echo "</ul>";
+    }
+
+    private static function arrayWalkWithRoute(
+        array &$arr,
+        callable $callback,
+        array $route = []
+    ): void {
+        foreach ($arr as $key => &$val) {
+            $_route = $route;
+            $_route[] = $key;
+            if (is_array($val)) {
+                self::arrayWalkWithRoute($val, $callback, $_route);
+            } else {
+                call_user_func_array($callback, [$key, &$val, $_route]);
+            }
+        }
+    }
+
+    public static function printForm($parent, $options)
+    {
+
+        $form_data = Option::getFormData($parent);
+
+        if ($form_data) {
+            foreach ($form_data as $key => $field) {
+                Bootstrap::setOption($key, $field);
+            }
+        }
+
+        $_fields = [];
+
+        static::arrayWalkWithRoute($options, function ($key, $item, $route) use (&$_fields) {
+            if ($item instanceof Option) {
+                array_pop($route);
+                $label = $item->getParam('label', $item->getName());
+                $description = $item->getParam('description', null);
+                $field = $item->getField();
+                $html = sprintf(
+                    '<div class="section"><div class="label">%s</div><div class="field">%s</div>%s</div>',
+                    $label,
+                    $field,
+                    $description != null ? sprintf('<div class="description">%s</div>', $description) : ''
+                );
+                $temp = &$_fields;
+                foreach ($route as $key) {
+                    $temp = &$temp[$key];
+                }
+                $temp[] = $html;
+                unset($temp);
+            }
+        });
+
+        ?>
+        <div class="wrap <?php echo Bootstrap::SLUG; ?>-wrap">
+            <h1>i18n Configuration</h1>
+
+            <form method="post" action="">
+                <?php self::printArrayList($_fields); ?>
+                <input type="hidden" name="<?php echo Bootstrap::SLUG; ?>-form" value="1">
+                <?php submit_button(); ?>
+            </form>
+        </div>
+        <?php
     }
 }
