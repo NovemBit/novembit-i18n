@@ -29,7 +29,7 @@ class Editor
 
         wp_enqueue_style(
             self::$name . '-style',
-            plugins_url('/includes/shortcodes/assets/editor/style.css', NOVEMBIT_I18N_PLUGIN_FILE),
+            plugins_url('/includes/shortcodes/assets/dropdown/style.css', NOVEMBIT_I18N_PLUGIN_FILE),
             [],
             '1.0.6'
         );
@@ -46,7 +46,7 @@ class Editor
 
         $atts = shortcode_atts(array(
             'id' => self::$name . '-' . self::$_id,
-            'class' => self::$name,
+            'class' => implode(' ',[self::$name,'novembit-i18n-translation-dropdown']),
             'title' => __('Edit Translations', 'novembit-18n'),
             'exit_label' => __('Exit Translations', 'novembit-18n')
         ), $atts);
