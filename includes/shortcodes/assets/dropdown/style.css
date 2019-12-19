@@ -1,5 +1,6 @@
 .novembit-i18n-translation-dropdown {
     position: relative;
+    display: inline-block;
 }
 
 .novembit-i18n-translation-dropdown:hover + .i18n-list,
