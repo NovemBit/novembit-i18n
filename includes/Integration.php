@@ -16,6 +16,8 @@ class Integration extends system\Integration
 
     protected function init(): void
     {
+        add_action('admin_bar_menu', [$this, 'adminBarMenu'], 100);
+
         if (is_admin()) {
             $this->adminInit();
         }
@@ -36,6 +38,22 @@ class Integration extends system\Integration
 
         add_action('admin_menu', [$this, 'adminMenu']);
 
+
+    }
+
+    /**
+     * @param \WP_Admin_Bar $admin_bar
+     */
+    public function adminBarMenu($admin_bar): void
+    {
+        /** @var \WP_Admin_Bar $admin_bar */
+        $admin_bar->add_menu(array(
+            'id' => Bootstrap::SLUG,
+            'title' => 'NovemBit i18n',
+            'meta' => array(
+                'title' => 'NovemBit i18n',
+            ),
+        ));
     }
 
     public function adminMenu()
@@ -54,8 +72,14 @@ class Integration extends system\Integration
 
     public function adminContent()
     {
-        echo '<div class="wrap">';
-        echo '<h1>NovemBit i18n internationalization plugin.</h1>';
-        echo '</div>';
+        ?>
+        <div class="wrap">
+            <h1>NovemBit i18n internationalization plugin.</h1>
+
+            <p>NovemBit-i18n is powerful WordPress framework to provide multilingual web site, and translates site
+                content without human intervention. Plugin to automatically translate your site. Just need to make the
+                right settings.</p>
+        </div>
+        <?php
     }
 }
