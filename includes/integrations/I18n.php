@@ -30,6 +30,8 @@ class I18n extends Integration
 
             add_action('admin_bar_menu', [$this, 'adminBarMenu'], 100);
 
+            add_action('wp_before_admin_bar_render', [$this, 'adminToolbar'], 100);
+
             if (Module::instance()->request->isReady()) {
 
                 add_filter('wp_redirect', [$this, 'redirectUrlTranslation'], PHP_INT_MAX, 1);
@@ -77,31 +79,96 @@ class I18n extends Integration
         }
     }
 
+    public function adminToolbar()
+    {
+
+        global $wp_admin_bar;
+
+        /**
+         * Translation editor
+         * */
+        $urls = Module::instance()->request->getEditorUrlTranslations();
+        if (!empty($urls)) {
+
+            $args = array(
+                'id' => Bootstrap::SLUG . "_item_edit_translation",
+                'parent' => Bootstrap::SLUG,
+                'title' => "Edit translation",
+            );
+            $wp_admin_bar->add_node($args);
+
+            $languages = Module::instance()->languages->getAcceptLanguages(true);
+
+            foreach ($urls as $language => $url) {
+
+                $flag = $languages[$language]['flag'];
+                $name = $languages[$language]['name'];
+                $args = [
+                    'id' => Bootstrap::SLUG . "_item_edit_translation_item_" . $language,
+                    'parent' => Bootstrap::SLUG . "_item_edit_translation",
+                    'title' => sprintf(
+                        '<img alt="%2$s" src="%1$s" style="display:inline; width: 18px !important; height: 12px !important;"/>&nbsp;%2$s',
+                        $flag,
+                        $name
+                    ),
+                    'href' => $url
+                ];
+                $wp_admin_bar->add_node($args);
+
+            }
+        }
+
+        /**
+         * Language Switcher
+         * */
+        $urls = Module::instance()->request->getUrlTranslations();
+        if(!empty($urls)) {
+            $args = array(
+                'id' => Bootstrap::SLUG . "_item_change_language",
+                'parent' => Bootstrap::SLUG,
+                'title' => "Change language",
+            );
+
+            $wp_admin_bar->add_node($args);
+
+
+            foreach ($urls as $language => $url) {
+
+                $flag = $languages[$language]['flag'];
+                $name = $languages[$language]['name'];
+                $args = [
+                    'id' => Bootstrap::SLUG . "_item_change_language_item" . $language,
+                    'parent' => Bootstrap::SLUG . "_item_change_language",
+                    'title' => sprintf(
+                        '<img alt="%2$s" src="%1$s" style="display:inline; width: 18px !important; height: 12px !important;"/>&nbsp;%2$s',
+                        $flag,
+                        $name
+                    ),
+                    'href' => $url
+                ];
+                $wp_admin_bar->add_node($args);
+
+            }
+        }
+
+        return;
+    }
+
     /**
      * @param \WP_Admin_Bar $admin_bar
      */
     public function adminBarMenu($admin_bar): void
     {
-        /** @var \WP_Admin_Bar $admin_bar */
-        $admin_bar->add_menu(array(
-            'id' => 'novembit-i18n',
-            'title' => 'NovemBit i18n',
-            'meta' => array(
-                'title' => 'NovemBit i18n',
-            ),
-        ));
-
         $admin_bar->add_menu(array(
             'id' => 'clear-cache',
-            'parent' => 'novembit-i18n',
-            'title' => 'Clear translations cache',
+            'parent' => Bootstrap::SLUG,
+            'title' => 'Clear cache',
             'meta' => array(
-                'title' => 'Temporary cache (DB records not including).',
+                'title' => 'Delete temporary caches.',
                 'class' => 'clear_cache',
                 'onclick' => "if(confirm('Press Ok to delete cache.')) window.location.href='?novembit-i18n-action=clear-cache'"
             ),
         ));
-
     }
 
     /**
@@ -204,6 +271,6 @@ class I18n extends Integration
 
     public function adminContent()
     {
-        Option::printForm(Bootstrap::SLUG,$this->options);
+        Option::printForm(Bootstrap::SLUG, $this->options);
     }
 }
