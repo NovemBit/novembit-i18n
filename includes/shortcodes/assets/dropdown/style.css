@@ -45,8 +45,8 @@
 
 .novembit-i18n-translation-dropdown + .i18n-list li span {
     vertical-align: middle;
-    font-size: 1.3rem;
-    display:inline-block
+    font-size: 1em;
+    display:inline-block;
 }
 
 .novembit-i18n-translation-dropdown + .i18n-label {
