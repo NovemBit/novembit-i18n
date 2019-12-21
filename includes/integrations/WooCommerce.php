@@ -67,4 +67,9 @@ class WooCommerce extends Integration
         });
         return $array;*/
     }
+
+    protected function adminInit(): void
+    {
+        // TODO: Implement adminInit() method.
+    }
 }

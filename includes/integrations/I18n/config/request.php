@@ -3,17 +3,43 @@
 use NovemBit\i18n\component\request\interfaces\Request;
 use NovemBit\i18n\Module;
 use NovemBit\wp\plugins\i18n\Bootstrap;
+use NovemBit\wp\plugins\i18n\system\Option;
 
 $config =
     [
-        'runtime_dir'=>Bootstrap::RUNTIME_DIR,
-        'restore_non_translated_urls' => true,
+        'runtime_dir' => Bootstrap::RUNTIME_DIR,
+        'restore_non_translated_urls' => new Option(
+            'request_restore_non_translated_urls',
+            true,
+            ['parent' => Bootstrap::SLUG, 'type' => Option::TYPE_BOOL]
+        ),
         'allow_editor' => current_user_can('administrator'),
-        'default_http_host'=>parse_url(site_url(),PHP_URL_HOST),
-        'source_type_map' => [
-            '/sitemap.xml/is' => 'sitemap_xml',
-            '/sitemap-index.xml/is' => 'sitemap_xml',
-        ],
+        'default_http_host' => parse_url(site_url(), PHP_URL_HOST),
+
+        'source_type_map' => new Option(
+            'request_source_type_map',
+            [
+                '/sitemap.xml/is' => 'sitemap_xml',
+                '/sitemap-index.xml/is' => 'sitemap_xml',
+            ],
+            [
+                'parent' => Bootstrap::SLUG,
+                'type' => Option::TYPE_OBJECT,
+                'method' => Option::METHOD_MULTIPLE,
+                'field' => ['type' => Option::TYPE_TEXT,'values' => [
+                    'text' => 'Text',
+                    'url' => 'URL',
+                    'sitemap_xml' => 'Sitemap XML',
+                    'xml' => 'XML',
+                    'html' => 'Html',
+                    'html_fragment' => 'Html Fragment',
+                    'json' => 'JSON',
+                    'jsonld' => "Json LD"
+                ]],
+                'label' => 'Source type map',
+                'description' => 'Test.'
+            ]
+        ),
 
         'exclusions' => [
             /**
@@ -24,7 +50,8 @@ $config =
 
                 /** @var Request $request */
 
-                if(preg_match('/(емисия-на-данни|data-feed|данни-подаване|zdroj-dat|projekt|datafeed|data-foder|Daten-Feed|daten-feed|Projekt|τροφοδοσία-δεδομένων|alimentación-de-datos|proyecto|andmevoog|projekti|flux-de-données|projet|feed-podataka|podaci-uvlačenja|feed-di-dati|progetto|データフィード|데이터-피드|gegevensfeed|data-toevoer|project|plik-danych|źródło-danych|feed-de-dados|projeto|flux-de-date|подача-данных|данные-подачи|проект|podajanje-podatkov|data-flöde)/i',$_SERVER['REQUEST_URI'])){
+                if (preg_match('/(емисия-на-данни|data-feed|данни-подаване|zdroj-dat|projekt|datafeed|data-foder|Daten-Feed|daten-feed|Projekt|τροφοδοσία-δεδομένων|alimentación-de-datos|proyecto|andmevoog|projekti|flux-de-données|projet|feed-podataka|podaci-uvlačenja|feed-di-dati|progetto|データフィード|데이터-피드|gegevensfeed|data-toevoer|project|plik-danych|źródło-danych|feed-de-dados|projeto|flux-de-date|подача-данных|данные-подачи|проект|podajanje-podatkov|data-flöde)/i',
+                    $_SERVER['REQUEST_URI'])) {
                     return true;
                 }
 
@@ -62,7 +89,7 @@ $config =
 
         }
     ];
-if(Bootstrap::getCachePool()) {
+if (Bootstrap::getCachePool()) {
     $config['cache_pool'] = Bootstrap::getCachePool();
 }
 return $config;

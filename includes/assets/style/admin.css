@@ -1,0 +1,121 @@
+.novembit-i18n-wrap {
+    font-size: 16px;
+}
+
+ul.novembit-i18n-admin-nested-fields > ul.novembit-i18n-admin-nested-fields > ul.novembit-i18n-admin-nested-fields {
+    display: none;
+}
+
+ul.novembit-i18n-admin-nested-fields {
+    padding: 10px 0 10px 10px;
+    font-size: 0.90em;
+    background: #00000008;
+}
+
+ul.novembit-i18n-admin-nested-fields .group button {
+    margin: 0;
+}
+
+ul.novembit-i18n-admin-nested-fields .section > .label {
+    color: #007cba;
+    font-weight: normal;
+    margin-bottom: 5px;
+}
+
+ul.novembit-i18n-admin-nested-fields .section > .description:before {
+    content: "\1F6C8";
+    font-size: 16px;
+    color: #007cba;
+    vertical-align: bottom;
+    margin-right: 5px;
+}
+
+ul.novembit-i18n-admin-nested-fields .section > .description {
+    color: #8c8c8c;
+    font-size: 13px;
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+
+ul.novembit-i18n-admin-nested-fields > .label {
+    background: #007cba;
+    padding: 10px;
+    color: #ffffff;
+    font-weight: bold;
+    border-bottom: solid 1px #ddd;
+    margin: 0;
+    cursor: pointer;
+}
+
+ul.novembit-i18n-admin-nested-fields .section {
+    border-bottom: solid 1px #bbb;
+    padding-bottom: 10px;
+}
+
+ul.novembit-i18n-admin-nested-fields .section>.field>.group {
+    break-inside: avoid-column;
+    margin-bottom: 7px;
+    position: relative;
+}
+
+ul.novembit-i18n-admin-nested-fields .section>.field>.group > * {
+    vertical-align: top;
+    margin-bottom: 3px;
+}
+
+ul.novembit-i18n-admin-nested-fields .section>.field .group > .full {
+    width: 100%;
+}
+
+ul.novembit-i18n-admin-nested-fields .section>.field > .group > .key {
+    background: #e6e6e6;
+}
+
+ul.novembit-i18n-admin-nested-fields .section>.field .group button.remove:hover {
+    background: #007cba;
+    opacity: 1;
+}
+
+ul.novembit-i18n-admin-nested-fields .section>.field .group button.remove {
+    height: 15px;
+    width: 20px;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    font-size: 0.8em;
+    opacity: 0.4;
+    background: #7b0000;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    position: absolute;
+    font-weight: bolder;
+}
+
+ul.novembit-i18n-admin-nested-fields .section>.field {
+    padding: 0 1em;
+    display:grid;
+    grid-column-gap: 0.5em;
+}
+
+/* Mobile Styles */
+@media only screen and (max-width: 400px) {
+    ul.novembit-i18n-admin-nested-fields .section>.field {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Tablet Styles */
+@media only screen and (min-width: 401px) and (max-width: 960px) {
+    ul.novembit-i18n-admin-nested-fields .section>.field {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Desktop Styles */
+@media only screen and (min-width: 961px) {
+    ul.novembit-i18n-admin-nested-fields .section>.field {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}

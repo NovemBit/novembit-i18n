@@ -17,6 +17,10 @@ abstract class Integration
 
     public static $rules = [];
 
+    public static $name;
+
+    protected static $_integrationsInstances = [];
+
     /**
      * @throws \Exception
      */
@@ -25,11 +29,29 @@ abstract class Integration
         foreach (static::$integrations as $integration) {
             $instance = new $integration();
             if ($instance instanceof Integration) {
+
+                static::$_integrationsInstances[self::getName()] = &$instance;
+
                 $instance->run();
             } else {
                 throw new \Exception(sprintf("Class is not instance of '%s'.", Integration::class));
             }
         }
+    }
+
+    final public static function getIntegration($name)
+    {
+        return static::$_integrationsInstances[$name];
+    }
+
+    final public static function getIntegrationsInstances()
+    {
+        return static::$_integrationsInstances;
+    }
+
+    final public static function getName()
+    {
+        return static::$name ?? static::class;
     }
 
 
@@ -40,11 +62,11 @@ abstract class Integration
     {
 
         foreach (static::$rules as $rule) {
-            if(is_callable($rule)){
-                if(!call_user_func($rule)){
+            if (is_callable($rule)) {
+                if (!call_user_func($rule)) {
                     return;
                 }
-            } elseif(!$rule){
+            } elseif (!$rule) {
                 return;
             }
         }
@@ -69,12 +91,12 @@ abstract class Integration
             }
         }
 
-        $this->init();
+
+            $this->init();
 
         static::runIntegrations();
 
     }
 
     abstract protected function init(): void;
-
 }

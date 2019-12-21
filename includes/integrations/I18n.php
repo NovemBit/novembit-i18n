@@ -6,6 +6,7 @@ namespace NovemBit\wp\plugins\i18n\integrations;
 
 use NovemBit\i18n\Module;
 use NovemBit\wp\plugins\i18n\Bootstrap;
+use NovemBit\wp\plugins\i18n\system\Option;
 use NovemBit\wp\plugins\i18n\system\Integration;
 use Psr\SimpleCache\InvalidArgumentException;
 
@@ -144,23 +145,65 @@ class I18n extends Integration
         return $url;
     }
 
+    private $options = [];
+
     public function createInstance(): void
     {
+        $this->options = [
+            /**
+             * Runtime Dir for module global instance
+             * */
+            'runtime_dir' => Bootstrap::RUNTIME_DIR,
+            /**
+             * Components configs
+             * */
+            'languages' => include(__DIR__ . '/I18n/config/languages.php'),
+            'translation' => include(__DIR__ . '/I18n/config/translation.php'),
+            'request' => include(__DIR__ . '/I18n/config/request.php'),
+            'rest' => include(__DIR__ . '/I18n/config/rest.php'),
+            'db' => include(__DIR__ . '/I18n/config/db.php'),
+        ];
+
+        $options = $this->options;
+
+        array_walk_recursive($options, function (&$item, $key) {
+            if ($item instanceof Option) {
+                $item = $item->getValue();
+            }
+        });
+
         Module::instance(
-            [
-                /**
-                 * Runtime Dir for module global instance
-                 * */
-                'runtime_dir' => Bootstrap::RUNTIME_DIR,
-                /**
-                 * Components configs
-                 * */
-                'translation' => include(__DIR__ . '/I18n/config/translation.php'),
-                'languages' => include(__DIR__ . '/I18n/config/languages.php'),
-                'request' => include(__DIR__ . '/I18n/config/request.php'),
-                'rest' => include(__DIR__ . '/I18n/config/rest.php'),
-                'db' => include(__DIR__ . '/I18n/config/db.php'),
-            ]
+            $options
         );
+
+        if (is_admin()) {
+            $this->adminInit();
+        }
+    }
+
+    public function getOptionGroup()
+    {
+        return str_replace('\\', '-', static::class);
+    }
+
+    protected function adminInit(): void
+    {
+
+        add_action('admin_menu', function () {
+            add_submenu_page(
+                Bootstrap::SLUG,
+                'i18n options',
+                'i18n configurations',
+                'manage_options',
+                Bootstrap::SLUG . '-integration-i18n',
+                [$this, 'adminContent'],
+                1
+            );
+        });
+    }
+
+    public function adminContent()
+    {
+        Option::printForm(Bootstrap::SLUG,$this->options);
     }
 }

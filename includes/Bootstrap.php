@@ -9,7 +9,55 @@ class Bootstrap
 
     const RUNTIME_DIR = WP_CONTENT_DIR . '/novembit-i18n';
 
+    const SLUG = 'novembit-i18n';
+
     private static $_cache_pool;
+
+    public static function getOptionName($option){
+        return self::SLUG.'_'.$option;
+    }
+
+    /**
+     * @param string $option
+     * @param null $default
+     *
+     * @return array|mixed|void
+     */
+    public static function getOption($option, $default = null)
+    {
+        if (self::isOptionConstant($option)) {
+            return constant(self::getOptionName($option));
+        }
+
+        return get_option(self::getOptionName($option), $default);
+    }
+
+
+    /**
+     * @param $option
+     *
+     * @return bool
+     */
+    public static function isOptionConstant($option)
+    {
+        return defined(self::getOptionName($option));
+    }
+
+    /**
+     * @param $option
+     * @param $value
+     *
+     * @return bool
+     */
+    public static function setOption($option, $value)
+    {
+        $option = self::getOptionName($option);
+        if (update_option($option, $value)) {
+            return true;
+        }
+
+        return false;
+    }
 
     public static function getCachePool()
     {
@@ -38,6 +86,7 @@ class Bootstrap
             $integration->run();
 
         }, 10);
+
     }
 
     private static function isWPCli()

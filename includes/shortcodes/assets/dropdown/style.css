@@ -1,0 +1,54 @@
+.novembit-i18n-translation-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.novembit-i18n-translation-dropdown:hover + .i18n-list,
+.novembit-i18n-translation-dropdown + .i18n-list:hover {
+    display: block;
+    vertical-align: top;
+}
+
+.novembit-i18n-translation-dropdown + .i18n-list {
+    display: none;
+    z-index: 999;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin: 0;
+    background: #fff;
+    width: 290px;
+    columns: 2;
+    padding: 10px !important;
+    box-shadow: 0 0 5px #999;
+    list-style: none;
+    opacity: 1;
+}
+
+.novembit-i18n-translation-dropdown + .i18n-list li {
+    padding: 0;
+    margin: 0;
+    font-size: 0;
+}
+
+.novembit-i18n-translation-dropdown + .i18n-list li a {
+    line-height: 1rem;
+    font-size: 1rem;
+}
+
+.novembit-i18n-translation-dropdown + .i18n-list li img {
+    width: 24px;
+    margin-right: 5px;
+    vertical-align: middle;
+    display:inline-block
+}
+
+.novembit-i18n-translation-dropdown + .i18n-list li span {
+    vertical-align: middle;
+    font-size: 1.3rem;
+    display:inline-block
+}
+
+.novembit-i18n-translation-dropdown + .i18n-label {
+    cursor: pointer;
+}
