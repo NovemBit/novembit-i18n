@@ -31,6 +31,12 @@ $config =
                 'type' => Option::TYPE_BOOL
             ]
         ),
+        'request_timeout'=>new Option('translation_method_request_timeout', 5,
+            [
+                'parent' => Bootstrap::SLUG,
+                'type' => Option::TYPE_TEXT
+            ]
+        ),
         'api_key' => new Option('translation_method_api_key', 'xxx', [
                 'parent' => Bootstrap::SLUG,
                 'type' => Option::TYPE_TEXT,

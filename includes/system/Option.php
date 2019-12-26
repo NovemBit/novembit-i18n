@@ -149,6 +149,81 @@ class Option
         return $str;
     }
 
+    private static function _getDataString(array $data): string
+    {
+        return implode(' ', array_map(
+            function ($k, $v) {
+                if (is_string($v)) {
+                    $v = htmlspecialchars($v);
+                }
+                return 'data-' . $k . '="' . $v . '"';
+            },
+            array_keys($data), $data
+        ));
+    }
+
+
+    /**
+     * Array to html attributes string
+     *
+     * @param $data
+     * @param string|null $parent
+     * @return string
+     */
+    private static function _getAttrsString($data, ?string $parent = null): string
+    {
+        return implode(' ', array_map(
+            function ($k, $v) use ($parent) {
+                if (is_string($v)) {
+                    $v = htmlspecialchars($v);
+                    if ($parent == null && is_int($k)) {
+                        return $v;
+                    }
+                    $k = ($parent ? $parent . '-' : '') . $k;
+                    return $k . '="' . $v . '"';
+                } elseif (is_array($v)) {
+                    return self::_getAttrsString($v, $k);
+                } elseif (empty($v)) {
+                    $k = ($parent ? $parent . '-' : '') . $k;
+                    return $k . '=""';
+                } else {
+                    $k = ($parent ? $parent . '-' : '') . $k;
+                    return $k . '="' . json_encode($v) . '"';
+                }
+
+            },
+            array_keys($data), $data
+        ));
+    }
+
+    private static function _tagOpen(string $tag, ?array $attrs = null)
+    {
+        if ($attrs !== null) {
+            $attrs = self::_getAttrsString($attrs);
+        }
+
+        $html = sprintf('<%s%s>',
+            $tag,
+            !empty($attrs) ? ' ' . $attrs : ''
+        );
+
+        return $html;
+    }
+
+    private static function _tagClose(string $tag)
+    {
+        $html = sprintf('</%s>', $tag);
+        return $html;
+    }
+
+    private static function _tag(string $tag, ?string $content = '', ?array $attrs = [])
+    {
+        $html = self::_tagOpen($tag, $attrs);
+        $html .= $content;
+        $html .= self::_tagClose($tag);
+        return $html;
+    }
+
     private static function _getField($params = [])
     {
         $parent = $params['parent'] ?? null;
@@ -173,43 +248,46 @@ class Option
 
         $data = $params['data'] ?? [];
         $data['name'] = $data['name'] ?? $name;
-        $data_str = implode(' ', array_map(
-            function ($k, $v) {
-                if (is_string($v)) {
-                    $v = htmlspecialchars($v);
-                }
-                return 'data-' . $k . '="' . $v . '"';
-            },
-            array_keys($data), $data
-        ));
+        $data_str = self::_getDataString($data);
 
         $html = '';
 
+
         switch ($type) {
             case self::TYPE_BOOL:
-                $html .= sprintf('<input value="{{boolean_false}}" type="hidden" name="%1$s"/>',
-                    $name
-                );
-                $html .= sprintf('<input class="%1$s" id="%2$s" value="{{boolean_true}}" type="checkbox" name="%2$s" %3$s %4$s %5$s %6$s/>',
-                    implode(' ', [$type, $method]),
-                    $name,
-                    $value ? 'checked' : '',
-                    $readonly_str,
-                    $disabled_str,
-                    $data_str
-                );
+                $html .= self::_tagOpen('input', ['value' => '{{boolean_false}}', 'type' => 'hidden', 'name' => $name]);
+
+                $html .= self::_tagOpen('input',
+                    [
+                        'class' => implode(' ', [$type, $method]),
+                        'id' => $name,
+                        'value' => '{{boolean_true}}',
+                        'type' => 'checkbox',
+                        'name' => $name,
+                        'data' => $data,
+                        $value ? 'checked' : '',
+                        $readonly_str,
+                        $disabled_str
+                    ]);
                 break;
             case self::TYPE_OBJECT:
                 $on_change = "var fields = this.parentElement.querySelectorAll('[name]'); for(var i=0; i<fields.length; i++){ var field= fields[i]; if(this.value!=null){field.removeAttribute('disabled')}; if(field.getAttribute('data-name') == null){ field.setAttribute('data-name',field.getAttribute('name')) } var attr = field.getAttribute('data-name'); attr = attr.replace('{key}','{{encode_key}}'+btoa(this.value)); fields[i].setAttribute('name',attr); }";
 
                 if ($template != null && !empty($template)) {
                     foreach ($value as $key => $_value) {
-                        $html .= '<div class="group">';
-                        $html .= '<button class="remove" onclick="this.parentElement.remove()">X</button>';
-                        $html .= sprintf('<input class="key full" type="text" placeholder="key" value="%s" onchange="%s" >',
-                            htmlspecialchars($key),
-                            $on_change);
-                        $html .= '<div class="group">';
+                        $html .= self::_tagOpen('div', ['class' => 'group']);
+                        $html .= self::_tag('button', 'X',
+                            ['class' => 'remove', 'onclick' => 'this.parentElement.remove()']);
+
+                        $html .= self::_tagOpen('input', [
+                            'class' => 'key full',
+                            'type' => 'text',
+                            'placeholder' => 'key',
+                            'value' => $key,
+                            'onchange' => $on_change
+                        ]);
+
+                        $html .= self::_tagOpen('div', ['class' => 'group']);
 
                         foreach ($template as $_key => $_field) {
 
@@ -219,31 +297,38 @@ class Option
 
                             $html .= self::_getField($_field);
                         }
-                        $html .= "</div>";
-                        $html .= "</div>";
-
+                        $html .= self::_tagClose('div');
+                        $html .= self::_tagClose('div');
                     }
                 } elseif ($field != null && !empty($field)) {
                     foreach ($value as $key => $_value) {
                         $_field = $field;
-                        $html .= "<div class='group'>";
-                        $html .= '<button class="remove" onclick="this.parentElement.remove()">X</button>';
-                        $html .= sprintf('<input class="key full" type="text" placeholder="key" value="%s" onchange="%s" >',
-                            htmlspecialchars($key),
-                            $on_change);
+                        $html .= self::_tagOpen('div', ['class' => 'group']);
+                        $html .= self::_tag('button', 'X',
+                            ['class' => 'remove', 'onclick' => 'this.parentElement.remove()']);
+
+                        $html .= self::_tagOpen('input', [
+                            'class' => 'key full',
+                            'type' => 'text',
+                            'placeholder' => 'key',
+                            'value' => $key,
+                            'onchange' => $on_change
+                        ]);
 
                         $_field['value'] = $_value;
                         $_field['data']['name'] = $name . '[{key}]';
                         $_field['name'] = $name . '[' . self::_encodeKey($key) . ']';
                         $html .= self::_getField($_field);
 
-                        $html .= "</div>";
+                        $html .= self::_tagClose('div');
                     }
                 }
 
-                $html .= "<div class='group'>";
-                $html .= sprintf('<input class="key full" type="text" placeholder="key" onchange="%s">', $on_change);
-                $html .= "<div class='group'>";
+                $html .= self::_tagOpen('div', ['class' => 'group']);
+                $html .= self::_tagOpen('input',
+                    ['class' => 'key full', 'type' => 'text', 'placeholder' => 'key', 'onchange' => $on_change]);
+
+                $html .= self::_tagOpen('div', ['class' => 'group']);
 
                 if ($template != null && !empty($template)) {
 
@@ -257,13 +342,13 @@ class Option
                     $field['disabled'] = true;
                     $html .= self::_getField($field);
                 }
-                $html .= "</div>";
+                $html .= self::_tagClose('div');
 
-                $html .= "</div>";
+                $html .= self::_tagClose('div');
                 break;
             case self::TYPE_GROUP:
                 if (!empty($template)) {
-                    $html .= "<div class='group'>";
+                    $html .= self::_tagOpen('div', ['class' => 'group']);
 
                     if ($method == self::METHOD_SINGLE) {
                         foreach ($template as $key => $_field) {
@@ -276,7 +361,7 @@ class Option
 
                         $last_key = count($value) + 1;
                         foreach ($value as $key => $_value) {
-                            $html .= "<div class='group'>";
+                            $html .= self::_tagOpen('div', ['class' => 'group']);
 
                             foreach ($_value as $_key => $__value) {
                                 $_field = $template[$_key];
@@ -284,17 +369,17 @@ class Option
                                 $_field['value'] = $__value;
                                 $html .= self::_getField($_field);
                             }
-                            $html .= "</div>";
+                            $html .= self::_tagClose('div');
 
                         }
-                        $html .= '<div class="group">';
+                        $html .= self::_tagOpen('div', ['class' => 'group']);
                         foreach ($template as $key => $_field) {
                             $_field['name'] = $name . '[' . $last_key . ']' . '[' . $key . ']';
                             $html .= self::_getField($_field);
                         }
-                        $html .= "</div>";
+                        $html .= self::_tagClose('div');
                     }
-                    $html .= "</div>";
+                    $html .= self::_tagClose('div');
 
                 }
                 break;
@@ -302,82 +387,122 @@ class Option
             default:
                 if (!empty($values)) {
                     if ($markup == null || $markup == self::MARKUP_SELECT) {
-                        $html .= sprintf('<select class="%1$s" id="%2$s" name="%3$s" %4$s %5$s %6$s %7$s>',
-                            implode(' ', [$type, $method, 'full']),
-                            $name,
-                            $name . ($method == self::METHOD_MULTIPLE ? '[]' : ''),
-                            $method == self::METHOD_MULTIPLE ? 'multiple="multiple"' : '',
-                            $data_str,
+                        $html .= self::_tagOpen('select', [
+                            'class' => implode(' ', [$type, $method, 'full']),
+                            'id' => $name,
+                            'name' => $name . ($method == self::METHOD_MULTIPLE ? '[]' : ''),
+                            $method == self::METHOD_MULTIPLE ? 'multiple' : '',
+                            'data' => $data,
                             $disabled_str,
                             $readonly_str
-                        );
-                        $html .= '<option>- Select -</option>';
+                        ]);
+                        $html .= self::_tag('option', '-- Select --');
+                        //$html .= '<option>- Select -</option>';
                         $open_tag_select = true;
                     }
 
                     foreach ($values as $key => $_value) {
                         if ($markup == null || $markup == self::MARKUP_SELECT) {
 
-                            $html .= sprintf('<option value="%s" %s>%s</option>',
-                                htmlspecialchars($key),
-                                (($key == $value) || (is_array($value) && in_array($key, $value))) ? 'selected' : '',
-                                $_value
-                            );
+                            $html .= self::_tag('option', $_value, [
+                                'value' => $key,
+                                (($key == $value) || (is_array($value) && in_array($key, $value))) ? 'selected' : ''
+                            ]);
+
                         } elseif ($markup == self::MARKUP_CHECKBOX) {
                             if ($method == self::METHOD_MULTIPLE) {
-                                $html .= sprintf('<div class="group"><label><input type="checkbox" name="%1$s" value="%2$s" %3$s %4$s %5$s %6$s>%7$s</label></div>',
-                                    $name . ($method == self::METHOD_MULTIPLE ? '[]' : ''),
-                                    htmlspecialchars($key),
-                                    (($key == $value) || (is_array($value) && in_array($key, $value))) ? 'checked' : '',
-                                    $data_str,
-                                    $disabled_str,
-                                    $readonly_str,
-                                    $_value
+                                $html .= self::_tag('div',
+                                    self::_tag('label',
+                                        self::_tagOpen('input', [
+                                            'type' => 'checkbox',
+                                            'name' => $name . ($method == self::METHOD_MULTIPLE ? '[]' : ''),
+                                            'value' => $key,
+                                            'data' => $data,
+                                            (($key == $value) || (is_array($value) && in_array($key,
+                                                        $value))) ? 'checked' : '',
+                                            $disabled_str,
+                                            $readonly_str,
+                                        ]) . $_value
+                                    )
+                                    , ['class' => 'group']
                                 );
                             } else {
-                                $html .= sprintf('<div class="group"><label><input type="radio" name="%1$s" value="%2$s" %3$s %4$s %5$s %6$s>%7$s</label></div>',
-                                    $name,
-                                    htmlspecialchars($key),
-                                    (($key == $value) || (is_array($value) && in_array($key, $value))) ? 'checked' : '',
-                                    $data_str,
-                                    $disabled_str,
-                                    $readonly_str,
-                                    $_value
+                                $html .= self::_tag('div',
+                                    self::_tag('label',
+                                        self::_tagOpen('input', [
+                                            'type' => 'radio',
+                                            'name' => $name,
+                                            'value' => $key,
+                                            (($key == $value) || (is_array($value) && in_array($key,
+                                                        $value))) ? 'checked' : '',
+                                            'data' => $data,
+                                            $disabled_str,
+                                            $readonly_str,
+                                        ]) . $_value
+                                    )
+                                    , ['class' => 'group']
                                 );
                             }
                         }
                     }
 
                     if (isset($open_tag_select)) {
-                        $html .= '</select>';
+                        $html .= self::_tagClose('select');
                     }
 
                 } elseif ($method == self::METHOD_MULTIPLE) {
+                    $type = 'text';
+
+                    if ($markup == self::MARKUP_NUMBER) {
+                        $type = 'number';
+                    }
+
                     foreach ($value as $key => $_value) {
                         if (!empty($_value)) {
-                            $html .= sprintf('<div class="group"><input name="%1$s" class="full" type="text" value="%2$s" %3$s %4$s %5$s>%6$s</div>',
-                                $name . '[]',
-                                htmlspecialchars($_value),
-                                $data_str,
-                                $disabled_str,
-                                $readonly_str,
-                                '<button class="remove" onclick="this.parentElement.remove()">X</button>'
+                            $html .= self::_tag('div',
+                                self::_tagOpen('input',
+                                    [
+                                        'name' => $name . '[]',
+                                        'class' => 'full',
+                                        'type' => $type,
+                                        'value' => $_value,
+                                        $disabled_str,
+                                        $readonly_str,
+                                    ]) . self::_tag('button', 'X',
+                                    ['class' => 'remove', 'onclick' => 'this.parentElement.remove()']),
+                                ['class' => 'group']
                             );
                         }
                     }
-                    $html .= sprintf('<div class="group" onclick="var e =this.querySelector(\'input[name]\'); e.disabled = false; e.focus()"><input name="%1$s" class="full" type="text" disabled></div>',
-                        $name . '[]'
+                    $html .= self::_tag('div',
+                        self::_tagOpen('input',
+                            ['name' => $name . '[]', 'class' => 'full', 'type' => 'text', 'disabled']),
+                        [
+                            'class' => 'group',
+                            'onclick' => "var e=this.querySelector('input[name]'); e.disabled = false; e.focus()"
+                        ]
                     );
-                    $html .= sprintf('<div class="group"><button class="button button-primary" type="button" onclick="%s">Add new</button></div>',
-                        "var c = this.parentElement.previousSibling.cloneNode(true); c.children[0].value=''; this.parentElement.parentElement.insertBefore(c,this.parentElement);");
+
+                    $html .= self::_tag('div',
+                        self::_tag('button', '+ Add new', [
+                            'type' => 'button',
+                            'class' => 'button button-primary',
+                            'onclick' => "var c = this.parentElement.previousSibling.cloneNode(true); c.children[0].value=''; this.parentElement.parentElement.insertBefore(c,this.parentElement);"
+                        ])
+                        , ['class' => 'group']);
+
+
                 } elseif ($method != self::METHOD_MULTIPLE) {
-                    $html .= sprintf('<input id="%1$s" class="full" type="text" name="%1$s" value="%2$s" %3$s %4$s %5$s/>',
-                        $name,
-                        htmlspecialchars($value),
-                        $data_str,
+                    $html .= self::_tagOpen('input', [
+                        'id' => $name,
+                        'class' => 'full',
+                        'type' => 'text',
+                        'name' => $name,
+                        'value' => $value,
+                        'data' => $data,
                         $disabled_str,
                         $readonly_str
-                    );
+                    ]);
                 } else {
                     $html .= "Not handled";
                 }
