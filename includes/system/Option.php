@@ -341,7 +341,9 @@ class Option
                         );
                     }
                 }
+
                 $_html = '';
+
                 if ($template != null && !empty($template)) {
                     foreach ($template as $key => $_field) {
                         $_field['name'] = $name . '[{key}]' . '[' . $key . ']';
@@ -493,7 +495,7 @@ class Option
                             [
                                 'name' => $name . '[]',
                                 'class' => 'full',
-                                'type' => 'text',
+                                'type' => $input_type,
                                 'disabled'
                             ] + $input_attrs),
                         ['onclick' => "var e=this.querySelector('input[name]'); e.disabled = false; e.focus()"]
@@ -508,10 +510,15 @@ class Option
                     );
 
                 } elseif ($method != self::METHOD_MULTIPLE) {
+                    $input_type = 'text';
+
+                    if ($markup == self::MARKUP_NUMBER) {
+                        $input_type = 'number';
+                    }
                     $html .= self::_tagOpen('input', [
                         'id' => $name,
                         'class' => 'full',
-                        'type' => 'text',
+                        'type' => $input_type,
                         'name' => $name,
                         'value' => $value,
                         'data' => $data,
