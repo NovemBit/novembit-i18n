@@ -122,6 +122,7 @@ class Option
             'disabled' => $disabled,
             'readonly' => $readonly
         ]);
+
         return $html;
     }
 
@@ -134,8 +135,10 @@ class Option
     {
         if (strpos($str, '{{encode_key}}') === 0) {
             $str = preg_replace('/^{{encode_key}}/', '', $str);
+
             return base64_decode($str);
         }
+
         return $str;
     }
 
@@ -146,6 +149,7 @@ class Option
         } elseif ($str == '{{boolean_false}}') {
             return false;
         }
+
         return $str;
     }
 
@@ -156,6 +160,7 @@ class Option
                 if (is_string($v)) {
                     $v = htmlspecialchars($v);
                 }
+
                 return 'data-' . $k . '="' . $v . '"';
             },
             array_keys($data), $data
@@ -168,6 +173,7 @@ class Option
      *
      * @param $data
      * @param string|null $parent
+     *
      * @return string
      */
     private static function _getAttrsString($data, ?string $parent = null): string
@@ -180,14 +186,17 @@ class Option
                         return $v;
                     }
                     $k = ($parent ? $parent . '-' : '') . $k;
+
                     return $k . '="' . $v . '"';
                 } elseif (is_array($v)) {
                     return self::_getAttrsString($v, $k);
                 } elseif (empty($v)) {
                     $k = ($parent ? $parent . '-' : '') . $k;
+
                     return $k . '=""';
                 } else {
                     $k = ($parent ? $parent . '-' : '') . $k;
+
                     return $k . '="' . json_encode($v) . '"';
                 }
 
@@ -213,18 +222,28 @@ class Option
     private static function _tagClose(string $tag)
     {
         $html = sprintf('</%s>', $tag);
+
         return $html;
     }
 
-    private static function _tag(string $tag, ?string $content = '', ?array $attrs = [])
+    private static function _tag(string $tag, ?string $content = '', ?array $attrs = []): string
     {
         $html = self::_tagOpen($tag, $attrs);
         $html .= $content;
         $html .= self::_tagClose($tag);
+
         return $html;
     }
 
-    private static function _getField($params = [])
+    private static function _group(string $content, array $attrs = []): string
+    {
+        $html = self::_tagOpen('div', ['class' => 'group'] + $attrs);
+        $html .= $content;
+        $html .= self::_tagClose('div');
+        return $html;
+    }
+
+    private static function _getField($params = []): string
     {
         $parent = $params['parent'] ?? null;
         $type = $params['type'] ?? null;
@@ -237,6 +256,8 @@ class Option
         $value = $params['value'] ?? null;
         $name = $params['name'] ?? null;
 
+        $input_attrs = $params['input_attrs'] ?? [];
+
         if ($parent != null) {
             $name = $parent . '[' . $name . ']';
         }
@@ -248,14 +269,14 @@ class Option
 
         $data = $params['data'] ?? [];
         $data['name'] = $data['name'] ?? $name;
-        $data_str = self::_getDataString($data);
 
         $html = '';
 
 
         switch ($type) {
             case self::TYPE_BOOL:
-                $html .= self::_tagOpen('input', ['value' => '{{boolean_false}}', 'type' => 'hidden', 'name' => $name]);
+                $html .= self::_tagOpen('input',
+                    ['value' => '{{boolean_false}}', 'type' => 'hidden', 'name' => $name]);
 
                 $html .= self::_tagOpen('input',
                     [
@@ -268,136 +289,130 @@ class Option
                         $value ? 'checked' : '',
                         $readonly_str,
                         $disabled_str
-                    ]);
+                    ] + $input_attrs);
                 break;
             case self::TYPE_OBJECT:
                 $on_change = "var fields = this.parentElement.querySelectorAll('[name]'); for(var i=0; i<fields.length; i++){ var field= fields[i]; if(this.value!=null){field.removeAttribute('disabled')}; if(field.getAttribute('data-name') == null){ field.setAttribute('data-name',field.getAttribute('name')) } var attr = field.getAttribute('data-name'); attr = attr.replace('{key}','{{encode_key}}'+btoa(this.value)); fields[i].setAttribute('name',attr); }";
 
                 if ($template != null && !empty($template)) {
                     foreach ($value as $key => $_value) {
-                        $html .= self::_tagOpen('div', ['class' => 'group']);
-                        $html .= self::_tag('button', 'X',
-                            ['class' => 'remove', 'onclick' => 'this.parentElement.remove()']);
-
-                        $html .= self::_tagOpen('input', [
-                            'class' => 'key full',
-                            'type' => 'text',
-                            'placeholder' => 'key',
-                            'value' => $key,
-                            'onchange' => $on_change
-                        ]);
-
-                        $html .= self::_tagOpen('div', ['class' => 'group']);
-
+                        $_html = '';
                         foreach ($template as $_key => $_field) {
-
                             $_field['value'] = $_value[$_key] ?? null;
                             $_field['data']['name'] = $name . '[{key}]' . '[' . $_key . ']';
                             $_field['name'] = $name . '[' . self::_encodeKey($key) . ']' . '[' . $_key . ']';
-
-                            $html .= self::_getField($_field);
+                            $_html .= self::_getField($_field);
                         }
-                        $html .= self::_tagClose('div');
-                        $html .= self::_tagClose('div');
+
+                        $html .= self::_group(
+                            implode('', [
+                                self::_tag('button', 'X',
+                                    ['class' => 'remove', 'onclick' => 'this.parentElement.remove()']),
+                                self::_tagOpen('input', [
+                                    'class' => 'key full',
+                                    'type' => 'text',
+                                    'placeholder' => 'key',
+                                    'value' => $key,
+                                    'onchange' => $on_change
+                                ]),
+                                self::_group($_html)
+                            ])
+                        );
                     }
                 } elseif ($field != null && !empty($field)) {
                     foreach ($value as $key => $_value) {
                         $_field = $field;
-                        $html .= self::_tagOpen('div', ['class' => 'group']);
-                        $html .= self::_tag('button', 'X',
-                            ['class' => 'remove', 'onclick' => 'this.parentElement.remove()']);
-
-                        $html .= self::_tagOpen('input', [
-                            'class' => 'key full',
-                            'type' => 'text',
-                            'placeholder' => 'key',
-                            'value' => $key,
-                            'onchange' => $on_change
-                        ]);
-
                         $_field['value'] = $_value;
                         $_field['data']['name'] = $name . '[{key}]';
                         $_field['name'] = $name . '[' . self::_encodeKey($key) . ']';
-                        $html .= self::_getField($_field);
-
-                        $html .= self::_tagClose('div');
+                        $html .= self::_group(
+                            implode('', [
+                                self::_tag('button', 'X',
+                                    ['class' => 'remove', 'onclick' => 'this.parentElement.remove()']),
+                                self::_tagOpen('input', [
+                                    'class' => 'key full',
+                                    'type' => 'text',
+                                    'placeholder' => 'key',
+                                    'value' => $key,
+                                    'onchange' => $on_change
+                                ]),
+                                self::_getField($_field)
+                            ])
+                        );
                     }
                 }
-
-                $html .= self::_tagOpen('div', ['class' => 'group']);
-                $html .= self::_tagOpen('input',
-                    ['class' => 'key full', 'type' => 'text', 'placeholder' => 'key', 'onchange' => $on_change]);
-
-                $html .= self::_tagOpen('div', ['class' => 'group']);
-
+                $_html = '';
                 if ($template != null && !empty($template)) {
-
                     foreach ($template as $key => $_field) {
                         $_field['name'] = $name . '[{key}]' . '[' . $key . ']';
                         $_field['disabled'] = true;
-                        $html .= self::_getField($_field);
+                        $_html .= self::_getField($_field);
                     }
                 } elseif ($field != null && !empty($field)) {
                     $field['name'] = $name . '[{key}]';
                     $field['disabled'] = true;
-                    $html .= self::_getField($field);
+                    $_html .= self::_getField($field);
                 }
-                $html .= self::_tagClose('div');
 
-                $html .= self::_tagClose('div');
+                $html .= self::_group(implode('', [
+                    self::_tagOpen('input',
+                        ['class' => 'key full', 'type' => 'text', 'placeholder' => 'key', 'onchange' => $on_change]),
+                    self::_group($_html)
+                ]));
+
                 break;
             case self::TYPE_GROUP:
                 if (!empty($template)) {
-                    $html .= self::_tagOpen('div', ['class' => 'group']);
-
+                    $_html = '';
                     if ($method == self::METHOD_SINGLE) {
                         foreach ($template as $key => $_field) {
 
                             $_field['name'] = $name . '[' . $key . ']';
                             $_field['value'] = $value[$key];
-                            $html .= self::_getField($_field);
+                            $_html .= self::_getField($_field);
                         }
                     } elseif ($method == self::METHOD_MULTIPLE) {
 
                         $last_key = count($value) + 1;
                         foreach ($value as $key => $_value) {
-                            $html .= self::_tagOpen('div', ['class' => 'group']);
-
+                            $__html = '';
                             foreach ($_value as $_key => $__value) {
                                 $_field = $template[$_key];
                                 $_field['name'] = $name . '[' . $key . ']' . '[' . $_key . ']';
                                 $_field['value'] = $__value;
-                                $html .= self::_getField($_field);
+                                $__html .= self::_getField($_field);
                             }
-                            $html .= self::_tagClose('div');
-
+                            $_html .= self::_group($__html);
                         }
-                        $html .= self::_tagOpen('div', ['class' => 'group']);
+
+                        $__html = '';
                         foreach ($template as $key => $_field) {
                             $_field['name'] = $name . '[' . $last_key . ']' . '[' . $key . ']';
-                            $html .= self::_getField($_field);
+                            $__html .= self::_getField($_field);
                         }
-                        $html .= self::_tagClose('div');
+                        $_html .= self::_group($__html);
                     }
-                    $html .= self::_tagClose('div');
-
+                    $html .= self::_group($_html);
                 }
                 break;
 
             default:
                 if (!empty($values)) {
                     if ($markup == null || $markup == self::MARKUP_SELECT) {
-                        $html .= self::_tagOpen('select', [
-                            'class' => implode(' ', [$type, $method, 'full']),
-                            'id' => $name,
-                            'name' => $name . ($method == self::METHOD_MULTIPLE ? '[]' : ''),
-                            $method == self::METHOD_MULTIPLE ? 'multiple' : '',
-                            'data' => $data,
-                            $disabled_str,
-                            $readonly_str
-                        ]);
+                        $html .= self::_tagOpen(
+                            'select',
+                            [
+                                'class' => implode(' ',
+                                    [$type, $method, 'full']),
+                                'id' => $name,
+                                'name' => $name . ($method == self::METHOD_MULTIPLE ? '[]' : ''),
+                                $method == self::METHOD_MULTIPLE ? 'multiple' : '',
+                                'data' => $data,
+                                $disabled_str,
+                                $readonly_str
+                            ] + $input_attrs
+                        );
                         $html .= self::_tag('option', '-- Select --');
-                        //$html .= '<option>- Select -</option>';
                         $open_tag_select = true;
                     }
 
@@ -406,12 +421,13 @@ class Option
 
                             $html .= self::_tag('option', $_value, [
                                 'value' => $key,
-                                (($key == $value) || (is_array($value) && in_array($key, $value))) ? 'selected' : ''
+                                (($key == $value) || (is_array($value) && in_array($key,
+                                            $value))) ? 'selected' : ''
                             ]);
 
                         } elseif ($markup == self::MARKUP_CHECKBOX) {
                             if ($method == self::METHOD_MULTIPLE) {
-                                $html .= self::_tag('div',
+                                $html .= self::_group(
                                     self::_tag('label',
                                         self::_tagOpen('input', [
                                             'type' => 'checkbox',
@@ -424,10 +440,9 @@ class Option
                                             $readonly_str,
                                         ]) . $_value
                                     )
-                                    , ['class' => 'group']
                                 );
                             } else {
-                                $html .= self::_tag('div',
+                                $html .= self::_group(
                                     self::_tag('label',
                                         self::_tagOpen('input', [
                                             'type' => 'radio',
@@ -440,7 +455,6 @@ class Option
                                             $readonly_str,
                                         ]) . $_value
                                     )
-                                    , ['class' => 'group']
                                 );
                             }
                         }
@@ -451,46 +465,47 @@ class Option
                     }
 
                 } elseif ($method == self::METHOD_MULTIPLE) {
-                    $type = 'text';
+                    $input_type = 'text';
 
                     if ($markup == self::MARKUP_NUMBER) {
-                        $type = 'number';
+                        $input_type = 'number';
                     }
 
                     foreach ($value as $key => $_value) {
                         if (!empty($_value)) {
-                            $html .= self::_tag('div',
+                            $html .= self::_group(
                                 self::_tagOpen('input',
                                     [
                                         'name' => $name . '[]',
                                         'class' => 'full',
-                                        'type' => $type,
+                                        'type' => $input_type,
                                         'value' => $_value,
                                         $disabled_str,
                                         $readonly_str,
-                                    ]) . self::_tag('button', 'X',
-                                    ['class' => 'remove', 'onclick' => 'this.parentElement.remove()']),
-                                ['class' => 'group']
+                                    ] + $input_attrs) . self::_tag('button', 'X',
+                                    ['class' => 'remove', 'onclick' => 'this.parentElement.remove()'])
                             );
                         }
                     }
-                    $html .= self::_tag('div',
+
+                    $html .= self::_group(
                         self::_tagOpen('input',
-                            ['name' => $name . '[]', 'class' => 'full', 'type' => 'text', 'disabled']),
-                        [
-                            'class' => 'group',
-                            'onclick' => "var e=this.querySelector('input[name]'); e.disabled = false; e.focus()"
-                        ]
+                            [
+                                'name' => $name . '[]',
+                                'class' => 'full',
+                                'type' => 'text',
+                                'disabled'
+                            ] + $input_attrs),
+                        ['onclick' => "var e=this.querySelector('input[name]'); e.disabled = false; e.focus()"]
                     );
 
-                    $html .= self::_tag('div',
+                    $html .= self::_group(
                         self::_tag('button', '+ Add new', [
                             'type' => 'button',
                             'class' => 'button button-primary',
                             'onclick' => "var c = this.parentElement.previousSibling.cloneNode(true); c.children[0].value=''; this.parentElement.parentElement.insertBefore(c,this.parentElement);"
                         ])
-                        , ['class' => 'group']);
-
+                    );
 
                 } elseif ($method != self::METHOD_MULTIPLE) {
                     $html .= self::_tagOpen('input', [
@@ -504,7 +519,7 @@ class Option
                         $readonly_str
                     ]);
                 } else {
-                    $html .= "Not handled";
+                    $html .= self::_group("Not handled!");
                 }
                 break;
         }
@@ -545,6 +560,7 @@ class Option
             }
             $return[$key] = $value;
         }
+
         return $return;
     }
 
