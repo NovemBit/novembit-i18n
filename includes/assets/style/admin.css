@@ -1,5 +1,6 @@
 .novembit-i18n-wrap {
     font-size: 16px;
+    max-width: 900px;
 }
 
 ul.novembit-i18n-admin-nested-fields > ul.novembit-i18n-admin-nested-fields > ul.novembit-i18n-admin-nested-fields {
