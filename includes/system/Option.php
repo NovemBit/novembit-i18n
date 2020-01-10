@@ -577,7 +577,9 @@ class Option
 
         foreach ($array as $k => $v) {
             if (is_array($v)) {
-                echo '<li class="label">' . ucfirst($k) . "</li>";
+                $label = str_replace('_',' ',ucfirst($k));
+
+                echo '<li class="label">' . $label . "</li>";
                 self::printArrayList($v);
                 continue;
             }
@@ -640,8 +642,7 @@ class Option
 
         ?>
         <div class="wrap <?php echo Bootstrap::SLUG; ?>-wrap">
-            <h1>i18n Configuration</h1>
-
+            <h2>Configuration</h2>
             <form method="post" action="">
                 <?php self::printArrayList($_fields); ?>
                 <input type="hidden" name="<?php echo Bootstrap::SLUG; ?>-form" value="1">
