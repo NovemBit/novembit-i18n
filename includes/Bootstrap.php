@@ -13,8 +13,9 @@ class Bootstrap
 
     private static $_cache_pool;
 
-    public static function getOptionName($option){
-        return self::SLUG.'_'.$option;
+    public static function getOptionName($option)
+    {
+        return self::SLUG . '_' . $option;
     }
 
     /**
@@ -59,20 +60,13 @@ class Bootstrap
         return false;
     }
 
+    public static function setCachePool($pool)
+    {
+        self::$_cache_pool = $pool;
+    }
+
     public static function getCachePool()
     {
-
-        if (!isset(self::$_cache_pool)) {
-
-            if (!class_exists('Memcached')) {
-                return null;
-            }
-
-            $client = new \Memcached();
-            $client->addServer('localhost', 11211);
-            self::$_cache_pool = new MemcachedCachePool($client);
-        }
-
         return self::$_cache_pool;
     }
 

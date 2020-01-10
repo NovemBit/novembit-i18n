@@ -4,6 +4,9 @@
 namespace NovemBit\wp\plugins\i18n;
 
 
+use Cache\Adapter\Memcached\MemcachedCachePool;
+use NovemBit\wp\plugins\i18n\system\Option;
+
 class Integration extends system\Integration
 {
 
@@ -14,12 +17,83 @@ class Integration extends system\Integration
         \NovemBit\wp\plugins\i18n\integrations\TheSEOFramework::class
     ];
 
+    public $options = [];
+
     protected function init(): void
     {
+
+        $this->options = [
+            'performance' => [
+                'cache_pool' => [
+                    'type' => new Option('performance_cache_pool_type', 'file',
+                        [
+                            'parent' => Bootstrap::SLUG,
+                            'type' => Option::TYPE_TEXT,
+                            'method' => Option::METHOD_SINGLE,
+                            'values' => [
+                                'file' => 'File cache',
+                                'memcached' => 'Memcached'
+                            ],
+                        ]
+                    ),
+                    'pools' => [
+                        'memcached' => [
+                            'host' => new Option('performance_cache_pool_pools_memcached_host', 'localhost',
+                                [
+                                    'parent' => Bootstrap::SLUG,
+                                    'type' => Option::TYPE_TEXT,
+                                    'method' => Option::METHOD_SINGLE
+                                ]
+                            ),
+                            'port' => new Option('performance_cache_pool_pools_memcached_port', '11211',
+                                [
+                                    'parent' => Bootstrap::SLUG,
+                                    'type' => Option::TYPE_TEXT,
+                                    'markup' => Option::MARKUP_NUMBER,
+                                    'method' => Option::METHOD_SINGLE
+                                ]
+                            )
+                        ],
+                    ]
+                ]
+            ]
+        ];
+
+        $this->setBootstrapCachePool();
+
         add_action('admin_bar_menu', [$this, 'adminBarMenu'], 100);
 
         if (is_admin()) {
             $this->adminInit();
+        }
+    }
+
+    private function setBootstrapCachePool(){
+
+        $options = $this->options;
+
+        array_walk_recursive($options, function (&$item, $key) {
+            if ($item instanceof Option) {
+                $item = $item->getValue();
+            }
+        });
+
+        if($options['performance']['cache_pool']['type'] == 'memcached'){
+            if (!class_exists('Memcached')) {
+                return null;
+            }
+
+            $client = new \Memcached();
+
+            $host = $options['performance']['cache_pool']['pools']['memcached']['host'] ?? 'localhost';
+            $port = $options['performance']['cache_pool']['pools']['memcached']['port'] ?? 11211;
+
+            $client->addServer($host, $port);
+
+            $pool = new MemcachedCachePool($client);
+
+            Bootstrap::setCachePool($pool);
+
         }
     }
 
@@ -68,6 +142,30 @@ class Integration extends system\Integration
             'dashicons-admin-site-alt',
             75
         );
+
+
+        add_submenu_page(
+            Bootstrap::SLUG,
+            'NovemBit i18n - Performance',
+            'Performance',
+            'manage_options',
+            Bootstrap::SLUG . '-performance',
+            [$this, 'adminContentPerformance'],
+            1
+        );
+    }
+
+    public function adminContentPerformance()
+    {
+        ?>
+        <div class="wrap">
+
+            <h1>Performance</h1>
+            <?php
+            Option::printForm(Bootstrap::SLUG, $this->options);
+            ?>
+        </div>
+        <?php
     }
 
     public function adminContent()
