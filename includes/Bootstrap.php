@@ -2,8 +2,6 @@
 
 namespace NovemBit\wp\plugins\i18n;
 
-use Cache\Adapter\Memcached\MemcachedCachePool;
-
 class Bootstrap
 {
 
@@ -72,15 +70,10 @@ class Bootstrap
 
     public static function init()
     {
-
         add_action('init', function () {
-
             $integration = new Integration();
-
             $integration->run();
-
         }, 10);
-
     }
 
     private static function isWPCli()
