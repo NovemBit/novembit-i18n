@@ -21,7 +21,6 @@ class Integration extends system\Integration
 
     protected function init(): void
     {
-
         $this->options = [
             'performance' => [
                 'cache_pool' => [
@@ -45,7 +44,7 @@ class Integration extends system\Integration
                                     'method' => Option::METHOD_SINGLE
                                 ]
                             ),
-                            'port' => new Option('performance_cache_pool_pools_memcached_port', '11211',
+                            'port' => new Option('performance_cache_pool_pools_memcached_port', 11211,
                                 [
                                     'parent' => Bootstrap::SLUG,
                                     'type' => Option::TYPE_TEXT,
@@ -68,7 +67,11 @@ class Integration extends system\Integration
         }
     }
 
-    private function setBootstrapCachePool(){
+    /**
+     *
+     */
+    private function setBootstrapCachePool()
+    {
 
         $options = $this->options;
 
@@ -78,10 +81,9 @@ class Integration extends system\Integration
             }
         });
 
-        if($options['performance']['cache_pool']['type'] == 'memcached'){
-            if (!class_exists('Memcached')) {
-                return null;
-            }
+        $type = $options['performance']['cache_pool']['type'] ?? 'file';
+
+        if ($type == 'memcached' && class_exists('Memcached')) {
 
             $client = new \Memcached();
 
