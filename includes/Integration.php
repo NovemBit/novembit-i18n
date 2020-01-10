@@ -65,7 +65,7 @@ class Integration extends system\Integration
             'manage_options',
             Bootstrap::SLUG,
             [$this, 'adminContent'],
-            'dashicons-schedule',
+            'dashicons-admin-site-alt',
             75
         );
     }
