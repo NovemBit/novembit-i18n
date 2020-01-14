@@ -4,6 +4,9 @@ use NovemBit\i18n\system\helpers\Languages;
 use NovemBit\wp\plugins\i18n\Bootstrap;
 use NovemBit\wp\plugins\i18n\system\Option;
 
+if(!class_exists(NovemBit\i18n\system\helpers\Languages::class)){
+    include "vendor/novembit/i18n/src/system/helpers/Languages.php";
+}
 $languages = Languages::getLanguages();
 $languages_list = [];
 foreach ($languages as $language){

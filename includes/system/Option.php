@@ -534,6 +534,11 @@ class Option
         return $html;
     }
 
+    /**
+     * @param $parent
+     * @param string $method
+     * @return array|mixed|null
+     */
     public static function getFormData($parent, $method = 'post')
     {
 
@@ -553,6 +558,10 @@ class Option
 
     }
 
+    /**
+     * @param array $input
+     * @return array
+     */
     public static function decodeKeys(array $input)
     {
         $return = array();
@@ -571,6 +580,9 @@ class Option
         return $return;
     }
 
+    /**
+     * @param $array
+     */
     private static function printArrayList($array)
     {
         echo '<ul class="' . Bootstrap::SLUG . '-admin-nested-fields">';
@@ -590,6 +602,11 @@ class Option
         echo "</ul>";
     }
 
+    /**
+     * @param array $arr
+     * @param callable $callback
+     * @param array $route
+     */
     private static function arrayWalkWithRoute(
         array &$arr,
         callable $callback,
@@ -606,6 +623,10 @@ class Option
         }
     }
 
+    /**
+     * @param $parent
+     * @param $options
+     */
     public static function printForm($parent, $options)
     {
 

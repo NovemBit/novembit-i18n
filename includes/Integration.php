@@ -125,9 +125,9 @@ class Integration extends system\Integration
         /** @var \WP_Admin_Bar $admin_bar */
         $admin_bar->add_menu(array(
             'id' => Bootstrap::SLUG,
-            'title' => 'NovemBit i18n',
+            'title' => __('NovemBit i18n', 'novembit-18n'),
             'meta' => array(
-                'title' => 'NovemBit i18n',
+                'title' => __('NovemBit i18n', 'novembit-18n'),
             ),
         ));
     }
@@ -145,11 +145,10 @@ class Integration extends system\Integration
             75
         );
 
-
         add_submenu_page(
             Bootstrap::SLUG,
-            'NovemBit i18n - Performance',
-            'Performance',
+            __('NovemBit i18n - Performance'),
+            __('Performance'),
             'manage_options',
             Bootstrap::SLUG . '-performance',
             [$this, 'adminContentPerformance'],
