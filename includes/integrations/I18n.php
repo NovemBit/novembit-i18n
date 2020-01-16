@@ -231,13 +231,7 @@ class I18n extends Integration
             'db' => include(__DIR__ . '/I18n/config/db.php'),
         ];
 
-        $options = $this->options;
-
-        array_walk_recursive($options, function (&$item, $key) {
-            if ($item instanceof Option) {
-                $item = $item->getValue();
-            }
-        });
+        $options = Option::expandOptions($this->options);
 
         Module::instance(
             $options
