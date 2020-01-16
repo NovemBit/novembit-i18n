@@ -31,13 +31,13 @@ $config =
                     'url' => 'URL',
                     'sitemap_xml' => 'Sitemap XML',
                     'xml' => 'XML',
-                    'html' => 'Html',
-                    'html_fragment' => 'Html Fragment',
+                    'html' => 'HTML',
+                    'html_fragment' => 'HTML Fragment',
                     'json' => 'JSON',
-                    'jsonld' => "Json LD"
+                    'jsonld' => "JSON LD"
                 ]],
                 'label' => 'Source type map',
-                'description' => 'Test.'
+                'description' => 'Select current request body translation type.'
             ]
         ),
 
