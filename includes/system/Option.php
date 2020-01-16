@@ -589,7 +589,7 @@ class Option
 
         foreach ($array as $k => $v) {
             if (is_array($v)) {
-                $label = str_replace('_',' ',ucfirst($k));
+                $label = str_replace('_', ' ', ucfirst($k));
 
                 echo '<li class="label">' . $label . "</li>";
                 self::printArrayList($v);
@@ -671,5 +671,16 @@ class Option
             </form>
         </div>
         <?php
+    }
+
+    public static function expandOptions(array $options)
+    {
+        array_walk_recursive($options, function (&$item, $key) {
+            if ($item instanceof self) {
+                $item = $item->getValue();
+            }
+        });
+
+        return $options;
     }
 }
