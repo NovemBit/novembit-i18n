@@ -7,8 +7,23 @@ use NovemBit\wp\plugins\i18n\system\Option;
 $config = [
     'class' => URL::class,
     'runtime_dir' => Bootstrap::RUNTIME_DIR,
+    'path_separator'=>new Option('translation_url_path_separator', '-',
+        [
+            'parent' => Bootstrap::SLUG,
+            'type' => Option::TYPE_TEXT
+        ]
+    ),
     'path_translation' => new Option(
         'translation_url_path_translation',
+        true,
+        [
+            'parent' => Bootstrap::SLUG,
+            'type' => Option::TYPE_BOOL
+        ]
+    ),
+
+    'path_lowercase' => new Option(
+        'translation_url_path_lowercase',
         true,
         [
             'parent' => Bootstrap::SLUG,

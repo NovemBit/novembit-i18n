@@ -73,13 +73,7 @@ class Integration extends system\Integration
     private function setBootstrapCachePool()
     {
 
-        $options = $this->options;
-
-        array_walk_recursive($options, function (&$item, $key) {
-            if ($item instanceof Option) {
-                $item = $item->getValue();
-            }
-        });
+        $options = Option::expandOptions($this->options);
 
         $type = $options['performance']['cache_pool']['type'] ?? 'file';
 
