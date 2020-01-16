@@ -38,6 +38,13 @@ $config =
                 'markup'=>Option::MARKUP_NUMBER
             ]
         ),
+        'api_limit_expire_delay'=>new Option('translation_method_api_limit_expire_delay', 3600,
+            [
+                'parent' => Bootstrap::SLUG,
+                'type' => Option::TYPE_TEXT,
+                'markup'=>Option::MARKUP_NUMBER
+            ]
+        ),
         'api_key' => new Option('translation_method_api_key', 'xxx', [
                 'parent' => Bootstrap::SLUG,
                 'type' => Option::TYPE_TEXT,
