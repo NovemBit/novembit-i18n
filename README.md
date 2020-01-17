@@ -17,6 +17,6 @@
     ```
    
 ## How to start
-> How to configure 
+> Setup plugin.
 
 ![image](docs/images/novembit-i18n.gif)
