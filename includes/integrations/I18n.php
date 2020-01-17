@@ -122,7 +122,7 @@ class I18n extends Integration
          * Language Switcher
          * */
         $urls = Module::instance()->request->getUrlTranslations();
-        if(!empty($urls)) {
+        if (!empty($urls)) {
             $args = array(
                 'id' => Bootstrap::SLUG . "_item_change_language",
                 'parent' => Bootstrap::SLUG,
