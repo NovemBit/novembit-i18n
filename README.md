@@ -1,5 +1,7 @@
 # Wordpress NovemBit i18n internationalization plugin
 
+![image](docs/images/novembit-i18n-front.gif)
+
 ## How to install
 
 1. Go to plugins directory `/wp-content/plugins`
