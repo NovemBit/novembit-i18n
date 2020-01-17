@@ -15,3 +15,8 @@
     ```bash
     wp plugin activate novembit-i18n
     ```
+   
+## How to start
+> How to configure 
+
+![image](docs/images/novembit-i18n.gif)
