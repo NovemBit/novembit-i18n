@@ -1,4 +1,5 @@
 <?php
+defined('ABSPATH') || exit;
 
 use NovemBit\i18n\component\translation\method\Google;
 use NovemBit\i18n\component\translation\method\Rest;

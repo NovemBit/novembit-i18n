@@ -3,7 +3,6 @@
 
 namespace NovemBit\wp\plugins\i18n\integrations;
 
-
 use NovemBit\i18n\Module;
 use NovemBit\wp\plugins\i18n\Bootstrap;
 use NovemBit\wp\plugins\i18n\system\Option;
@@ -216,6 +215,25 @@ class I18n extends Integration
 
     public function createInstance(): void
     {
+
+        add_filter(
+            Bootstrap::SLUG . '_translation_content_types',
+            function ($types) {
+                $types += [
+                    'text' => 'Text',
+                    'url' => 'URL',
+                    'xml' => 'XML',
+                    'html' => 'HTML',
+                    'html_fragment' => 'HTML Fragment',
+                    'sitemap_xml' => 'Sitemap XML',
+                    'gpf_xml' => 'Google Product Feed XML',
+                    'json' => 'JSON',
+                    'jsonld' => "JSON LD"
+                ];
+                return $types;
+            }
+        );
+
         $this->options = [
             /**
              * Runtime Dir for module global instance

@@ -1,27 +1,32 @@
 <?php
 
+defined('ABSPATH') || exit;
+
 use NovemBit\i18n\system\helpers\Languages;
 use NovemBit\wp\plugins\i18n\Bootstrap;
 use NovemBit\wp\plugins\i18n\system\Option;
 
-if(!class_exists(NovemBit\i18n\system\helpers\Languages::class)){
+if (!class_exists(NovemBit\i18n\system\helpers\Languages::class)) {
     include "vendor/novembit/i18n/src/system/helpers/Languages.php";
 }
+
 $languages = Languages::getLanguages();
 $languages_list = [];
-foreach ($languages as $language){
+
+foreach ($languages as $language) {
     $languages_list[$language['alpha1']] = $language['name'];
 }
+
 $config =
     [
         'runtime_dir' => Bootstrap::RUNTIME_DIR,
-        'from_language' => new Option('from_language', 'en',[
-            'parent'=>Bootstrap::SLUG,
+        'from_language' => new Option('from_language', 'en', [
+            'parent' => Bootstrap::SLUG,
             'type' => Option::TYPE_TEXT,
             'method' => Option::METHOD_SINGLE,
             'values' => $languages_list,
-            'label'=>'From language',
-            'description'=>'Website main content language.'
+            'label' => 'From language',
+            'description' => 'Website main content language.'
         ]),
         'accept_languages' => new Option(
             'accept_languages',
@@ -47,18 +52,18 @@ $config =
                 'ru',
                 'en'
             ], [
-                'parent'=>Bootstrap::SLUG,
+                'parent' => Bootstrap::SLUG,
                 'type' => Option::TYPE_TEXT,
                 'method' => Option::METHOD_MULTIPLE,
                 'markup' => Option::MARKUP_CHECKBOX,
                 'values' => $languages_list,
-                'label'=>'To languages',
-                'description'=>'In what languages the site should be translated.'
+                'label' => 'To languages',
+                'description' => 'In what languages the site should be translated.'
 
             ]
         ),
 
-        'localization_config' =>new Option(
+        'localization_config' => new Option(
             'languages_localization_config',
             [
                 'default' => ['language' => 'en', 'country' => 'UK', 'region' => 'Europe'],
@@ -85,11 +90,11 @@ $config =
                 '^.*\.org$' => ['language' => 'en', 'country' => 'UK'],
             ],
             [
-                'parent'=>Bootstrap::SLUG,
+                'parent' => Bootstrap::SLUG,
                 'type' => Option::TYPE_OBJECT,
                 'method' => Option::METHOD_MULTIPLE,
                 'template' => [
-                    'language' => ['type' => Option::TYPE_TEXT, 'values' =>$languages_list],
+                    'language' => ['type' => Option::TYPE_TEXT, 'values' => $languages_list],
                     'country' => ['type' => Option::TYPE_TEXT],
                     'region' => ['type' => Option::TYPE_TEXT],
                 ],

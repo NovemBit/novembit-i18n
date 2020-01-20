@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') || exit;
+
 use NovemBit\i18n\component\request\interfaces\Request;
 use NovemBit\i18n\Module;
 use NovemBit\wp\plugins\i18n\Bootstrap;
@@ -26,16 +28,10 @@ $config =
                 'parent' => Bootstrap::SLUG,
                 'type' => Option::TYPE_OBJECT,
                 'method' => Option::METHOD_MULTIPLE,
-                'field' => ['type' => Option::TYPE_TEXT,'values' => [
-                    'text' => 'Text',
-                    'url' => 'URL',
-                    'sitemap_xml' => 'Sitemap XML',
-                    'xml' => 'XML',
-                    'html' => 'HTML',
-                    'html_fragment' => 'HTML Fragment',
-                    'json' => 'JSON',
-                    'jsonld' => "JSON LD"
-                ]],
+                'field' => [
+                    'type' => Option::TYPE_TEXT,
+                    'values' => apply_filters(Bootstrap::SLUG . '_translation_content_types', [])
+                ],
                 'label' => 'Source type map',
                 'description' => 'Select current request body translation type.'
             ]

@@ -1,4 +1,5 @@
 <?php
+defined('ABSPATH') || exit;
 
 use NovemBit\i18n\component\translation\type\HTMLFragment;
 use NovemBit\wp\plugins\i18n\Bootstrap;
@@ -17,21 +18,13 @@ $config =
                 'html_fragment_xpath_query_map_accept',
                 include('html/xpath_query_map_accept.php'),
                 [
-                    'parent'=>Bootstrap::SLUG,
+                    'parent' => Bootstrap::SLUG,
                     'type' => Option::TYPE_OBJECT,
                     'method' => Option::METHOD_MULTIPLE,
                     'template' => [
-                        'type' => ['type' => Option::TYPE_TEXT,
-                            'values' => [
-                                'text' => 'Text',
-                                'url' => 'url',
-                                'sitemap_xml' => 'Sitemap XML',
-                                'xml' => 'XML',
-                                'html' => 'Html',
-                                'html_fragment' => 'Html Fragment',
-                                'json' => 'JSON',
-                                'jsonld' => "Json LD"
-                            ]
+                        'type' => [
+                            'type' => Option::TYPE_TEXT,
+                            'values' => apply_filters(Bootstrap::SLUG . '_translation_content_types', [])
                         ],
                     ],
                     'label' => 'Test',

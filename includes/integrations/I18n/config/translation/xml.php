@@ -1,4 +1,5 @@
 <?php
+defined('ABSPATH') || exit;
 
 use NovemBit\i18n\component\translation\type\XML;
 use NovemBit\wp\plugins\i18n\Bootstrap;

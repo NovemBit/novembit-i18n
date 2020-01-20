@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') || exit;
+
 use NovemBit\wp\plugins\i18n\Bootstrap;
 
 $config =
@@ -15,7 +17,7 @@ $config =
         ]
     ];
 
-if(Bootstrap::getCachePool()) {
+if (Bootstrap::getCachePool()) {
     $config['cache_pool'] = Bootstrap::getCachePool();
 }
 
