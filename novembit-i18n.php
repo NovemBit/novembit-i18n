@@ -7,7 +7,7 @@
  * Author: Novembit
  * Author URI:
  * License: GPLv3
- * Text Domain: novembit-18n
+ * Text Domain: novembit-i18n
  */
 
 use NovemBit\wp\plugins\i18n\i18n;

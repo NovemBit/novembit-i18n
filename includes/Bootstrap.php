@@ -71,8 +71,17 @@ class Bootstrap
     public static function init()
     {
         add_action('init', function () {
+
+            if (!session_id()) {
+                session_start();
+            }
+
+            add_action('admin_notices', [Bootstrap::class, 'printNotices']);
+
             $integration = new Integration();
+
             $integration->run();
+
         }, 10);
     }
 
@@ -84,6 +93,34 @@ class Bootstrap
         return false;
     }
 
+
+    public static function addNotice($message, $type = 'success', $dismissible = false)
+    {
+        $_SESSION[self::SLUG . '-notices'][] = ['type' => $type, 'message' => $message, 'dismissible' => $dismissible];
+    }
+
+
+    public static function printNotices()
+    {
+        if (!isset($_SESSION[self::SLUG . '-notices'])) {
+            return;
+        }
+        foreach ($_SESSION[self::SLUG . '-notices'] as $key => $notice) {
+            {
+                $type = $notice['type'] ?? 'success';
+                $dismissible = $notice['dismissible'] ?? true;
+                $message = $notice['message'] ?? '';
+                ?>
+                <div class="notice notice-<?php echo $type; ?> <?php echo $dismissible ? 'is-dismissible' : ''; ?>">
+                    <p><?php echo $message; ?></p>
+                </div>
+                <?php
+
+                unset($_SESSION[self::SLUG . '-notices'][$key]);
+            }
+        }
+
+    }
 
     public static function isWPRest()
     {

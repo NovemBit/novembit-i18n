@@ -48,11 +48,14 @@ class I18n extends Integration
 
         }, 11);
 
+
         /**
          * Implement cache deletion
          * */
-        if (isset($_GET['novembit-i18n-action'])
-            && $_GET['novembit-i18n-action'] == 'clear-cache'
+        if (
+            is_admin()
+            && isset($_GET[Bootstrap::SLUG . '-action'])
+            && $_GET[Bootstrap::SLUG . '-action'] == 'clear-cache'
             && current_user_can('administrator')
         ) {
             try {
@@ -66,16 +69,25 @@ class I18n extends Integration
                 Module::instance()->translation->html->getCachePool()->clear();
                 Module::instance()->translation->xml->getCachePool()->clear();
                 Module::instance()->translation->json->getCachePool()->clear();
+
+
             } catch (\Exception $exception) {
                 /**
                  * Prevent warnings
                  * */
+                Bootstrap::addNotice('Can not clear translation cache. Please contact your system administrator.',
+                    'error');
+            }
+
+            if (is_admin()) {
+                Bootstrap::addNotice('Translation cache successfully cleared.');
             }
 
             wp_redirect(wp_get_referer() ?? site_url());
 
             exit;
         }
+
     }
 
     public function adminToolbar()
@@ -92,7 +104,7 @@ class I18n extends Integration
             $args = array(
                 'id' => Bootstrap::SLUG . "_item_edit_translation",
                 'parent' => Bootstrap::SLUG,
-                'title' => "Edit translation",
+                'title' => __("Edit translation", 'novembit-i18n'),
             );
             $wp_admin_bar->add_node($args);
 
@@ -125,7 +137,7 @@ class I18n extends Integration
             $args = array(
                 'id' => Bootstrap::SLUG . "_item_change_language",
                 'parent' => Bootstrap::SLUG,
-                'title' => "Change language",
+                'title' => __("Change language", 'novembit-i18n'),
             );
 
             $wp_admin_bar->add_node($args);
@@ -153,6 +165,12 @@ class I18n extends Integration
         return;
     }
 
+
+    public function getClearCacheUrl()
+    {
+        return add_query_arg([Bootstrap::SLUG . '-action' => 'clear-cache'], admin_url());
+    }
+
     /**
      * @param \WP_Admin_Bar $admin_bar
      */
@@ -161,11 +179,10 @@ class I18n extends Integration
         $admin_bar->add_menu(array(
             'id' => 'clear-cache',
             'parent' => Bootstrap::SLUG,
-            'title' => 'Clear cache',
+            'title' => __('Clear cache', 'novembit-i18n'),
+            'href' => $this->getClearCacheUrl(),
             'meta' => array(
-                'title' => 'Delete temporary caches.',
-                'class' => 'clear_cache',
-                'onclick' => "if(confirm('Press Ok to delete cache.')) window.location.href='?novembit-i18n-action=clear-cache'"
+                'title' => __('Delete temporary caches.', 'novembit-i18n')
             ),
         ));
     }
@@ -283,6 +300,8 @@ class I18n extends Integration
 
     public function adminContent()
     {
-        Option::printForm(Bootstrap::SLUG, $this->options);
+        Option::printForm(Bootstrap::SLUG, $this->options, [
+            'on_save_success_message' => 'Successfully saved. To clear cache click <a href="' . $this->getClearCacheUrl() . '">here</a>.'
+        ]);
     }
 }

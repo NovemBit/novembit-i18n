@@ -627,7 +627,7 @@ class Option
      * @param $parent
      * @param $options
      */
-    public static function printForm($parent, $options)
+    public static function printForm($parent, $options, ?array $params = [])
     {
 
         $form_data = Option::getFormData($parent);
@@ -636,6 +636,12 @@ class Option
             foreach ($form_data as $key => $field) {
                 Bootstrap::setOption($key, $field);
             }
+            $success_message = $params['on_save_success_message'] ?? 'Settings saved!';
+            ?>
+            <div class="notice notice-success is-dismissible">
+                <p><?php echo $success_message; ?></p>
+            </div>
+            <?php
         }
 
         $_fields = [];
