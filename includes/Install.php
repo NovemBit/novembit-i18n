@@ -2,6 +2,8 @@
 
 namespace NovemBit\wp\plugins\i18n;
 
+use NovemBit\wp\plugins\i18n\system\Option;
+
 class Install
 {
 
@@ -64,7 +66,7 @@ class Install
     private static function migration()
     {
 
-        if (Bootstrap::getOption('migration_version', null) != self::$migration_version) {
+        if (Option::getOption('migration_version', Bootstrap::SLUG,null) != self::$migration_version) {
 
             $sql = file_get_contents(__DIR__ . '/../vendor/novembit/i18n/migrations/structure.sql');
 
