@@ -4,8 +4,6 @@
 namespace NovemBit\wp\plugins\i18n\system;
 
 
-use NovemBit\wp\plugins\i18n\Bootstrap;
-
 class Option
 {
     private $_name;
@@ -65,9 +63,85 @@ class Option
         $this->_default = $default;
     }
 
+    /**
+     * @return array|mixed|void
+     */
     public function getValue()
     {
-        return Bootstrap::getOption($this->getName(), $this->getDefault());
+        return self::getOption($this->getName(), $this->getParam('parent', null), $this->getDefault());
+    }
+
+    /**
+     * @param $option
+     * @param null $parent
+     *
+     * @return string
+     */
+    public static function getOptionName($option, $parent = null)
+    {
+        if ($parent !== null) {
+            $option = $parent . '_' . $option;
+        }
+
+        return $option;
+    }
+
+    /**
+     * @param string $option
+     * @param null $parent
+     * @param null $default
+     *
+     * @return array|mixed|void
+     */
+    public static function getOption($option, $parent = null, $default = null)
+    {
+        $name = self::getOptionName($option, $parent);
+
+        if (self::isOptionConstant($option)) {
+            return constant($name);
+        }
+
+        return apply_filters(
+            self::getOptionFilterName($option, $parent),
+            get_option($name, $default)
+        );
+    }
+
+    public static function getOptionFilterName($option, $parent)
+    {
+        $name = self::getOptionName($option, $parent);
+
+        return 'option_value_' . $name;
+    }
+
+    /**
+     * @param $option
+     *
+     * @param null $parent
+     *
+     * @return bool
+     */
+    public static function isOptionConstant($option, $parent = null)
+    {
+        return defined(self::getOptionName($option, $parent));
+    }
+
+    /**
+     * @param $option
+     * @param null $parent
+     * @param $value
+     *
+     * @return bool
+     */
+    public static function setOption($option, $parent = null, $value = null)
+    {
+        $option = self::getOptionName($option, $parent);
+
+        if (update_option($option, $value)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -91,46 +165,57 @@ class Option
         $this->_params = $params;
     }
 
+    /**
+     * @return string
+     */
     public function getField()
     {
-        $parent = $this->getParam('parent', null);
-        $type = $this->getParam('type', null);
-        $method = $this->getParam('method', self::METHOD_SINGLE);
-        $values = $this->getParam('values', []);
-        $markup = $this->getParam('markup', null);
+        $parent   = $this->getParam('parent', null);
+        $type     = $this->getParam('type', null);
+        $method   = $this->getParam('method', self::METHOD_SINGLE);
+        $values   = $this->getParam('values', []);
+        $markup   = $this->getParam('markup', null);
         $template = $this->getParam('template', null);
-        $field = $this->getParam('field', null);
+        $field    = $this->getParam('field', null);
         $disabled = $this->getParam('disabled', false);
         $readonly = $this->getParam('readonly', false);
 
         $data = $this->getParam('data', []);
 
-
         $value = $this->getValue();
-        $name = $this->getName();
-        $html = self::_getField([
-            'type' => $type,
-            'parent' => $parent,
-            'method' => $method,
-            'values' => $values,
-            'markup' => $markup,
+        $name  = $this->getName();
+
+        return self::_getField([
+            'type'     => $type,
+            'parent'   => $parent,
+            'method'   => $method,
+            'values'   => $values,
+            'markup'   => $markup,
             'template' => $template,
-            'field' => $field,
-            'value' => $value,
-            'name' => $name,
-            'data' => $data,
+            'field'    => $field,
+            'value'    => $value,
+            'name'     => $name,
+            'data'     => $data,
             'disabled' => $disabled,
             'readonly' => $readonly
         ]);
-
-        return $html;
     }
 
+    /**
+     * @param $key
+     *
+     * @return string
+     */
     private static function _encodeKey($key)
     {
         return "{{encode_key}}" . base64_encode($key);
     }
 
+    /**
+     * @param $str
+     *
+     * @return false|string|string[]|null
+     */
     private static function _maybeDecodeKey($str)
     {
         if (strpos($str, '{{encode_key}}') === 0) {
@@ -142,6 +227,11 @@ class Option
         return $str;
     }
 
+    /**
+     * @param $str
+     *
+     * @return bool
+     */
     private static function _maybeBoolean($str)
     {
         if ($str == '{{boolean_true}}') {
@@ -153,7 +243,7 @@ class Option
         return $str;
     }
 
-    private static function _getDataString(array $data): string
+    /*private static function _getDataString(array $data): string
     {
         return implode(' ', array_map(
             function ($k, $v) {
@@ -165,7 +255,7 @@ class Option
             },
             array_keys($data), $data
         ));
-    }
+    }*/
 
 
     /**
@@ -205,27 +295,41 @@ class Option
         ));
     }
 
+    /**
+     * @param string $tag
+     * @param array|null $attrs
+     *
+     * @return string
+     */
     private static function _tagOpen(string $tag, ?array $attrs = null)
     {
         if ($attrs !== null) {
             $attrs = self::_getAttrsString($attrs);
         }
 
-        $html = sprintf('<%s%s>',
+        return sprintf('<%s%s>',
             $tag,
-            !empty($attrs) ? ' ' . $attrs : ''
+            ! empty($attrs) ? ' ' . $attrs : ''
         );
-
-        return $html;
     }
 
+    /**
+     * @param string $tag
+     *
+     * @return string
+     */
     private static function _tagClose(string $tag)
     {
-        $html = sprintf('</%s>', $tag);
-
-        return $html;
+        return sprintf('</%s>', $tag);
     }
 
+    /**
+     * @param string $tag
+     * @param string|null $content
+     * @param array|null $attrs
+     *
+     * @return string
+     */
     private static function _tag(string $tag, ?string $content = '', ?array $attrs = []): string
     {
         $html = self::_tagOpen($tag, $attrs);
@@ -235,26 +339,38 @@ class Option
         return $html;
     }
 
+    /**
+     * @param string $content
+     * @param array $attrs
+     *
+     * @return string
+     */
     private static function _group(string $content, array $attrs = []): string
     {
         $html = self::_tagOpen('div', ['class' => 'group'] + $attrs);
         $html .= $content;
         $html .= self::_tagClose('div');
+
         return $html;
     }
 
+    /**
+     * @param array $params
+     *
+     * @return string
+     */
     private static function _getField($params = []): string
     {
-        $parent = $params['parent'] ?? null;
-        $type = $params['type'] ?? null;
-        $method = $params['method'] ?? null;
-        $values = $params['values'] ?? [];
-        $markup = $params['markup'] ?? null;
+        $parent   = $params['parent'] ?? null;
+        $type     = $params['type'] ?? null;
+        $method   = $params['method'] ?? null;
+        $values   = $params['values'] ?? [];
+        $markup   = $params['markup'] ?? null;
         $template = $params['template'] ?? null;
-        $field = $params['field'] ?? null;
+        $field    = $params['field'] ?? null;
 
         $value = $params['value'] ?? null;
-        $name = $params['name'] ?? null;
+        $name  = $params['name'] ?? null;
 
         $input_attrs = $params['input_attrs'] ?? [];
 
@@ -262,12 +378,12 @@ class Option
             $name = $parent . '[' . $name . ']';
         }
 
-        $disabled = $params['disabled'] ?? false;
+        $disabled     = $params['disabled'] ?? false;
         $disabled_str = $disabled ? "disabled" : "";
-        $readonly = $params['readonly'] ?? false;
+        $readonly     = $params['readonly'] ?? false;
         $readonly_str = $readonly ? "readonly" : "";
 
-        $data = $params['data'] ?? [];
+        $data         = $params['data'] ?? [];
         $data['name'] = $data['name'] ?? $name;
 
         $html = '';
@@ -281,11 +397,11 @@ class Option
                 $html .= self::_tagOpen('input',
                     [
                         'class' => implode(' ', [$type, $method]),
-                        'id' => $name,
+                        'id'    => $name,
                         'value' => '{{boolean_true}}',
-                        'type' => 'checkbox',
-                        'name' => $name,
-                        'data' => $data,
+                        'type'  => 'checkbox',
+                        'name'  => $name,
+                        'data'  => $data,
                         $value ? 'checked' : '',
                         $readonly_str,
                         $disabled_str
@@ -294,14 +410,14 @@ class Option
             case self::TYPE_OBJECT:
                 $on_change = "var fields = this.parentElement.querySelectorAll('[name]'); for(var i=0; i<fields.length; i++){ var field= fields[i]; if(this.value!=null){field.removeAttribute('disabled')}; if(field.getAttribute('data-name') == null){ field.setAttribute('data-name',field.getAttribute('name')) } var attr = field.getAttribute('data-name'); attr = attr.replace('{key}','{{encode_key}}'+btoa(this.value)); fields[i].setAttribute('name',attr); }";
 
-                if ($template != null && !empty($template)) {
+                if ($template != null && ! empty($template)) {
                     foreach ($value as $key => $_value) {
                         $_html = '';
                         foreach ($template as $_key => $_field) {
-                            $_field['value'] = $_value[$_key] ?? null;
+                            $_field['value']        = $_value[$_key] ?? null;
                             $_field['data']['name'] = $name . '[{key}]' . '[' . $_key . ']';
-                            $_field['name'] = $name . '[' . self::_encodeKey($key) . ']' . '[' . $_key . ']';
-                            $_html .= self::_getField($_field);
+                            $_field['name']         = $name . '[' . self::_encodeKey($key) . ']' . '[' . $_key . ']';
+                            $_html                  .= self::_getField($_field);
                         }
 
                         $html .= self::_group(
@@ -309,32 +425,32 @@ class Option
                                 self::_tag('button', 'X',
                                     ['class' => 'remove', 'onclick' => 'this.parentElement.remove()']),
                                 self::_tagOpen('input', [
-                                    'class' => 'key full',
-                                    'type' => 'text',
+                                    'class'       => 'key full',
+                                    'type'        => 'text',
                                     'placeholder' => 'key',
-                                    'value' => $key,
-                                    'onchange' => $on_change
+                                    'value'       => $key,
+                                    'onchange'    => $on_change
                                 ]),
                                 self::_group($_html)
                             ])
                         );
                     }
-                } elseif ($field != null && !empty($field)) {
+                } elseif ($field != null && ! empty($field)) {
                     foreach ($value as $key => $_value) {
-                        $_field = $field;
-                        $_field['value'] = $_value;
+                        $_field                 = $field;
+                        $_field['value']        = $_value;
                         $_field['data']['name'] = $name . '[{key}]';
-                        $_field['name'] = $name . '[' . self::_encodeKey($key) . ']';
-                        $html .= self::_group(
+                        $_field['name']         = $name . '[' . self::_encodeKey($key) . ']';
+                        $html                   .= self::_group(
                             implode('', [
                                 self::_tag('button', 'X',
                                     ['class' => 'remove', 'onclick' => 'this.parentElement.remove()']),
                                 self::_tagOpen('input', [
-                                    'class' => 'key full',
-                                    'type' => 'text',
+                                    'class'       => 'key full',
+                                    'type'        => 'text',
                                     'placeholder' => 'key',
-                                    'value' => $key,
-                                    'onchange' => $on_change
+                                    'value'       => $key,
+                                    'onchange'    => $on_change
                                 ]),
                                 self::_getField($_field)
                             ])
@@ -344,16 +460,16 @@ class Option
 
                 $_html = '';
 
-                if ($template != null && !empty($template)) {
+                if ($template != null && ! empty($template)) {
                     foreach ($template as $key => $_field) {
-                        $_field['name'] = $name . '[{key}]' . '[' . $key . ']';
+                        $_field['name']     = $name . '[{key}]' . '[' . $key . ']';
                         $_field['disabled'] = true;
-                        $_html .= self::_getField($_field);
+                        $_html              .= self::_getField($_field);
                     }
-                } elseif ($field != null && !empty($field)) {
-                    $field['name'] = $name . '[{key}]';
+                } elseif ($field != null && ! empty($field)) {
+                    $field['name']     = $name . '[{key}]';
                     $field['disabled'] = true;
-                    $_html .= self::_getField($field);
+                    $_html             .= self::_getField($field);
                 }
 
                 $html .= self::_group(implode('', [
@@ -364,14 +480,14 @@ class Option
 
                 break;
             case self::TYPE_GROUP:
-                if (!empty($template)) {
+                if ( ! empty($template)) {
                     $_html = '';
                     if ($method == self::METHOD_SINGLE) {
                         foreach ($template as $key => $_field) {
 
-                            $_field['name'] = $name . '[' . $key . ']';
+                            $_field['name']  = $name . '[' . $key . ']';
                             $_field['value'] = $value[$key];
-                            $_html .= self::_getField($_field);
+                            $_html           .= self::_getField($_field);
                         }
                     } elseif ($method == self::METHOD_MULTIPLE) {
 
@@ -379,10 +495,10 @@ class Option
                         foreach ($value as $key => $_value) {
                             $__html = '';
                             foreach ($_value as $_key => $__value) {
-                                $_field = $template[$_key];
-                                $_field['name'] = $name . '[' . $key . ']' . '[' . $_key . ']';
+                                $_field          = $template[$_key];
+                                $_field['name']  = $name . '[' . $key . ']' . '[' . $_key . ']';
                                 $_field['value'] = $__value;
-                                $__html .= self::_getField($_field);
+                                $__html          .= self::_getField($_field);
                             }
                             $_html .= self::_group($__html);
                         }
@@ -390,7 +506,7 @@ class Option
                         $__html = '';
                         foreach ($template as $key => $_field) {
                             $_field['name'] = $name . '[' . $last_key . ']' . '[' . $key . ']';
-                            $__html .= self::_getField($_field);
+                            $__html         .= self::_getField($_field);
                         }
                         $_html .= self::_group($__html);
                     }
@@ -399,22 +515,22 @@ class Option
                 break;
 
             default:
-                if (!empty($values)) {
+                if ( ! empty($values)) {
                     if ($markup == null || $markup == self::MARKUP_SELECT) {
-                        $html .= self::_tagOpen(
+                        $html            .= self::_tagOpen(
                             'select',
                             [
                                 'class' => implode(' ',
                                     [$type, $method, 'full']),
-                                'id' => $name,
-                                'name' => $name . ($method == self::METHOD_MULTIPLE ? '[]' : ''),
+                                'id'    => $name,
+                                'name'  => $name . ($method == self::METHOD_MULTIPLE ? '[]' : ''),
                                 $method == self::METHOD_MULTIPLE ? 'multiple' : '',
-                                'data' => $data,
+                                'data'  => $data,
                                 $disabled_str,
                                 $readonly_str
                             ] + $input_attrs
                         );
-                        $html .= self::_tag('option', '-- Select --');
+                        $html            .= self::_tag('option', '-- Select --');
                         $open_tag_select = true;
                     }
 
@@ -432,10 +548,10 @@ class Option
                                 $html .= self::_group(
                                     self::_tag('label',
                                         self::_tagOpen('input', [
-                                            'type' => 'checkbox',
-                                            'name' => $name . ($method == self::METHOD_MULTIPLE ? '[]' : ''),
+                                            'type'  => 'checkbox',
+                                            'name'  => $name . ($method == self::METHOD_MULTIPLE ? '[]' : ''),
                                             'value' => $key,
-                                            'data' => $data,
+                                            'data'  => $data,
                                             (($key == $value) || (is_array($value) && in_array($key,
                                                         $value))) ? 'checked' : '',
                                             $disabled_str,
@@ -447,12 +563,12 @@ class Option
                                 $html .= self::_group(
                                     self::_tag('label',
                                         self::_tagOpen('input', [
-                                            'type' => 'radio',
-                                            'name' => $name,
+                                            'type'  => 'radio',
+                                            'name'  => $name,
                                             'value' => $key,
                                             (($key == $value) || (is_array($value) && in_array($key,
                                                         $value))) ? 'checked' : '',
-                                            'data' => $data,
+                                            'data'  => $data,
                                             $disabled_str,
                                             $readonly_str,
                                         ]) . $_value
@@ -474,13 +590,13 @@ class Option
                     }
 
                     foreach ($value as $key => $_value) {
-                        if (!empty($_value)) {
+                        if ( ! empty($_value)) {
                             $html .= self::_group(
                                 self::_tagOpen('input',
                                     [
-                                        'name' => $name . '[]',
+                                        'name'  => $name . '[]',
                                         'class' => 'full',
-                                        'type' => $input_type,
+                                        'type'  => $input_type,
                                         'value' => $_value,
                                         $disabled_str,
                                         $readonly_str,
@@ -493,9 +609,9 @@ class Option
                     $html .= self::_group(
                         self::_tagOpen('input',
                             [
-                                'name' => $name . '[]',
+                                'name'  => $name . '[]',
                                 'class' => 'full',
-                                'type' => $input_type,
+                                'type'  => $input_type,
                                 'disabled'
                             ] + $input_attrs),
                         ['onclick' => "var e=this.querySelector('input[name]'); e.disabled = false; e.focus()"]
@@ -503,8 +619,8 @@ class Option
 
                     $html .= self::_group(
                         self::_tag('button', '+ Add new', [
-                            'type' => 'button',
-                            'class' => 'button button-primary',
+                            'type'    => 'button',
+                            'class'   => 'button button-primary',
                             'onclick' => "var c = this.parentElement.previousSibling.cloneNode(true); c.children[0].value=''; this.parentElement.parentElement.insertBefore(c,this.parentElement);"
                         ])
                     );
@@ -516,12 +632,12 @@ class Option
                         $input_type = 'number';
                     }
                     $html .= self::_tagOpen('input', [
-                        'id' => $name,
+                        'id'    => $name,
                         'class' => 'full',
-                        'type' => $input_type,
-                        'name' => $name,
+                        'type'  => $input_type,
+                        'name'  => $name,
                         'value' => $value,
-                        'data' => $data,
+                        'data'  => $data,
                         $disabled_str,
                         $readonly_str
                     ]);
@@ -537,6 +653,7 @@ class Option
     /**
      * @param $parent
      * @param string $method
+     *
      * @return array|mixed|null
      */
     public static function getFormData($parent, $method = 'post')
@@ -560,6 +677,7 @@ class Option
 
     /**
      * @param array $input
+     *
      * @return array
      */
     public static function decodeKeys(array $input)
@@ -582,17 +700,22 @@ class Option
 
     /**
      * @param $array
+     * @param null $parent
+     *
+     * @return void
      */
-    private static function printArrayList($array)
+    private static function printArrayList($array, $parent = null)
     {
-        echo '<ul class="' . Bootstrap::SLUG . '-admin-nested-fields">';
+        $parent = $parent ?? 'Option';
+
+        echo '<ul class="' . $parent . '-admin-nested-fields">';
 
         foreach ($array as $k => $v) {
             if (is_array($v)) {
                 $label = str_replace('_', ' ', ucfirst($k));
 
                 echo '<li class="label">' . $label . "</li>";
-                self::printArrayList($v);
+                self::printArrayList($v, $parent);
                 continue;
             }
 
@@ -613,7 +736,7 @@ class Option
         array $route = []
     ): void {
         foreach ($arr as $key => &$val) {
-            $_route = $route;
+            $_route   = $route;
             $_route[] = $key;
             if (is_array($val)) {
                 self::arrayWalkWithRoute($val, $callback, $_route);
@@ -626,6 +749,7 @@ class Option
     /**
      * @param $parent
      * @param $options
+     * @param array|null $params
      */
     public static function printForm($parent, $options, ?array $params = [])
     {
@@ -634,7 +758,7 @@ class Option
 
         if ($form_data) {
             foreach ($form_data as $key => $field) {
-                Bootstrap::setOption($key, $field);
+                self::setOption($key, $parent, $field);
             }
             $success_message = $params['on_save_success_message'] ?? 'Settings saved!';
             ?>
@@ -649,16 +773,16 @@ class Option
         static::arrayWalkWithRoute($options, function ($key, $item, $route) use (&$_fields) {
             if ($item instanceof Option) {
                 array_pop($route);
-                $label = $item->getParam('label', $item->getName());
+                $label       = $item->getParam('label', $item->getName());
                 $description = $item->getParam('description', null);
-                $field = $item->getField();
-                $html = sprintf(
+                $field       = $item->getField();
+                $html        = sprintf(
                     '<div class="section"><div class="label">%s</div><div class="field">%s</div>%s</div>',
                     $label,
                     $field,
                     $description != null ? sprintf('<div class="description">%s</div>', $description) : ''
                 );
-                $temp = &$_fields;
+                $temp        = &$_fields;
                 foreach ($route as $key) {
                     $temp = &$temp[$key];
                 }
@@ -668,17 +792,22 @@ class Option
         });
 
         ?>
-        <div class="wrap <?php echo Bootstrap::SLUG; ?>-wrap">
+        <div class="wrap <?php echo $parent; ?>-wrap">
             <h2>Configuration</h2>
             <form method="post" action="">
-                <?php self::printArrayList($_fields); ?>
-                <input type="hidden" name="<?php echo Bootstrap::SLUG; ?>-form" value="1">
+                <?php self::printArrayList($_fields, $parent); ?>
+                <input type="hidden" name="<?php echo $parent; ?>-form" value="1">
                 <?php submit_button(); ?>
             </form>
         </div>
         <?php
     }
 
+    /**
+     * @param array $options
+     *
+     * @return array
+     */
     public static function expandOptions(array $options)
     {
         array_walk_recursive($options, function (&$item, $key) {
