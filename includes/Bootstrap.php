@@ -11,53 +11,6 @@ class Bootstrap
 
     private static $_cache_pool;
 
-    public static function getOptionName($option)
-    {
-        return self::SLUG . '_' . $option;
-    }
-
-    /**
-     * @param string $option
-     * @param null $default
-     *
-     * @return array|mixed|void
-     */
-    public static function getOption($option, $default = null)
-    {
-        if (self::isOptionConstant($option)) {
-            return constant(self::getOptionName($option));
-        }
-
-        return get_option(self::getOptionName($option), $default);
-    }
-
-
-    /**
-     * @param $option
-     *
-     * @return bool
-     */
-    public static function isOptionConstant($option)
-    {
-        return defined(self::getOptionName($option));
-    }
-
-    /**
-     * @param $option
-     * @param $value
-     *
-     * @return bool
-     */
-    public static function setOption($option, $value)
-    {
-        $option = self::getOptionName($option);
-        if (update_option($option, $value)) {
-            return true;
-        }
-
-        return false;
-    }
-
     public static function setCachePool($pool)
     {
         self::$_cache_pool = $pool;
@@ -70,19 +23,21 @@ class Bootstrap
 
     public static function init()
     {
-        add_action('init', function () {
+        add_action(
+            'init',
+            function () {
+                if (!session_id()) {
+                    session_start();
+                }
 
-            if (!session_id()) {
-                session_start();
-            }
+                add_action('admin_notices', [Bootstrap::class, 'printNotices']);
 
-            add_action('admin_notices', [Bootstrap::class, 'printNotices']);
+                $integration = new Integration();
 
-            $integration = new Integration();
-
-            $integration->run();
-
-        }, 10);
+                $integration->run();
+            },
+            10
+        );
     }
 
     private static function isWPCli()
@@ -90,6 +45,7 @@ class Bootstrap
         if (defined('WP_CLI') && WP_CLI) {
             return true;
         }
+
         return false;
     }
 
@@ -119,7 +75,6 @@ class Bootstrap
                 unset($_SESSION[self::SLUG . '-notices'][$key]);
             }
         }
-
     }
 
     public static function isWPRest()

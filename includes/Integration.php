@@ -14,7 +14,8 @@ class Integration extends system\Integration
         \NovemBit\wp\plugins\i18n\integrations\I18n::class,
         \NovemBit\wp\plugins\i18n\integrations\Algolia::class,
         \NovemBit\wp\plugins\i18n\integrations\WooCommerce::class,
-        \NovemBit\wp\plugins\i18n\integrations\TheSEOFramework::class
+        \NovemBit\wp\plugins\i18n\integrations\TheSEOFramework::class,
+        \NovemBit\wp\plugins\i18n\integrations\Brandlight::class,
     ];
 
     public $options = [];
@@ -155,8 +156,7 @@ class Integration extends system\Integration
             __('Performance'),
             'manage_options',
             Bootstrap::SLUG . '-performance',
-            [$this, 'adminContentPerformance'],
-            1
+            [$this, 'adminContentPerformance']
         );
     }
 
