@@ -10,9 +10,9 @@ $config = [
     'runtime_dir' => Bootstrap::RUNTIME_DIR,
     'xpath_query_map' => [
         'accept' => [
-            "//[name()='title']/text()" => ['type' => 'text'],
-            "//[name()='link']/text()" => ['type' => 'url'],
-            "//*/*/*[2]/text()" => ['type' => 'url']
+            "//*[name()='title']/text()"     => ['type' => 'text'],
+            "//*[name()='description']/text()" => ['type' => 'text'],
+            "//*[name()='link']/text()" => ['type' => 'url'],
         ]
     ]
 ];
