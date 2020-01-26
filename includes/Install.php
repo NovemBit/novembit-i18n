@@ -13,7 +13,6 @@ class Install
 
     public static function install()
     {
-
         self::migration();
 
         self::install_mu_plugin();
@@ -26,7 +25,6 @@ class Install
 
     private static function install_mu_plugin()
     {
-
         $source = dirname(__FILE__) . '/../mu-plugins/i18n.php';
         $target = WPMU_PLUGIN_DIR . '/' . self::$filename;
 
@@ -35,15 +33,17 @@ class Install
         }
 
         if (!copy($source, $target)) {
-            add_action('admin_notices', function () {
-                ?>
-                <div class="notice notice-success is-dismissible">
-                    <p><?php _e('Can\'t install mu-plugin file!', 'novembit-i18n'); ?></p>
-                </div>
-                <?php
-            });
+            add_action(
+                'admin_notices',
+                function () {
+                    ?>
+                    <div class="notice notice-success is-dismissible">
+                        <p><?php _e('Can\'t install mu-plugin file!', 'novembit-i18n'); ?></p>
+                    </div>
+                    <?php
+                }
+            );
         }
-
     }
 
     /**
@@ -57,7 +57,6 @@ class Install
             return true;
         }
         return false;
-
     }
 
     /**
@@ -65,9 +64,7 @@ class Install
      */
     private static function migration()
     {
-
-        if (Option::getOption('migration_version', Bootstrap::SLUG,null) != self::$migration_version) {
-
+        if (Option::getOption('migration_version', Bootstrap::SLUG, null) != self::$migration_version) {
             $sql = file_get_contents(__DIR__ . '/../vendor/novembit/i18n/migrations/structure.sql');
 
             global $wpdb;
@@ -75,13 +72,10 @@ class Install
             try {
                 $wpdb->query($sql);
 
-                Bootstrap::setOption('migration_version', self::$migration_version);
-
+                Option::setOption('migration_version', Bootstrap::SLUG, self::$migration_version);
             } catch (\Exception $exception) {
-
             }
         }
-
     }
 
 }
