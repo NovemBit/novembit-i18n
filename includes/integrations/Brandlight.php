@@ -41,6 +41,20 @@ class Brandlight extends Integration
                 return $patterns;
             }
         );
+
+
+        /*
+         * Google shopping product feed
+         * */
+        add_filter(
+            Option::getOptionFilterName('request_source_type_map', Bootstrap::SLUG),
+            function ($patterns) {
+                $patterns['/woocommerce_gpf\/google.*/is'] = 'gpf_xml';
+                return $patterns;
+            }
+        );
+
+
     }
 
     protected function adminInit(): void
