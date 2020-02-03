@@ -2,7 +2,8 @@
 
 namespace NovemBit\wp\plugins\i18n;
 
-use NovemBit\wp\plugins\i18n\system\Option;
+
+use diazoxide\wp\lib\option\Option;
 
 class Install
 {

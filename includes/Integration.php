@@ -5,7 +5,7 @@ namespace NovemBit\wp\plugins\i18n;
 
 
 use Cache\Adapter\Memcached\MemcachedCachePool;
-use NovemBit\wp\plugins\i18n\system\Option;
+use diazoxide\wp\lib\option\Option;
 
 class Integration extends system\Integration
 {
@@ -99,13 +99,13 @@ class Integration extends system\Integration
 
 //        wp_enqueue_style(Bootstrap::SLUG . '-bs-grid',
 //            plugin_dir_url(NOVEMBIT_I18N_PLUGIN_FILE) . '/vendor/twbs/bootstrap/dist/css/bootstrap-grid.min.css', [], '0.1');
+//
+//        wp_enqueue_style(Bootstrap::SLUG . '-admin',
+//            plugin_dir_url(NOVEMBIT_I18N_PLUGIN_FILE) . '/includes/assets/style/admin.css',
+//            [], '0.2');
 
-        wp_enqueue_style(Bootstrap::SLUG . '-admin',
-            plugin_dir_url(NOVEMBIT_I18N_PLUGIN_FILE) . '/includes/assets/style/admin.css',
-            [], '0.2');
-
-        wp_enqueue_script(Bootstrap::SLUG,
-            plugin_dir_url(NOVEMBIT_I18N_PLUGIN_FILE) . '/includes/assets/scripts/admin.js', [], '0.2');
+//        wp_enqueue_script(Bootstrap::SLUG,
+//            plugin_dir_url(NOVEMBIT_I18N_PLUGIN_FILE) . '/includes/assets/scripts/admin.js', [], '0.2');
 
         add_action('admin_menu', [$this, 'adminMenu']);
 

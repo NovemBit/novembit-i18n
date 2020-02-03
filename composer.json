@@ -16,6 +16,7 @@
     "ext-dom": "*",
     "ext-mbstring": "*",
     "novembit/i18n": "dev-master",
+    "diazoxide/wp-lib-option": "dev-master",
     "ext-json": "*"
   },
   "require-dev": {

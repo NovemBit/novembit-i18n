@@ -1,9 +1,9 @@
 <?php
 defined('ABSPATH') || exit;
 
+use diazoxide\wp\lib\option\Option;
 use NovemBit\i18n\component\translation\type\HTML;
 use NovemBit\wp\plugins\i18n\Bootstrap;
-use NovemBit\wp\plugins\i18n\system\Option;
 
 $config = [
     'class' => HTML::class,

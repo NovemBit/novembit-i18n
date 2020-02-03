@@ -3,9 +3,9 @@
 
 namespace NovemBit\wp\plugins\i18n\integrations;
 
+use diazoxide\wp\lib\option\Option;
 use NovemBit\i18n\Module;
 use NovemBit\wp\plugins\i18n\Bootstrap;
-use NovemBit\wp\plugins\i18n\system\Option;
 use NovemBit\wp\plugins\i18n\system\Integration;
 use Psr\SimpleCache\InvalidArgumentException;
 

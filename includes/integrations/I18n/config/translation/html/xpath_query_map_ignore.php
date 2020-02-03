@@ -1,6 +1,5 @@
 <?php
 
-use NovemBit\wp\plugins\i18n\system\Option;
 
 return
     [

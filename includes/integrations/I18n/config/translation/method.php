@@ -1,10 +1,10 @@
 <?php
 defined('ABSPATH') || exit;
 
+use diazoxide\wp\lib\option\Option;
 use NovemBit\i18n\component\translation\method\Google;
 use NovemBit\i18n\component\translation\method\Rest;
 use NovemBit\wp\plugins\i18n\Bootstrap;
-use NovemBit\wp\plugins\i18n\system\Option;
 
 $config =
     [
