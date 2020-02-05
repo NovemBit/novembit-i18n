@@ -47,7 +47,7 @@ class AlgoliaWoocommerceFork extends Integration
 
                                 let addEditorSuffixToPermalink = function (item) {
                                     let query_key = window.novembit.i18n.prefix + '-' + window.novembit.i18n.editor.query_key;
-                                    item.permalink += "?" + query_key + "=true";
+                                    item.permalink += "?" + query_key + "=1";
                                     return item;
                                 };
 
