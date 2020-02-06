@@ -20,14 +20,16 @@ foreach ($languages as $language) {
 $config =
     [
         'runtime_dir' => Bootstrap::RUNTIME_DIR,
-        'from_language' => new Option('from_language', 'en', [
+        'from_language' => new Option(
+            'from_language', 'en', [
             'parent' => Bootstrap::SLUG,
             'type' => Option::TYPE_TEXT,
             'method' => Option::METHOD_SINGLE,
             'values' => $languages_list,
             'label' => 'From language',
             'description' => 'Website main content language.'
-        ]),
+        ]
+        ),
         'accept_languages' => new Option(
             'accept_languages',
             [
@@ -94,12 +96,11 @@ $config =
                 'type' => Option::TYPE_OBJECT,
                 'method' => Option::METHOD_MULTIPLE,
                 'template' => [
-                    'language' => ['type' => Option::TYPE_TEXT, 'values' => $languages_list],
-                    'country' => ['type' => Option::TYPE_TEXT],
-                    'region' => ['type' => Option::TYPE_TEXT],
+                    'language' => ['type' => Option::TYPE_TEXT, 'values' => $languages_list, 'label' => 'Language'],
+                    'country' => ['type' => Option::TYPE_TEXT, 'label' => 'Country'],
+                    'region' => ['type' => Option::TYPE_TEXT, 'label' => 'Region'],
                 ],
-                'label' => 'localization config',
-                'description' => 'Test.'
+                'label' => 'Language detection pattern',
             ]
         ),
 
