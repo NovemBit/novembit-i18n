@@ -96,9 +96,7 @@ $config =
                 $url = urldecode($url);
                 $url = preg_replace('/\?.*/', '', $url);
 
-                if(wpsc_delete_url_cache($url)){
-                    exit;
-                };
+                wpsc_delete_url_cache($url);
             }
         }
     ];
