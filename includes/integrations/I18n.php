@@ -79,7 +79,9 @@ class I18n extends Integration
 
 
     /**
+     * Delete translation cache pools
      *
+     * @return bool
      */
     public static function deleteI18nCache()
     {
