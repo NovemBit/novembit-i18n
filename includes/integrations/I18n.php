@@ -112,6 +112,8 @@ class I18n extends Integration
     {
         global $wp_admin_bar;
 
+        $languages = Module::instance()->languages->getAcceptLanguages(true);
+
         /**
          * Translation editor
          * */
@@ -123,9 +125,6 @@ class I18n extends Integration
                 'title' => __("Edit translation", 'novembit-i18n'),
             );
             $wp_admin_bar->add_node($args);
-
-            $languages = Module::instance()->languages->getAcceptLanguages(true);
-
             foreach ($urls as $language => $url) {
                 $flag = $languages[$language]['flag'];
                 $name = $languages[$language]['name'];
