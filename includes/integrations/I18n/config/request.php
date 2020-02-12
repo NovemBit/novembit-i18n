@@ -6,6 +6,7 @@ use diazoxide\wp\lib\option\Option;
 use NovemBit\i18n\component\request\interfaces\Request;
 use NovemBit\i18n\Module;
 use NovemBit\wp\plugins\i18n\Bootstrap;
+use NovemBit\wp\plugins\i18n\integrations\I18n;
 
 $config =
     [
@@ -43,11 +44,12 @@ $config =
              * @return bool
              */
             function ($request) {
-
                 /** @var Request $request */
 
-                if (preg_match('/(емисия-на-данни|data-feed|данни-подаване|zdroj-dat|projekt|datafeed|data-foder|Daten-Feed|daten-feed|Projekt|τροφοδοσία-δεδομένων|alimentación-de-datos|proyecto|andmevoog|projekti|flux-de-données|projet|feed-podataka|podaci-uvlačenja|feed-di-dati|progetto|データフィード|데이터-피드|gegevensfeed|data-toevoer|project|plik-danych|źródło-danych|feed-de-dados|projeto|flux-de-date|подача-данных|данные-подачи|проект|podajanje-podatkov|data-flöde)/i',
-                    $_SERVER['REQUEST_URI'])) {
+                if (preg_match(
+                    '/(емисия-на-данни|data-feed|данни-подаване|zdroj-dat|projekt|datafeed|data-foder|Daten-Feed|daten-feed|Projekt|τροφοδοσία-δεδομένων|alimentación-de-datos|proyecto|andmevoog|projekti|flux-de-données|projet|feed-podataka|podaci-uvlačenja|feed-di-dati|progetto|データフィード|데이터-피드|gegevensfeed|data-toevoer|project|plik-danych|źródło-danych|feed-de-dados|projeto|flux-de-date|подача-данных|данные-подачи|проект|podajanje-podatkov|data-flöde)/i',
+                    $_SERVER['REQUEST_URI']
+                )) {
                     return true;
                 }
 
@@ -76,13 +78,26 @@ $config =
             }
         ],
         'on_page_not_found' => function () {
-
-            //self::discordNotify(self::PAGE_NOT_FOUND);
-
             header('Location: ' . site_url() . Module::instance()->request->getDestination());
-
             exit;
+        },
+        'editor_after_save_callback' => function ($verbose, $request) {
+            /**
+             * Delete translations cache
+             * */
+            I18n::deleteI18nCache();
 
+            /**
+             * Clear supercache current page cache
+             * */
+            if (function_exists('wpsc_delete_url_cache')) {
+            	/** @var Request $request */
+                $url = $request->getOrigRequestUri();
+                $url = urldecode($url);
+                $url = preg_replace('/\?.*/', '', $url);
+
+                wpsc_delete_url_cache($url);
+            }
         }
     ];
 if (Bootstrap::getCachePool()) {
