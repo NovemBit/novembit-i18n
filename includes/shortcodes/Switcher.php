@@ -81,7 +81,7 @@ class Switcher
             $flag = $languages[$code]['flag'] ?? null;
 
             $html .= sprintf(
-                '<li><a href="%1$s"><img alt="%3$s" title="%3$s"" src="%2$s"><span>%3$s</span></a></li>',
+                '<li><a href="%1$s"><img alt="%3$s" title="%3$s" src="%2$s"><span>%3$s</span></a></li>',
                 $url,
                 $flag,
                 $name
