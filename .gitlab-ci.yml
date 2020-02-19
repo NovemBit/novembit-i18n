@@ -1,0 +1,137 @@
+# Template for GitLab CI configuration for AgentDesign WordPress Themes/Plugins.
+# (Revision 1.3)
+
+
+# The standard stages for a CI/CD pipeline
+stages:
+  - build
+  - test
+  - deploy
+
+# The Docker image we use that contains our custom CI scripts
+image: registry.gitlab.com/agentdesign/sysadmin/docker/docker-agentdesign-wordpress-ci
+
+# Copy our private SSH key and known hosts keys into place for SFTP deployments
+before_script:
+  - aws s3 sync s3://agentdesign-gitlab-ci/ssh /root/.ssh && chmod 400 /root/.ssh/id_rsa
+
+
+#########
+# BUILD #
+#########
+
+# Build all branches using the 'build-wp-plugin' script to obtain a ZIP file
+build:
+  stage: build
+  script:
+    - build-wp-plugin -v
+  artifacts:
+    paths:
+    - wpcd-artefacts/*.zip
+
+
+########
+# TEST #
+########
+
+# Remove leading dot to enable test stage if/when there are plugin unit tests
+# (in most cases, plugins do not have test suites)
+.test:
+  stage: test
+  script:
+    - test-wp-plugin -v
+
+test:
+  stage: test
+  script:
+    - for file in $(find . -name "*.php"); do php -l $file; done
+
+
+##########
+# DEPLOY #
+##########
+
+# The 'deploy-wp-plugin' script determines the deployment to use from the 'WPCD_PLATFORM'
+# environment variable. The deployment driver determines where to deploy it to from
+# the 'environment.name' setting.
+#
+
+# For 'master' branch builds, put the latest copy in our S3 archive for subsequently run site builds.
+deploy:aws:s3:
+  stage: deploy
+  only:
+    - master
+  environment:
+    name: aws-s3-production-plugins-bucket
+    url: https://s3-eu-west-1.amazonaws.com/plugins.agentdesign.co.uk/production/${CI_PROJECT_NAME}.zip
+  variables:
+    WPCD_PLATFORM: "s3"
+  script:
+    - deploy-wp-plugin -v
+
+
+# Deploy 'develop' branch to our 'waves' development host.
+deploy:runcloud:development:waves:
+  stage: deploy
+  only:
+    - develop
+  environment:
+    name: runcloud-development-waves
+    url: https://dev.waves.agentdesign.co.uk
+  variables:
+    SSH_HOST: dev.runcloud.agentdesign.co.uk
+    SSH_USER: waves
+    SSH_PATH: /home/waves/webapps/waves
+  script:
+    - deploy-wp-plugin -v
+
+
+# Deploy 'develop' branch to our 'cms' development host.
+deploy:runcloud:development:cms:
+  stage: deploy
+  only:
+    - develop
+  environment:
+    name: runcloud-development-cms
+    url: https://dev.cms.agentdesign.co.uk
+  variables:
+    SSH_HOST: dev.runcloud.agentdesign.co.uk
+    SSH_USER: cms
+    SSH_PATH: /home/cms/webapps/cms
+  script:
+    - deploy-wp-plugin -v
+
+
+# Deploy 'develop' branch to our 'cms' production host.
+# DANGEROUS! Bad practice for production hosts, and recommended against by RG
+# and others, but required anyway by MQ. Please comment this stage out if you
+# plan to commit dangerous code to develop branch. Better safe than sorry.
+# https://gitlab.com/agentdesign/wordpress/site-builds/wp-stack-cms-hub/issues/149
+deploy:runcloud:production:cms:
+  stage: deploy
+  only:
+    - develop
+  environment:
+    name: runcloud-production-cms
+    url: https://cms.agentdesign.co.uk
+  variables:
+    SSH_HOST: cms.runcloud.agentdesign.co.uk
+    SSH_USER: cms
+    SSH_PATH: /home/cms/webapps/cms
+  script:
+    - deploy-wp-plugin -v
+
+
+# This rule uses a regexp to allow 'develop-<arbitraryid>' branches to be deployed, but requires that
+# the host and DNS settings for that <arbitraryid> to have been set up in advance.
+.deploy:runcloud:development:waves:developer:
+  stage: deploy
+  only:
+    - /^develop-.*$/
+  environment:
+    name: runcloud-development-waves-developer
+    url: https://{0}.dev.waves.agentdesign.co.uk
+  variables:
+    WPCD_PLATFORM: "runcloud-agentdesign"
+  script:
+    - deploy-wp-plugin -v
