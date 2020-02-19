@@ -19,6 +19,6 @@
     ```
    
 ## How to start
-> Setup plugin.
+> Setup plugin
 
 ![image](docs/images/novembit-i18n.gif)
