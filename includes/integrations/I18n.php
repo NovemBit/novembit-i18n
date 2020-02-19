@@ -4,6 +4,7 @@
 namespace NovemBit\wp\plugins\i18n\integrations;
 
 use diazoxide\wp\lib\option\Option;
+use Exception;
 use NovemBit\i18n\Module;
 use NovemBit\wp\plugins\i18n\Bootstrap;
 use NovemBit\wp\plugins\i18n\system\Integration;
@@ -96,7 +97,7 @@ class I18n extends Integration
             Module::instance()->translation->html->getCachePool()->clear();
             Module::instance()->translation->xml->getCachePool()->clear();
             Module::instance()->translation->json->getCachePool()->clear();
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             /**
              * Prevent warnings
              * */
@@ -208,12 +209,20 @@ class I18n extends Integration
     public function startRequestTranslation(): void
     {
         Module::instance()->request->start();
+        $language_code = Module::instance()->request->getLanguage();
+        $language_data = Module::instance()->languages->getLanguageData($language_code);
+        $direction = $language_data['direction'] ?? null;
+        if ($direction) {
+            global $wp_locale;
+            $wp_locale->text_direction = $direction;
+        }
     }
 
     /**
      * @param $url
+     *
      * @return string
-     * @throws \Exception
+     * @throws Exception
      * @throws InvalidArgumentException
      */
     public function redirectUrlTranslation($url)
