@@ -209,12 +209,16 @@ class I18n extends Integration
     public function startRequestTranslation(): void
     {
         Module::instance()->request->start();
-        $language_code = Module::instance()->request->getLanguage();
-        $language_data = Module::instance()->languages->getLanguageData($language_code);
-        $direction = $language_data['direction'] ?? null;
-        if ($direction) {
-            global $wp_locale;
-            $wp_locale->text_direction = $direction;
+
+        if (Module::instance()->request->isReady()) {
+
+            $language_code = Module::instance()->request->getLanguage();
+            $language_data = Module::instance()->languages->getLanguageData($language_code);
+            $direction = $language_data['direction'] ?? null;
+            if ($direction) {
+                global $wp_locale;
+                $wp_locale->text_direction = $direction;
+            }
         }
     }
 
