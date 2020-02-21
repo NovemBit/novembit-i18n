@@ -59,14 +59,12 @@ class AlgoliaWoocommerceFork extends Integration
 
                                 if (window.novembit.i18n.hasOwnProperty('editor')
                                     && window.novembit.i18n.editor.hasOwnProperty('is_editor')
-                                    && window.novembit.i18n.editor
+                                    && window.novembit.i18n.editor.is_editor
                                 ) {
                                     window.algolia.addFilter('algoliaWC/infiniteHitsWidgetItemData', addEditorSuffixToPermalink, 1000000000);
                                     window.algolia.addFilter('algolia/autocompleteItemData', addEditorSuffixToPermalink, 1000000000);
-
                                 }
                             }
-
                         })();
                     </script>
                     <?php
