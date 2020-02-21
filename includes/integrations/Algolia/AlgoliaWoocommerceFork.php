@@ -23,36 +23,55 @@ class AlgoliaWoocommerceFork extends Integration
     public function fixPermalinkIssues()
     {
         if (Module::instance()->request->isReady()) {
+            add_action(
+                'wp_footer',
+                function () {
+                    ?>
+                    <script type="application/javascript">
+                        (function () {
 
-            add_action('wp_footer', function () {
-                $js = <<<js
-(function () {
+                            if (window.hasOwnProperty('novembit')
+                                && window.novembit.hasOwnProperty('i18n')
+                                && window.novembit.i18n.hasOwnProperty('default_language')
+                                && window.hasOwnProperty('algolia')
+                                && window.algolia.hasOwnProperty('addFilter')
+                            ) {
 
-    if (window.hasOwnProperty('novembit')
-        && window.novembit.hasOwnProperty('i18n')
-        && window.novembit.i18n.hasOwnProperty('default_language')
-    ) {
+                                let default_language = window.novembit.i18n.default_language;
 
-        let default_language = window.novembit.i18n.default_language;
+                                let removeDefaultLanguageFromPermalink = function (item) {
+                                    let pattern = new RegExp('^\/' + default_language + '\/');
+                                    item.permalink = item.permalink.replace(pattern, '/');
+                                    return item;
+                                };
 
-        let removeDefaultLanguageFromPermalink = function (item) {
-            let pattern = new RegExp('^\/' + default_language + '\/');
-            item.permalink = item.permalink.replace(pattern, '/');
-            return item;
-        };
+                                let addEditorSuffixToPermalink = function (item) {
+                                    let query_key = window.novembit.i18n.prefix + '-' + window.novembit.i18n.editor.query_key;
+                                    if (window.novembit.i18n.hasOwnProperty('editor')
+                                        && window.novembit.i18n.editor.hasOwnProperty('addParameterToURL')) {
+                                        item.permalink = window.novembit.i18n.editor.addParameterToURL(item.permalink, query_key, 1);
+                                    }
+                                    return item;
+                                };
 
-        if (window.hasOwnProperty('algolia') && window.algolia.hasOwnProperty('addFilter')) {
-            window.algolia.addFilter('algoliaWC/infiniteHitsWidgetItemData', removeDefaultLanguageFromPermalink, 1000000000);
-            window.algolia.addFilter('algolia/autocompleteItemData', removeDefaultLanguageFromPermalink, 1000000000);
-        }
-    }
+                                window.algolia.addFilter('algoliaWC/infiniteHitsWidgetItemData', removeDefaultLanguageFromPermalink, 1000000000);
+                                window.algolia.addFilter('algolia/autocompleteItemData', removeDefaultLanguageFromPermalink, 1000000000);
 
-})();
-js;
-                echo sprintf('<script type="application/javascript">%s</script>',
-                    $js
-                );
-            });
+                                if (window.novembit.i18n.hasOwnProperty('editor')
+                                    && window.novembit.i18n.editor.hasOwnProperty('is_editor')
+                                    && window.novembit.i18n.editor
+                                ) {
+                                    window.algolia.addFilter('algoliaWC/infiniteHitsWidgetItemData', addEditorSuffixToPermalink, 1000000000);
+                                    window.algolia.addFilter('algolia/autocompleteItemData', addEditorSuffixToPermalink, 1000000000);
+
+                                }
+                            }
+
+                        })();
+                    </script>
+                    <?php
+                }
+            );
         }
     }
 
