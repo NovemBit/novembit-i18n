@@ -1,6 +1,7 @@
 # Template for GitLab CI configuration for AgentDesign WordPress Themes/Plugins.
 # (Revision 1.3)
 
+
 # The standard stages for a CI/CD pipeline
 stages:
   - build
@@ -12,7 +13,6 @@ image: registry.gitlab.com/agentdesign/sysadmin/docker/docker-agentdesign-wordpr
 
 # Copy our private SSH key and known hosts keys into place for SFTP deployments
 before_script:
-  - set -e
   - aws s3 sync s3://agentdesign-gitlab-ci/ssh /root/.ssh && chmod 400 /root/.ssh/id_rsa
 
 
