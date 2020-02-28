@@ -16,15 +16,15 @@ class Install
     {
         self::migration();
 
-        self::install_mu_plugin();
+        self::installMUPlugin();
     }
 
     public static function uninstall()
     {
-        self::uninstall_mu_plugin();
+        self::uninstallMUPlugin();
     }
 
-    private static function install_mu_plugin()
+    private static function installMUPlugin()
     {
         $source = dirname(__FILE__) . '/../mu-plugins/i18n.php';
         $target = WPMU_PLUGIN_DIR . '/' . self::$filename;
@@ -50,7 +50,7 @@ class Install
     /**
      * @return bool
      */
-    private static function uninstall_mu_plugin()
+    private static function uninstallMUPlugin()
     {
         $target = WPMU_PLUGIN_DIR . '/' . self::$filename;
 

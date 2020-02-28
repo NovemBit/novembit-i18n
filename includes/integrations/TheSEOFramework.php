@@ -1,8 +1,6 @@
 <?php
 
-
 namespace NovemBit\wp\plugins\i18n\integrations;
-
 
 use diazoxide\wp\lib\option\Option;
 use NovemBit\i18n\Module;
@@ -37,7 +35,7 @@ class TheSEOFramework extends Integration
         add_action('init', function () {
 
             if ($_SERVER['REQUEST_URI'] == "/sitemap-index.xml") {
-                if ( ! headers_sent()) {
+                if (! headers_sent()) {
                     \status_header(200);
                     header('Content-type: text/xml; charset=utf-8', true);
                 }
@@ -80,13 +78,12 @@ class TheSEOFramework extends Integration
 
         add_action('init', function () {
 
-            if ( ! function_exists('\the_seo_framework')) {
+            if (! function_exists('\the_seo_framework')) {
                 return;
             }
 
             if (preg_match('/^\/sitemap.xml/', $_SERVER['REQUEST_URI'])) {
-
-                if ( ! headers_sent()) {
+                if (! headers_sent()) {
                     \status_header(200);
                     header('Content-type: text/xml; charset=utf-8', true);
                 }
@@ -94,19 +91,17 @@ class TheSEOFramework extends Integration
                 echo "\n";
                 die;
             }
-
         }, 11);
 
         add_filter('robots_txt', function ($output, $public) {
             $current_domain = $_SERVER['HTTP_HOST'];
             $default_domain = parse_url(site_url(), PHP_URL_HOST);
-            if ( ! empty($default_domain)) {
+            if (! empty($default_domain)) {
                 $output = str_replace($default_domain, $current_domain, $output);
             }
 
             return str_replace('sitemap.xml', 'sitemap-index.xml', $output);
         }, 30, 2);
-
     }
 
     protected function adminInit(): void

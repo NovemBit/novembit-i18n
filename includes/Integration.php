@@ -1,8 +1,6 @@
 <?php
 
-
 namespace NovemBit\wp\plugins\i18n;
-
 
 use Cache\Adapter\Memcached\MemcachedCachePool;
 use diazoxide\wp\lib\option\Option;
@@ -25,7 +23,9 @@ class Integration extends system\Integration
         $this->options = [
             'performance' => [
                 'cache_pool' => [
-                    'type' => new Option('performance_cache_pool_type', 'file',
+                    'type' => new Option(
+                        'performance_cache_pool_type',
+                        'file',
                         [
                             'parent' => Bootstrap::SLUG,
                             'type' => Option::TYPE_TEXT,
@@ -38,14 +38,18 @@ class Integration extends system\Integration
                     ),
                     'pools' => [
                         'memcached' => [
-                            'host' => new Option('performance_cache_pool_pools_memcached_host', 'localhost',
+                            'host' => new Option(
+                                'performance_cache_pool_pools_memcached_host',
+                                'localhost',
                                 [
                                     'parent' => Bootstrap::SLUG,
                                     'type' => Option::TYPE_TEXT,
                                     'method' => Option::METHOD_SINGLE
                                 ]
                             ),
-                            'port' => new Option('performance_cache_pool_pools_memcached_port', 11211,
+                            'port' => new Option(
+                                'performance_cache_pool_pools_memcached_port',
+                                11211,
                                 [
                                     'parent' => Bootstrap::SLUG,
                                     'type' => Option::TYPE_TEXT,
@@ -79,7 +83,6 @@ class Integration extends system\Integration
         $type = $options['performance']['cache_pool']['type'] ?? 'file';
 
         if ($type == 'memcached' && class_exists('Memcached')) {
-
             $client = new \Memcached();
 
             $host = $options['performance']['cache_pool']['pools']['memcached']['host'] ?? 'localhost';
@@ -90,7 +93,6 @@ class Integration extends system\Integration
             $pool = new MemcachedCachePool($client);
 
             Bootstrap::setCachePool($pool);
-
         }
     }
 
@@ -108,8 +110,6 @@ class Integration extends system\Integration
 //            plugin_dir_url(NOVEMBIT_I18N_PLUGIN_FILE) . '/includes/assets/scripts/admin.js', [], '0.2');
 
         add_action('admin_menu', [$this, 'adminMenu']);
-
-
     }
 
     /**

@@ -2,23 +2,35 @@
 
 namespace NovemBit\wp\plugins\i18n;
 
+use Psr\SimpleCache\CacheInterface;
+
 class Bootstrap
 {
 
-    const RUNTIME_DIR = WP_CONTENT_DIR . '/novembit-i18n';
+    public const RUNTIME_DIR = WP_CONTENT_DIR . '/novembit-i18n';
 
-    const SLUG = 'novembit-i18n';
+    public const SLUG = 'novembit-i18n';
 
-    private static $_cache_pool;
+    private static $cache_pool;
 
-    public static function setCachePool($pool)
+    /**
+     * Set Cache Pool
+     *
+     * @param CacheInterface $pool PSR cache
+     */
+    public static function setCachePool(CacheInterface $pool)
     {
-        self::$_cache_pool = $pool;
+        self::$cache_pool = $pool;
     }
 
+    /**
+     * Get Cache Pool
+     *
+     * @return mixed
+     */
     public static function getCachePool()
     {
-        return self::$_cache_pool;
+        return self::$cache_pool;
     }
 
     public static function init()
@@ -26,7 +38,7 @@ class Bootstrap
         add_action(
             'init',
             function () {
-                if (!session_id()) {
+                if (! session_id()) {
                     session_start();
                 }
 
@@ -58,22 +70,22 @@ class Bootstrap
 
     public static function printNotices()
     {
-        if (!isset($_SESSION[self::SLUG . '-notices'])) {
+        if (! isset($_SESSION[self::SLUG . '-notices'])) {
             return;
         }
         foreach ($_SESSION[self::SLUG . '-notices'] as $key => $notice) {
             {
-                $type = $notice['type'] ?? 'success';
+                $type        = $notice['type'] ?? 'success';
                 $dismissible = $notice['dismissible'] ?? true;
-                $message = $notice['message'] ?? '';
-                ?>
+                $message     = $notice['message'] ?? '';
+            ?>
                 <div class="notice notice-<?php echo $type; ?> <?php echo $dismissible ? 'is-dismissible' : ''; ?>">
                     <p><?php echo $message; ?></p>
                 </div>
                 <?php
 
                 unset($_SESSION[self::SLUG . '-notices'][$key]);
-            }
+                }
         }
     }
 
@@ -91,6 +103,4 @@ class Bootstrap
 
         return false;
     }
-
-
 }

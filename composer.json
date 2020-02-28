@@ -12,7 +12,7 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "ext-dom": "*",
     "ext-mbstring": "*",
     "novembit/i18n": "dev-master",
@@ -20,11 +20,15 @@
     "ext-json": "*"
   },
   "require-dev": {
+    "wp-coding-standards/wpcs": "*"
   },
   "autoload": {
     "psr-4": {
       "NovemBit\\wp\\plugins\\i18n\\": "includes/"
     }
+  },
+  "scripts": {
+    "style": "phpcs --standard=PSR12"
   },
   "repositories": [
     {

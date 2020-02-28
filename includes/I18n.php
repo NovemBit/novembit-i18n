@@ -2,36 +2,39 @@
 
 namespace NovemBit\wp\plugins\i18n;
 
+use Doctrine\DBAL\ConnectionException;
+use NovemBit\i18n\component\translation\exceptions\UnsupportedLanguagesException;
 use NovemBit\i18n\Module;
 use NovemBit\wp\plugins\i18n\shortcodes\Editor;
 use NovemBit\wp\plugins\i18n\shortcodes\Switcher;
+use Psr\SimpleCache\InvalidArgumentException;
 
-class i18n
+class I18n
 {
 
-    const SLUG = "NOVEMBIT_I18N";
+    public const SLUG = "NOVEMBIT_I18N";
 
     public $version = '1.0.0';
 
-    private static $_instance = null;
+    private static $instance = null;
 
     /**
-     * @return i18n|null
+     * @return I18n|null
      */
     public static function instance()
     {
-        if (is_null(self::$_instance)) {
-            self::$_instance = new self();
+        if (is_null(self::$instance)) {
+            self::$instance = new self();
         }
 
-        return self::$_instance;
+        return self::$instance;
     }
 
-    public function __construct()
+    private function __construct()
     {
-        $this->define_constants();
-        $this->init_hooks();
-        $this->init_assets_version();
+        $this->defineConstants();
+        $this->initHooks();
+        $this->initAssetsVersion();
     }
 
     /**
@@ -47,7 +50,12 @@ class i18n
         }
     }
 
-    private function define_constants()
+    /**
+     * Define Constants
+     *
+     * @return void
+     */
+    private function defineConstants(): void
     {
         $this->define('NOVEMBIT_I18N_ABSPATH', dirname(NOVEMBIT_I18N_PLUGIN_FILE) . '/');
         $this->define('NOVEMBIT_I18N_PLUGIN_BASENAME', plugin_basename(NOVEMBIT_I18N_PLUGIN_FILE));
@@ -58,18 +66,22 @@ class i18n
     /**
      * Hook into actions and filters.
      *
+     * @return void
      */
-    private function init_hooks()
+    private function initHooks(): void
     {
         register_activation_hook(NOVEMBIT_I18N_PLUGIN_FILE, [Install::class, 'install']);
         register_deactivation_hook(NOVEMBIT_I18N_PLUGIN_FILE, [Install::class, 'uninstall']);
 
-        add_action('plugins_loaded', [$this, 'on_plugins_loaded'], -1);
+        add_action('plugins_loaded', [$this, 'onPluginsLoaded'], -1);
 
         add_action('init', [$this, 'init'], PHP_INT_MAX - 10);
     }
 
-    public function on_plugins_loaded()
+    /**
+     * @return void
+     */
+    public function onPluginsLoaded(): void
     {
         do_action('novembit_i18n_loaded');
     }
@@ -132,21 +144,33 @@ class i18n
 
     /**
      * Setting up assets version
+     *
+     * @return void
      */
-    private function init_assets_version()
+    private function initAssetsVersion(): void
     {
-        i18n::setOption('assets_version', $this->version);
+        I18n::setOption('assets_version', $this->version);
     }
 
-    public static function getUrlTranslation($url, $lang=null){
+    /**
+     * @param $url
+     * @param null $lang
+     *
+     * @return mixed
+     * @throws ConnectionException
+     * @throws UnsupportedLanguagesException
+     * @throws InvalidArgumentException
+     */
+    public static function getUrlTranslation($url, $lang = null)
+    {
 
         /*if(Module::instance()->request->isReady()){
             return $url;
         }*/
 
-        if($lang==null){
+        if ($lang == null) {
             $lang = Module::instance()->request->getLanguage();
-        } elseif(!Module::instance()->languages->validateLanguage($lang)){
+        } elseif (!Module::instance()->languages->validateLanguage($lang)) {
             return $url;
         }
 
@@ -157,5 +181,4 @@ class i18n
                 ->translate([$url])[$url][$lang]
             ?? $url;
     }
-
 }

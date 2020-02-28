@@ -1,6 +1,5 @@
 <?php
 
-
 namespace NovemBit\wp\plugins\i18n\integrations;
 
 use diazoxide\wp\lib\option\Option;
@@ -17,7 +16,9 @@ class I18n extends Integration
         Module::class
     ];
 
-
+    /**
+     * @return void
+     */
     public function init(): void
     {
         /**
@@ -106,6 +107,7 @@ class I18n extends Integration
                 'error'
             );
         }
+
         return true;
     }
 
@@ -119,25 +121,25 @@ class I18n extends Integration
          * Translation editor
          * */
         $urls = Module::instance()->request->getEditorUrlTranslations();
-        if (!empty($urls)) {
+        if (! empty($urls)) {
             $args = array(
-                'id' => Bootstrap::SLUG . "_item_edit_translation",
+                'id'     => Bootstrap::SLUG . "_item_edit_translation",
                 'parent' => Bootstrap::SLUG,
-                'title' => __("Edit translation", 'novembit-i18n'),
+                'title'  => __("Edit translation", 'novembit-i18n'),
             );
             $wp_admin_bar->add_node($args);
             foreach ($urls as $language => $url) {
                 $flag = $languages[$language]['flag'];
                 $name = $languages[$language]['name'];
                 $args = [
-                    'id' => Bootstrap::SLUG . "_item_edit_translation_item_" . $language,
+                    'id'     => Bootstrap::SLUG . "_item_edit_translation_item_" . $language,
                     'parent' => Bootstrap::SLUG . "_item_edit_translation",
-                    'title' => sprintf(
+                    'title'  => sprintf(
                         '<img alt="%2$s" src="%1$s" style="display:inline; width: 18px !important; height: 12px !important;"/>&nbsp;%2$s',
                         $flag,
                         $name
                     ),
-                    'href' => $url
+                    'href'   => $url
                 ];
                 $wp_admin_bar->add_node($args);
             }
@@ -147,11 +149,11 @@ class I18n extends Integration
          * Language Switcher
          * */
         $urls = Module::instance()->request->getUrlTranslations();
-        if (!empty($urls)) {
+        if (! empty($urls)) {
             $args = array(
-                'id' => Bootstrap::SLUG . "_item_change_language",
+                'id'     => Bootstrap::SLUG . "_item_change_language",
                 'parent' => Bootstrap::SLUG,
-                'title' => __("Change language", 'novembit-i18n'),
+                'title'  => __("Change language", 'novembit-i18n'),
             );
 
             $wp_admin_bar->add_node($args);
@@ -161,14 +163,14 @@ class I18n extends Integration
                 $flag = $languages[$language]['flag'];
                 $name = $languages[$language]['name'];
                 $args = [
-                    'id' => Bootstrap::SLUG . "_item_change_language_item" . $language,
+                    'id'     => Bootstrap::SLUG . "_item_change_language_item" . $language,
                     'parent' => Bootstrap::SLUG . "_item_change_language",
-                    'title' => sprintf(
+                    'title'  => sprintf(
                         '<img alt="%2$s" src="%1$s" style="display:inline; width: 18px !important; height: 12px !important;"/>&nbsp;%2$s',
                         $flag,
                         $name
                     ),
-                    'href' => $url
+                    'href'   => $url
                 ];
                 $wp_admin_bar->add_node($args);
             }
@@ -190,11 +192,11 @@ class I18n extends Integration
     {
         $admin_bar->add_menu(
             array(
-                'id' => 'clear-cache',
+                'id'     => 'clear-cache',
                 'parent' => Bootstrap::SLUG,
-                'title' => __('Clear cache', 'novembit-i18n'),
-                'href' => $this->getClearCacheUrl(),
-                'meta' => array(
+                'title'  => __('Clear cache', 'novembit-i18n'),
+                'href'   => $this->getClearCacheUrl(),
+                'meta'   => array(
                     'title' => __('Delete temporary caches.', 'novembit-i18n')
                 ),
             )
@@ -211,10 +213,9 @@ class I18n extends Integration
         Module::instance()->request->start();
 
         if (Module::instance()->request->isReady()) {
-
             $language_code = Module::instance()->request->getLanguage();
             $language_data = Module::instance()->languages->getLanguageData($language_code);
-            $direction = $language_data['direction'] ?? null;
+            $direction     = $language_data['direction'] ?? null;
             if ($direction) {
                 global $wp_locale;
                 $wp_locale->text_direction = $direction;
@@ -235,20 +236,21 @@ class I18n extends Integration
 
         if (
             isset($parsed['host']) &&
-            !in_array($parsed['host'], [$_SERVER['HTTP_HOST'], parse_url(site_url(), PHP_URL_HOST)])
+            ! in_array($parsed['host'], [$_SERVER['HTTP_HOST'], parse_url(site_url(), PHP_URL_HOST)])
         ) {
             return $url;
         }
 
         $language = Module::instance()->request->getLanguage();
         if ($language !== null) {
-            $url = Module::instance()->request->getTranslation()->url->translate([$url])[$url][$language] ?? $url;
+            $url   = Module::instance()->request->getTranslation()->url->translate([$url])[$url][$language] ?? $url;
             $parts = parse_url($url);
             if (isset($parts['host'])) {
                 return $url;
             }
             $url = '/' . ltrim($url, '/');
         }
+
         return $url;
     }
 
@@ -260,16 +262,17 @@ class I18n extends Integration
             Bootstrap::SLUG . '_translation_content_types',
             function ($types) {
                 $types += [
-                    'text' => 'Text',
-                    'url' => 'URL',
-                    'xml' => 'XML',
-                    'html' => 'HTML',
+                    'text'          => 'Text',
+                    'url'           => 'URL',
+                    'xml'           => 'XML',
+                    'html'          => 'HTML',
                     'html_fragment' => 'HTML Fragment',
-                    'sitemap_xml' => 'Sitemap XML',
-                    'gpf_xml' => 'Google Product Feed XML',
-                    'json' => 'JSON',
-                    'jsonld' => "JSON LD"
+                    'sitemap_xml'   => 'Sitemap XML',
+                    'gpf_xml'       => 'Google Product Feed XML',
+                    'json'          => 'JSON',
+                    'jsonld'        => "JSON LD"
                 ];
+
                 return $types;
             }
         );
@@ -282,11 +285,11 @@ class I18n extends Integration
             /**
              * Components configs
              * */
-            'languages' => include(__DIR__ . '/I18n/config/languages.php'),
+            'languages'   => include(__DIR__ . '/I18n/config/languages.php'),
             'translation' => include(__DIR__ . '/I18n/config/translation.php'),
-            'request' => include(__DIR__ . '/I18n/config/request.php'),
-            'rest' => include(__DIR__ . '/I18n/config/rest.php'),
-            'db' => include(__DIR__ . '/I18n/config/db.php'),
+            'request'     => include(__DIR__ . '/I18n/config/request.php'),
+            'rest'        => include(__DIR__ . '/I18n/config/rest.php'),
+            'db'          => include(__DIR__ . '/I18n/config/db.php'),
         ];
 
         $options = Option::expandOptions($this->options);
@@ -305,6 +308,11 @@ class I18n extends Integration
         return str_replace('\\', '-', static::class);
     }
 
+    /**
+     * Admin init
+     *
+     * @return void
+     */
     protected function adminInit(): void
     {
         add_action(
@@ -329,8 +337,8 @@ class I18n extends Integration
             Bootstrap::SLUG,
             $this->options,
             [
-                'on_save_success_message' => 'Successfully saved. To clear cache click <a href="' . $this->getClearCacheUrl(
-                    ) . '">here</a>.'
+                'on_save_success_message' => 'Successfully saved. To clear cache click <a href="' .
+                                             $this->getClearCacheUrl() . '">here</a>.'
             ]
         );
     }

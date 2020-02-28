@@ -1,13 +1,10 @@
 <?php
 
-
 namespace NovemBit\wp\plugins\i18n\integrations;
-
 
 use diazoxide\wp\lib\option\Option;
 use NovemBit\wp\plugins\i18n\Bootstrap;
 use NovemBit\wp\plugins\i18n\system\Integration;
-
 
 class Brandlight extends Integration
 {
@@ -54,8 +51,6 @@ class Brandlight extends Integration
                 return $patterns;
             }
         );
-
-
     }
 
     protected function adminInit(): void

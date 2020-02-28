@@ -1,8 +1,6 @@
 <?php
 
-
 namespace NovemBit\wp\plugins\i18n\integrations;
-
 
 use NovemBit\i18n\Module;
 use NovemBit\wp\plugins\i18n\system\Integration;
@@ -36,7 +34,6 @@ class WooCommerce extends Integration
         /*add_filter('woocommerce_get_country_locale',[$this,'woocommerceFrontendI18nArray'],PHP_INT_MAX);
         add_filter('woocommerce_get_country_locale_default',[$this,'woocommerceFrontendI18nArray'],PHP_INT_MAX);
         add_filter('woocommerce_get_country_locale_base', [$this, 'woocommerceFrontendI18nArray'], PHP_INT_MAX);*/
-
     }
 
     /**

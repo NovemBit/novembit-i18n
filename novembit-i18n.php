@@ -10,24 +10,23 @@
  * Text Domain: novembit-i18n
  */
 
-use NovemBit\wp\plugins\i18n\i18n;
+defined('ABSPATH') || exit;
 
-defined( 'ABSPATH' ) || exit;
-
-include_once dirname( __FILE__ ) . '/vendor/autoload.php';
+include_once dirname(__FILE__) . '/vendor/autoload.php';
 
 // Define WPPF_PLUGIN_FILE.
-if ( ! defined( 'NOVEMBIT_I18N_PLUGIN_FILE' ) ) {
-	define( 'NOVEMBIT_I18N_PLUGIN_FILE', __FILE__ );
+if (! defined('NOVEMBIT_I18N_PLUGIN_FILE')) {
+    define('NOVEMBIT_I18N_PLUGIN_FILE', __FILE__);
 }
 
 /**
  * Returns the main instance of Novembit_i18n.
  *
- * @return i18n
+ * @return NovemBit\wp\plugins\i18n\I18n
  */
-function NovemBit_i18n() {
-	return i18n::instance();
+function NovemBit_i18n()
+{
+    return NovemBit\wp\plugins\i18n\I18n::instance();
 }
 
 // Global for backwards compatibility.
