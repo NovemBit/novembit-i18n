@@ -3,32 +3,31 @@
 defined('ABSPATH') || exit;
 
 use diazoxide\wp\lib\option\Option;
+use NovemBit\i18n\system\helpers\Countries;
 use NovemBit\i18n\system\helpers\Languages;
 use NovemBit\wp\plugins\i18n\Bootstrap;
 
-if (!class_exists(NovemBit\i18n\system\helpers\Languages::class)) {
+if ( ! class_exists(NovemBit\i18n\system\helpers\Languages::class)) {
     include "vendor/novembit/i18n/src/system/helpers/Languages.php";
 }
 
-$languages = Languages::getLanguages();
-$languages_list = [];
-
-foreach ($languages as $language) {
-    $languages_list[$language['alpha1']] = $language['name'];
-}
+$languages_list = Languages::getMap('alpha1', 'name');
+$countries_list = Countries::getMap('alpha2', 'name');
 
 $config =
     [
-        'runtime_dir' => Bootstrap::RUNTIME_DIR,
-        'from_language' => new Option(
-            'from_language', 'en', [
-            'parent' => Bootstrap::SLUG,
-            'type' => Option::TYPE_TEXT,
-            'method' => Option::METHOD_SINGLE,
-            'values' => $languages_list,
-            'label' => 'From language',
-            'description' => 'Website main content language.'
-        ]
+        'runtime_dir'      => Bootstrap::RUNTIME_DIR,
+        'from_language'    => new Option(
+            'from_language',
+            'en',
+            [
+                'parent'      => Bootstrap::SLUG,
+                'type'        => Option::TYPE_TEXT,
+                'method'      => Option::METHOD_SINGLE,
+                'values'      => $languages_list,
+                'label'       => 'From language',
+                'description' => 'Website main content language.'
+            ]
         ),
         'accept_languages' => new Option(
             'accept_languages',
@@ -53,13 +52,14 @@ $config =
                 'de',
                 'ru',
                 'en'
-            ], [
-                'parent' => Bootstrap::SLUG,
-                'type' => Option::TYPE_TEXT,
-                'method' => Option::METHOD_MULTIPLE,
-                'markup' => Option::MARKUP_CHECKBOX,
-                'values' => $languages_list,
-                'label' => 'To languages',
+            ],
+            [
+                'parent'      => Bootstrap::SLUG,
+                'type'        => Option::TYPE_TEXT,
+                'method'      => Option::METHOD_MULTIPLE,
+                'markup'      => Option::MARKUP_CHECKBOX,
+                'values'      => $languages_list,
+                'label'       => 'To languages',
                 'description' => 'In what languages the site should be translated.'
 
             ]
@@ -68,39 +68,56 @@ $config =
         'localization_config' => new Option(
             'languages_localization_config',
             [
-                'default' => ['language' => 'en', 'country' => 'UK', 'region' => 'Europe'],
-                '^.*\.uk$' => ['language' => 'en', 'country' => 'UK'],
-                '^.*\.ca$' => ['language' => 'en', 'country' => 'Canada'],
-                '^.*\.ro$' => ['language' => 'ro', 'country' => 'Romania'],
-                '^.*\.gr$' => ['language' => 'el', 'country' => 'Greece'],
-                '^.*\.sg$' => ['language' => 'en', 'country' => 'Singapore'],
-                '^.*\.fr$' => ['language' => 'fr', 'country' => 'France'],
-                '^.*\.it$' => ['language' => 'it', 'country' => 'Italy'],
-                '^.*\.nl$' => ['language' => 'nl', 'country' => 'Netherlands'],
-                '^.*\.de$' => ['language' => 'de', 'country' => 'Germany'],
-                '^.*\.ru$' => ['language' => 'ru', 'country' => 'Russia'],
-                '^.*\.dk$' => ['language' => 'da', 'country' => 'Denmark'],
-                '^.*\.cz$' => ['language' => 'cs', 'country' => 'Czech Republic'],
-                '^.*\.pl$' => ['language' => 'pl', 'country' => 'Poland'],
-                '^.*\.nz$' => ['language' => 'en', 'country' => 'New Zealand'],
-                '^.*\.si$' => ['language' => 'sl', 'country' => 'Slovenia'],
-                '^.*\.kr$' => ['language' => 'ko', 'country' => 'South Korea'],
-                '^.*\.ee$' => ['language' => 'et', 'country' => 'Estonia'],
-                '^.*\.eu$' => ['language' => 'en', 'region' => 'Europe'],
+                'default'   => ['language' => 'en', 'country' => 'UK', 'region' => 'Europe'],
+                '^.*\.uk$'  => ['language' => 'en', 'country' => 'UK'],
+                '^.*\.ca$'  => ['language' => 'en', 'country' => 'Canada'],
+                '^.*\.ro$'  => ['language' => 'ro', 'country' => 'Romania'],
+                '^.*\.gr$'  => ['language' => 'el', 'country' => 'Greece'],
+                '^.*\.sg$'  => ['language' => 'en', 'country' => 'Singapore'],
+                '^.*\.fr$'  => ['language' => 'fr', 'country' => 'France'],
+                '^.*\.it$'  => ['language' => 'it', 'country' => 'Italy'],
+                '^.*\.nl$'  => ['language' => 'nl', 'country' => 'Netherlands'],
+                '^.*\.de$'  => ['language' => 'de', 'country' => 'Germany'],
+                '^.*\.ru$'  => ['language' => 'ru', 'country' => 'Russia'],
+                '^.*\.dk$'  => ['language' => 'da', 'country' => 'Denmark'],
+                '^.*\.cz$'  => ['language' => 'cs', 'country' => 'Czech Republic'],
+                '^.*\.pl$'  => ['language' => 'pl', 'country' => 'Poland'],
+                '^.*\.nz$'  => ['language' => 'en', 'country' => 'New Zealand'],
+                '^.*\.si$'  => ['language' => 'sl', 'country' => 'Slovenia'],
+                '^.*\.kr$'  => ['language' => 'ko', 'country' => 'South Korea'],
+                '^.*\.ee$'  => ['language' => 'et', 'country' => 'Estonia'],
+                '^.*\.eu$'  => ['language' => 'en', 'region' => 'Europe'],
                 '^.*\.com$' => ['language' => 'en', 'country' => 'UK'],
                 '^.*\.net$' => ['language' => 'en', 'country' => 'UK'],
                 '^.*\.org$' => ['language' => 'en', 'country' => 'UK'],
             ],
             [
-                'parent' => Bootstrap::SLUG,
-                'type' => Option::TYPE_OBJECT,
-                'method' => Option::METHOD_MULTIPLE,
-                'template' => [
-                    'language' => ['type' => Option::TYPE_TEXT, 'values' => $languages_list, 'label' => 'Language'],
-                    'country' => ['type' => Option::TYPE_TEXT, 'label' => 'Country'],
-                    'region' => ['type' => Option::TYPE_TEXT, 'label' => 'Region'],
+                'parent'      => Bootstrap::SLUG,
+                'main_params' => ['style' => 'grid-template-columns: repeat(3, 1fr);'],
+                'type'        => Option::TYPE_OBJECT,
+                'method'      => Option::METHOD_MULTIPLE,
+                'template'    => [
+                    'language'         => [
+                        'type'   => Option::TYPE_TEXT,
+                        'values' => $languages_list,
+                        'label'  => 'Language'
+                    ],
+                    'accept_languages' => [
+                        'type'        => Option::TYPE_TEXT,
+                        'method'      => Option::METHOD_MULTIPLE,
+                        'markup'      => Option::MARKUP_SELECT,
+                        'values'      => $languages_list,
+                        'label'       => 'To languages',
+                        'description' => 'In what languages the site should be translated.'
+                    ],
+                    'country'          => [
+                        'type'   => Option::TYPE_TEXT,
+                        'label'  => 'Country',
+                        'values' => $countries_list
+                    ],
+                    'region'           => ['type' => Option::TYPE_TEXT, 'label' => 'Region'],
                 ],
-                'label' => 'Language detection pattern',
+                'label'       => 'Language detection pattern',
             ]
         ),
 
