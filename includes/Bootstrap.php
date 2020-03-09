@@ -2,6 +2,8 @@
 
 namespace NovemBit\wp\plugins\i18n;
 
+use NovemBit\wp\plugins\i18n\shortcodes\Editor;
+use NovemBit\wp\plugins\i18n\shortcodes\Switcher;
 use Psr\SimpleCache\CacheInterface;
 
 class Bootstrap
@@ -11,14 +13,63 @@ class Bootstrap
 
     public const SLUG = 'novembit-i18n';
 
+    /**
+     * Main plugin file
+     *
+     * @var string
+     * */
+    private $plugin_file;
+
+    /**
+     * Cache pool
+     *
+     * @var CacheInterface
+     * */
     private static $cache_pool;
+
+    /**
+     * Main instance of class
+     *
+     * @var self
+     * */
+    private static $instance;
+
+    /**
+     * @param null $plugin_file
+     *
+     * @return Bootstrap
+     */
+    public static function instance($plugin_file = null)
+    {
+        if (! isset(self::$instance)) {
+            self::$instance = new self($plugin_file);
+        }
+
+        return self::$instance;
+    }
+
+    /**
+     * Bootstrap constructor.
+     *
+     * @param $plugin_file
+     */
+    private function __construct($plugin_file)
+    {
+        $this->plugin_file = $plugin_file;
+
+        register_activation_hook($this->getPluginFile(), [Install::class, 'install']);
+
+        register_deactivation_hook($this->getPluginFile(), [Install::class, 'uninstall']);
+
+        $this->initHooks();
+    }
 
     /**
      * Set Cache Pool
      *
      * @param CacheInterface $pool PSR cache
      */
-    public static function setCachePool(CacheInterface $pool)
+    public static function setCachePool(CacheInterface $pool): void
     {
         self::$cache_pool = $pool;
     }
@@ -26,14 +77,28 @@ class Bootstrap
     /**
      * Get Cache Pool
      *
-     * @return mixed
+     * @return CacheInterface
      */
-    public static function getCachePool()
+    public static function getCachePool(): ?CacheInterface
     {
         return self::$cache_pool;
     }
 
+    /**
+     * @deprecated
+     * */
     public static function init()
+    {
+        $old_mu = WPMU_PLUGIN_DIR . '/0_novembit_i18n.php';
+        if (file_exists(WPMU_PLUGIN_DIR . '/0_novembit_i18n.php')) {
+            unlink($old_mu);
+        }
+    }
+
+    /**
+     * @return void
+     */
+    private function initHooks(): void
     {
         add_action(
             'init',
@@ -49,6 +114,14 @@ class Bootstrap
                 $integration->run();
             },
             10
+        );
+
+        add_action(
+            'init',
+            function () {
+                Switcher::init();
+                Editor::init();
+            }
         );
     }
 
@@ -102,5 +175,31 @@ class Bootstrap
         }
 
         return false;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPluginFile()
+    {
+        return $this->plugin_file;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getPluginDirUrl()
+    {
+        return plugin_dir_url($this->getPluginFile());
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getPluginBasename()
+    {
+        return plugin_basename($this->getPluginFile());
     }
 }
