@@ -115,13 +115,13 @@ class I18n extends Integration
     {
         global $wp_admin_bar;
 
-        $languages = Module::instance()->languages->getAcceptLanguages(true);
+        $languages = Module::instance()->localization->getAcceptLanguages(true);
 
         /**
          * Translation editor
          * */
         $urls = Module::instance()->request->getEditorUrlTranslations();
-        if (! empty($urls)) {
+        if ( ! empty($urls)) {
             $args = array(
                 'id'     => Bootstrap::SLUG . "_item_edit_translation",
                 'parent' => Bootstrap::SLUG,
@@ -149,7 +149,7 @@ class I18n extends Integration
          * Language Switcher
          * */
         $urls = Module::instance()->request->getUrlTranslations();
-        if (! empty($urls)) {
+        if ( ! empty($urls)) {
             $args = array(
                 'id'     => Bootstrap::SLUG . "_item_change_language",
                 'parent' => Bootstrap::SLUG,
@@ -214,7 +214,7 @@ class I18n extends Integration
 
         if (Module::instance()->request->isReady()) {
             $language_code = Module::instance()->request->getLanguage();
-            $language_data = Module::instance()->languages->getLanguageData($language_code);
+            $language_data = Module::instance()->localization->getLanguageData($language_code);
             $direction     = $language_data['direction'] ?? null;
             if ($direction) {
                 global $wp_locale;
@@ -281,15 +281,15 @@ class I18n extends Integration
             /**
              * Runtime Dir for module global instance
              * */
-            'runtime_dir' => Bootstrap::RUNTIME_DIR,
+            'runtime_dir'  => Bootstrap::RUNTIME_DIR,
             /**
              * Components configs
              * */
-            'languages'   => include(__DIR__ . '/I18n/config/languages.php'),
-            'translation' => include(__DIR__ . '/I18n/config/translation.php'),
-            'request'     => include(__DIR__ . '/I18n/config/request.php'),
-            'rest'        => include(__DIR__ . '/I18n/config/rest.php'),
-            'db'          => include(__DIR__ . '/I18n/config/db.php'),
+            'localization' => include(__DIR__ . '/I18n/config/localization.php'),
+            'translation'  => include(__DIR__ . '/I18n/config/translation.php'),
+            'request'      => include(__DIR__ . '/I18n/config/request.php'),
+            'rest'         => include(__DIR__ . '/I18n/config/rest.php'),
+            'db'           => include(__DIR__ . '/I18n/config/db.php'),
         ];
 
         $options = Option::expandOptions($this->options);

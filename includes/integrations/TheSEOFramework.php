@@ -52,7 +52,7 @@ class TheSEOFramework extends Integration
                 $urls = Module::instance()
                     ->translation
                     ->setLanguages(
-                        Module::instance()->languages->getAcceptLanguages()
+                        Module::instance()->localization->getAcceptLanguages()
                     )
                     ->url
                     ->translate([$sitemap_url])[$sitemap_url];
