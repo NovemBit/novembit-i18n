@@ -9,6 +9,9 @@ use NovemBit\wp\plugins\i18n\shortcodes\Editor;
 use NovemBit\wp\plugins\i18n\shortcodes\Switcher;
 use Psr\SimpleCache\InvalidArgumentException;
 
+/**
+ * @deprecated Use Bootstrap Class
+ * */
 class I18n
 {
 
@@ -170,7 +173,7 @@ class I18n
 
         if ($lang == null) {
             $lang = Module::instance()->request->getLanguage();
-        } elseif (!Module::instance()->languages->validateLanguage($lang)) {
+        } elseif (!Module::instance()->localization->validateLanguage($lang)) {
             return $url;
         }
 
