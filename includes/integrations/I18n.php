@@ -6,11 +6,18 @@ use diazoxide\wp\lib\option\Option;
 use Exception;
 use NovemBit\i18n\Module;
 use NovemBit\wp\plugins\i18n\Bootstrap;
+use NovemBit\wp\plugins\i18n\integrations\I18n\Countries;
+use NovemBit\wp\plugins\i18n\integrations\I18n\Languages;
 use NovemBit\wp\plugins\i18n\system\Integration;
 use Psr\SimpleCache\InvalidArgumentException;
 
 class I18n extends Integration
 {
+
+    public static $integrations = [
+        Languages::class,
+        Countries::class
+    ];
 
     public static $classes = [
         Module::class
@@ -115,7 +122,7 @@ class I18n extends Integration
     {
         global $wp_admin_bar;
 
-        $languages = Module::instance()->localization->getAcceptLanguages(true);
+        $languages = Module::instance()->localization->languages->getAcceptLanguages(true);
 
         /**
          * Translation editor
@@ -214,7 +221,7 @@ class I18n extends Integration
 
         if (Module::instance()->request->isReady()) {
             $language_code = Module::instance()->request->getLanguage();
-            $language_data = Module::instance()->localization->getLanguageData($language_code);
+            $language_data = Module::instance()->localization->languages->getLanguageData($language_code);
             $direction     = $language_data['direction'] ?? null;
             if ($direction) {
                 global $wp_locale;
