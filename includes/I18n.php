@@ -173,7 +173,7 @@ class I18n
 
         if ($lang == null) {
             $lang = Module::instance()->request->getLanguage();
-        } elseif (!Module::instance()->localization->validateLanguage($lang)) {
+        } elseif (!Module::instance()->localization->languages->validateLanguage($lang)) {
             return $url;
         }
 
