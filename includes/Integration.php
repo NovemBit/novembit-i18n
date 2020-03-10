@@ -78,7 +78,7 @@ class Integration extends system\Integration
     private function setBootstrapCachePool()
     {
 
-        $options = Option::expandOptions($this->options);
+        $options = Option::expandOptions($this->options,Bootstrap::SLUG);
 
         $type = $options['performance']['cache_pool']['type'] ?? 'file';
 
