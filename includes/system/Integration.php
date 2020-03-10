@@ -1,8 +1,6 @@
 <?php
 
-
 namespace NovemBit\wp\plugins\i18n\system;
-
 
 abstract class Integration
 {
@@ -19,7 +17,7 @@ abstract class Integration
 
     public static $name;
 
-    protected static $_integrationsInstances = [];
+    protected static $integrationsInstances = [];
 
     /**
      * @throws \Exception
@@ -29,8 +27,7 @@ abstract class Integration
         foreach (static::$integrations as $integration) {
             $instance = new $integration();
             if ($instance instanceof Integration) {
-
-                static::$_integrationsInstances[self::getName()] = &$instance;
+                static::$integrationsInstances[self::getName()] = &$instance;
 
                 $instance->run();
             } else {
@@ -41,12 +38,12 @@ abstract class Integration
 
     final public static function getIntegration($name)
     {
-        return static::$_integrationsInstances[$name];
+        return static::$integrationsInstances[$name];
     }
 
     final public static function getIntegrationsInstances()
     {
-        return static::$_integrationsInstances;
+        return static::$integrationsInstances;
     }
 
     final public static function getName()
@@ -60,42 +57,41 @@ abstract class Integration
      */
     final public function run()
     {
-
         foreach (static::$rules as $rule) {
             if (is_callable($rule)) {
-                if (!call_user_func($rule)) {
+                if (! call_user_func($rule)) {
                     return;
                 }
-            } elseif (!$rule) {
+            } elseif (! $rule) {
                 return;
             }
         }
 
         foreach (static::$classes as $class) {
-            if (!class_exists($class)) {
+            if (! class_exists($class)) {
                 return;
             }
         }
 
         foreach (static::$functions as $function) {
-            if (!function_exists($function)) {
+            if (! function_exists($function)) {
                 return;
             }
         }
 
         foreach (static::$plugins as $plugin) {
-            if (!function_exists('is_plugin_active')
-                || !is_plugin_active($plugin)
+            if (
+                ! function_exists('is_plugin_active')
+                 || ! is_plugin_active($plugin)
             ) {
                 return;
             }
         }
 
 
-            $this->init();
+        $this->init();
 
         static::runIntegrations();
-
     }
 
     abstract protected function init(): void;
