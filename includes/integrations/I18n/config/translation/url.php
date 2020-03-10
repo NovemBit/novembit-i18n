@@ -12,7 +12,7 @@ $config = [
     'path_separator' => new Option(
         'translation_url_path_separator', '-',
         [
-            'parent' => Bootstrap::SLUG,
+            
             'type' => Option::TYPE_TEXT
         ]
     ),
@@ -20,7 +20,7 @@ $config = [
         'translation_url_path_translation',
         true,
         [
-            'parent' => Bootstrap::SLUG,
+            
             'type' => Option::TYPE_BOOL
         ]
     ),
@@ -29,7 +29,7 @@ $config = [
         'translation_url_path_lowercase',
         true,
         [
-            'parent' => Bootstrap::SLUG,
+            
             'type' => Option::TYPE_BOOL
         ]
     ),
@@ -54,7 +54,7 @@ $config = [
     'path_exclusion_patterns' => new Option(
         'translation_url_path_exclusion_patterns',
         [],
-        ['parent' => Bootstrap::SLUG, 'type' => Option::TYPE_TEXT, 'method' => Option::METHOD_MULTIPLE]
+        [ 'type' => Option::TYPE_TEXT, 'method' => Option::METHOD_MULTIPLE]
     )
 ];
 if (Bootstrap::getCachePool()) {

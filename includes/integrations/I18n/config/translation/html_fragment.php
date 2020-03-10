@@ -12,13 +12,13 @@ $config =
         'xpath_query_map' => [
             'ignore' => new Option('html_fragment_xpath_query_map_ignore',
                 include('html/xpath_query_map_ignore.php'),
-                ['parent' => Bootstrap::SLUG, 'type' => Option::TYPE_TEXT, 'method' => Option::METHOD_MULTIPLE])
+                [ 'type' => Option::TYPE_TEXT, 'method' => Option::METHOD_MULTIPLE])
             ,
             'accept' => new Option(
                 'html_fragment_xpath_query_map_accept',
                 include('html/xpath_query_map_accept.php'),
                 [
-                    'parent' => Bootstrap::SLUG,
+                    
                     'type' => Option::TYPE_OBJECT,
                     'method' => Option::METHOD_MULTIPLE,
                     'template' => [

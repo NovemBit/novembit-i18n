@@ -10,7 +10,7 @@ $config =
     [
         'class' => new Option('translation_method_class', Rest::class,
             [
-                'parent' => Bootstrap::SLUG,
+                
                 'type' => Option::TYPE_TEXT,
                 'method' => Option::METHOD_SINGLE,
                 'values' => [
@@ -22,32 +22,32 @@ $config =
         'runtime_dir' => Bootstrap::RUNTIME_DIR,
         'remote_host' => new Option('translation_method_remote_host', 'i18n.brandlight.org',
             [
-                'parent' => Bootstrap::SLUG,
+                
                 'type' => Option::TYPE_TEXT
             ]
         ),
         'ssl' => new Option('translation_method_ssl', true,
             [
-                'parent' => Bootstrap::SLUG,
+                
                 'type' => Option::TYPE_BOOL
             ]
         ),
         'request_timeout'=>new Option('translation_method_request_timeout', 5,
             [
-                'parent' => Bootstrap::SLUG,
+                
                 'type' => Option::TYPE_TEXT,
                 'markup'=>Option::MARKUP_NUMBER
             ]
         ),
         'api_limit_expire_delay'=>new Option('translation_method_api_limit_expire_delay', 3600,
             [
-                'parent' => Bootstrap::SLUG,
+                
                 'type' => Option::TYPE_TEXT,
                 'markup'=>Option::MARKUP_NUMBER
             ]
         ),
         'api_key' => new Option('translation_method_api_key', 'xxx', [
-                'parent' => Bootstrap::SLUG,
+                
                 'type' => Option::TYPE_TEXT,
             ]
         ),
@@ -99,7 +99,7 @@ $config =
                 'Activpet',
             ],
             [
-                'parent' => Bootstrap::SLUG,
+                
                 'type' => Option::TYPE_TEXT,
                 'method' => Option::METHOD_MULTIPLE
             ]

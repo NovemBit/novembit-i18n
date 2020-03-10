@@ -14,7 +14,7 @@ $config =
         'restore_non_translated_urls' => new Option(
             'request_restore_non_translated_urls',
             true,
-            ['parent' => Bootstrap::SLUG, 'type' => Option::TYPE_BOOL]
+            [ 'type' => Option::TYPE_BOOL]
         ),
         'allow_editor' => current_user_can('administrator'),
         'default_http_host' => parse_url(site_url(), PHP_URL_HOST),
@@ -26,7 +26,7 @@ $config =
                 '/sitemap-index.xml/is' => 'sitemap_xml',
             ],
             [
-                'parent' => Bootstrap::SLUG,
+                
                 'type' => Option::TYPE_OBJECT,
                 'method' => Option::METHOD_MULTIPLE,
                 'field' => [
