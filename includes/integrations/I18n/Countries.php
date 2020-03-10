@@ -3,14 +3,22 @@
 namespace NovemBit\wp\plugins\i18n\integrations\I18n;
 
 use diazoxide\wp\lib\option\Option;
+use NovemBit\i18n\system\helpers\Arrays;
 use NovemBit\wp\plugins\i18n\Bootstrap;
-use NovemBit\wp\plugins\i18n\system\Integration;
+use NovemBit\wp\plugins\i18n\integrations\I18n;
 
-class Countries extends Integration
+class Countries
 {
 
-    public function init(): void
+    /**
+     * @var I18n
+     * */
+    private $parent;
+
+    public function __construct($parent)
     {
+        $this->parent = $parent;
+
         if (is_admin()) {
             $this->adminInit();
         }
@@ -38,13 +46,24 @@ class Countries extends Integration
         );
     }
 
+    public function getList()
+    {
+        $countries = $this->options()['all_countries'];
+        return Arrays::map($countries, 'alpha2', 'name');
+    }
+
+    public function options()
+    {
+        return Option::expandOptions($this->settings(), Bootstrap::SLUG);
+    }
+
     private function settings()
     {
         $countries_list = \NovemBit\i18n\system\helpers\Countries::getData();
 
         return [
             'all_countries' => new Option(
-                md5(self::getName()).'_all_countries',
+                str_replace('\\', '_', self::class) . '_all_countries',
                 $countries_list,
                 [
                     'type'        => Option::TYPE_GROUP,

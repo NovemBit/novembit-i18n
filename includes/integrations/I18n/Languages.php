@@ -3,14 +3,21 @@
 namespace NovemBit\wp\plugins\i18n\integrations\I18n;
 
 use diazoxide\wp\lib\option\Option;
+use NovemBit\i18n\system\helpers\Arrays;
 use NovemBit\wp\plugins\i18n\Bootstrap;
-use NovemBit\wp\plugins\i18n\system\Integration;
+use NovemBit\wp\plugins\i18n\integrations\I18n;
 
-class Languages extends Integration
+class Languages
 {
 
-    public function init(): void
+    /**
+     * @var I18n
+     * */
+    private $parent;
+
+    public function __construct($parent)
     {
+        $this->parent = $parent;
 
         if (is_admin()) {
             $this->adminInit();
@@ -39,24 +46,42 @@ class Languages extends Integration
         );
     }
 
+    public function options()
+    {
+        return Option::expandOptions($this->settings(), Bootstrap::SLUG);
+    }
+
+    public function getList()
+    {
+        $countries = $this->options()['all_languages'] ?? [];
+
+        return Arrays::map($countries, 'alpha1', 'name');
+    }
+
+    public function getAll()
+    {
+        return $this->options()['all_languages'] ?? [];
+    }
+
+
     private function settings()
     {
         $languages_list = \NovemBit\i18n\system\helpers\Languages::getData();
 
         return [
             'all_languages' => new Option(
-                md5(self::getName()) . '_all_languages',
+                str_replace('\\', '_', self::class) . '_all_languages',
                 $languages_list,
                 [
                     'type'        => Option::TYPE_GROUP,
                     'method'      => Option::METHOD_MULTIPLE,
-                //                    'main_params' => ['style' => 'grid-template-columns: repeat(1, 1fr);'],
+                    //                    'main_params' => ['style' => 'grid-template-columns: repeat(1, 1fr);'],
                     'values'      => $languages_list,
-                    'template' => [
-                            'alpha1' => ['type' => Option::TYPE_TEXT],
-                            'name' =>  ['type' => Option::TYPE_TEXT],
-                            'native' =>  ['type' => Option::TYPE_TEXT],
-                            'flag' =>  ['type' => Option::TYPE_TEXT]
+                    'template'    => [
+                        'alpha1' => ['type' => Option::TYPE_TEXT],
+                        'name'   => ['type' => Option::TYPE_TEXT],
+                        'native' => ['type' => Option::TYPE_TEXT],
+                        'flag'   => ['type' => Option::TYPE_TEXT, 'values' => $this->parent->countries->getList()]
                     ],
                     'label'       => 'To languages',
                     'description' => 'In what languages the site should be translated.'
@@ -70,10 +95,10 @@ class Languages extends Integration
         Option::printForm(
             Bootstrap::SLUG,
             $this->settings()
-            //            [
-            //                'on_save_success_message' => 'Successfully saved. To clear cache click <a href="' .
-            //                                             $this->getClearCacheUrl() . '">here</a>.'
-            //            ]
+        //            [
+        //                'on_save_success_message' => 'Successfully saved. To clear cache click <a href="' .
+        //                                             $this->getClearCacheUrl() . '">here</a>.'
+        //            ]
         );
     }
 }
