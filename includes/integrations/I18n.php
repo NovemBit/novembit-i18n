@@ -13,21 +13,30 @@ use Psr\SimpleCache\InvalidArgumentException;
 
 class I18n extends Integration
 {
-
-    public static $integrations = [
-        Languages::class,
-        Countries::class
-    ];
-
+    
     public static $classes = [
         Module::class
     ];
+    
+    /**
+     * @var Countries
+     * */
+    public $countries;
+
+    /**
+     * @var Languages
+     * */
+    public $languages;
 
     /**
      * @return void
      */
     public function init(): void
     {
+        $this->countries = new Countries($this);
+        
+        $this->languages = new Languages($this);
+        
         /**
          * Creating instance of i18n
          * */
@@ -128,7 +137,7 @@ class I18n extends Integration
          * Translation editor
          * */
         $urls = Module::instance()->request->getEditorUrlTranslations();
-        if ( ! empty($urls)) {
+        if (! empty($urls)) {
             $args = array(
                 'id'     => Bootstrap::SLUG . "_item_edit_translation",
                 'parent' => Bootstrap::SLUG,
@@ -156,7 +165,7 @@ class I18n extends Integration
          * Language Switcher
          * */
         $urls = Module::instance()->request->getUrlTranslations();
-        if ( ! empty($urls)) {
+        if (! empty($urls)) {
             $args = array(
                 'id'     => Bootstrap::SLUG . "_item_change_language",
                 'parent' => Bootstrap::SLUG,
@@ -283,7 +292,7 @@ class I18n extends Integration
                 return $types;
             }
         );
-
+        
         $this->options = [
             /**
              * Runtime Dir for module global instance
@@ -292,14 +301,14 @@ class I18n extends Integration
             /**
              * Components configs
              * */
-            'localization' => include(__DIR__ . '/I18n/config/localization.php'),
-            'translation'  => include(__DIR__ . '/I18n/config/translation.php'),
-            'request'      => include(__DIR__ . '/I18n/config/request.php'),
-            'rest'         => include(__DIR__ . '/I18n/config/rest.php'),
-            'db'           => include(__DIR__ . '/I18n/config/db.php'),
+            'localization' => require_once(__DIR__ . '/I18n/config/localization.php'),
+            'translation'  => require_once(__DIR__ . '/I18n/config/translation.php'),
+            'request'      => require_once(__DIR__ . '/I18n/config/request.php'),
+            'rest'         => require_once(__DIR__ . '/I18n/config/rest.php'),
+            'db'           => require_once(__DIR__ . '/I18n/config/db.php'),
         ];
 
-        $options = Option::expandOptions($this->options);
+        $options = Option::expandOptions($this->options, Bootstrap::SLUG);
 
         Module::instance(
             $options
