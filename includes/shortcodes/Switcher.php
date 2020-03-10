@@ -74,7 +74,7 @@ class Switcher
 
         $urls = Module::instance()->request->getUrlTranslations();
 
-        $languages = Module::instance()->localization->getAcceptLanguages(true);
+        $languages = Module::instance()->localization->languages->getAcceptLanguages(true);
 
         foreach ($urls as $code => $url) {
 

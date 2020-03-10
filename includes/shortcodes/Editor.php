@@ -82,7 +82,7 @@ class Editor
 
         $urls = Module::instance()->request->getEditorUrlTranslations();
 
-        $languages = Module::instance()->localization->getAcceptLanguages(true);
+        $languages = Module::instance()->localization->languages->getAcceptLanguages(true);
 
         foreach ($urls as $code => $url) {
 
