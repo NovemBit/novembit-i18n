@@ -1,11 +1,13 @@
 <?php
+/** @var I18n $this */
 
 use diazoxide\wp\lib\option\Option;
 use NovemBit\wp\plugins\i18n\Bootstrap;
-
+use NovemBit\wp\plugins\i18n\integrations\I18n;
 
 return [
     'runtime_dir'         => Bootstrap::RUNTIME_DIR,
+    'all_languages'=>$this->languages->getAll(),
     'from_language'       => new Option(
         'from_language',
         'en',
@@ -13,7 +15,7 @@ return [
 
             'type'        => Option::TYPE_TEXT,
             'method'      => Option::METHOD_SINGLE,
-            'values'      => $languages_list,
+            'values'      => $this->languages->getList(),
             'label'       => 'From language',
             'description' => 'Website main content language.'
         ]
@@ -48,7 +50,7 @@ return [
             'method'      => Option::METHOD_MULTIPLE,
             'markup'      => Option::MARKUP_SELECT,
             'main_params' => ['style' => 'grid-template-columns: repeat(1, 1fr);'],
-            'values'      => $languages_list,
+            'values'      => $this->languages->getList(),
             'label'       => 'To languages',
             'description' => 'In what languages the site should be translated.'
         ]
@@ -87,21 +89,21 @@ return [
             'template'    => [
                 'language'         => [
                     'type'   => Option::TYPE_TEXT,
-                    'values' => $languages_list,
+                    'values' => $this->languages->getList(),
                     'label'  => 'Language'
                 ],
                 'accept_languages' => [
                     'type'        => Option::TYPE_TEXT,
                     'method'      => Option::METHOD_MULTIPLE,
                     'markup'      => Option::MARKUP_SELECT,
-                    'values'      => $languages_list,
+                    'values'      => $this->languages->getList(),
                     'label'       => 'To languages',
                     'description' => 'In what languages the site should be translated.'
                 ],
                 'country'          => [
                     'type'   => Option::TYPE_TEXT,
                     'label'  => 'Country',
-                    'values' => $countries_list
+                    'values' => $this->countries->getList()
                 ],
                 'region'           => ['type' => Option::TYPE_TEXT, 'label' => 'Region'],
             ],
