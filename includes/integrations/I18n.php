@@ -8,16 +8,17 @@ use NovemBit\i18n\Module;
 use NovemBit\wp\plugins\i18n\Bootstrap;
 use NovemBit\wp\plugins\i18n\integrations\I18n\Countries;
 use NovemBit\wp\plugins\i18n\integrations\I18n\Languages;
+use NovemBit\wp\plugins\i18n\integrations\I18n\Regions;
 use NovemBit\wp\plugins\i18n\system\Integration;
 use Psr\SimpleCache\InvalidArgumentException;
 
 class I18n extends Integration
 {
-    
+
     public static $classes = [
         Module::class
     ];
-    
+
     /**
      * @var Countries
      * */
@@ -29,14 +30,19 @@ class I18n extends Integration
     public $languages;
 
     /**
+     * @var Regions
+     * */
+    public $regions;
+
+    /**
      * @return void
      */
     public function init(): void
     {
-        $this->countries = new Countries($this);
-        
         $this->languages = new Languages($this);
-        
+        $this->countries = new Countries($this);
+        $this->regions   = new Regions($this);
+
         /**
          * Creating instance of i18n
          * */
@@ -137,7 +143,7 @@ class I18n extends Integration
          * Translation editor
          * */
         $urls = Module::instance()->request->getEditorUrlTranslations();
-        if (! empty($urls)) {
+        if ( ! empty($urls)) {
             $args = array(
                 'id'     => Bootstrap::SLUG . "_item_edit_translation",
                 'parent' => Bootstrap::SLUG,
@@ -165,7 +171,7 @@ class I18n extends Integration
          * Language Switcher
          * */
         $urls = Module::instance()->request->getUrlTranslations();
-        if (! empty($urls)) {
+        if ( ! empty($urls)) {
             $args = array(
                 'id'     => Bootstrap::SLUG . "_item_change_language",
                 'parent' => Bootstrap::SLUG,
@@ -292,7 +298,7 @@ class I18n extends Integration
                 return $types;
             }
         );
-        
+
         $this->options = [
             /**
              * Runtime Dir for module global instance
