@@ -7,7 +7,7 @@ use NovemBit\wp\plugins\i18n\integrations\I18n;
 
 return [
     'runtime_dir'         => Bootstrap::RUNTIME_DIR,
-    'all_languages'=>$this->languages->getAll(),
+    'all_languages'       => $this->languages->getAll(),
     'from_language'       => new Option(
         'from_language',
         'en',
