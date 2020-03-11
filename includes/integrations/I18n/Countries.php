@@ -14,7 +14,7 @@ class Countries
      * @var I18n
      * */
     private $parent;
-
+    
     public function __construct($parent)
     {
         $this->parent = $parent;
@@ -48,36 +48,47 @@ class Countries
 
     public function getList()
     {
-        $countries = $this->options()['all_countries'];
-        return Arrays::map($countries, 'alpha2', 'name');
+        $items = $this->options('all');
+
+        return Arrays::map($items, 'alpha2', 'name');
     }
 
-    public function options()
-    {
-        return Option::expandOptions($this->settings(), Bootstrap::SLUG);
-    }
-
-    private function settings()
+    /**
+     * @param bool $is_form
+     *
+     * @return array
+     */
+    public function settings($is_form = false)
     {
         $countries_list = \NovemBit\i18n\system\helpers\Countries::getData();
 
         return [
-            'all_countries' => new Option(
-                str_replace('\\', '_', self::class) . '_all_countries',
+            'all' => new Option(
+                str_replace('\\', '_', self::class) . '_all',
                 $countries_list,
                 [
                     'type'        => Option::TYPE_GROUP,
                     'method'      => Option::METHOD_MULTIPLE,
                     'values'      => $countries_list,
                     'template'    => [
-                        'name'     => ['type' => Option::TYPE_TEXT],
-                        'alpha2'   => ['type' => Option::TYPE_TEXT],
-                        'alpha3'   => ['type' => Option::TYPE_TEXT],
-                        'numeric'  => ['type' => Option::TYPE_TEXT],
-                        'currency' => [
+                        
+                        'name'    => ['type' => Option::TYPE_TEXT],
+                        'alpha2'  => ['type' => Option::TYPE_TEXT],
+                        'alpha3'  => ['type' => Option::TYPE_TEXT],
+                        'numeric' => ['type' => Option::TYPE_TEXT],
+
+                        'regions' => [
                             'type'   => Option::TYPE_TEXT,
                             'method' => Option::METHOD_MULTIPLE,
-                            'label'  => 'Currency'
+                            'values' => $is_form ? $this->parent->regions->getList() : [],
+                            'label'  => 'Regions'
+                        ],
+
+                        'languages' => [
+                            'type'   => Option::TYPE_TEXT,
+                            'method' => Option::METHOD_MULTIPLE,
+                            'values' => $is_form ? $this->parent->languages->getList() : [],
+                            'label'  => 'Languages'
                         ],
                     ],
                     'label'       => 'To languages',
@@ -86,16 +97,24 @@ class Countries
             ),
         ];
     }
+    
+    public function options($name = null, $default = null)
+    {
+        $options = Option::expandOptions($this->settings(), Bootstrap::SLUG);
+
+        if ($name === null) {
+            return $options;
+        } else {
+            return $options[$name] ?? $default;
+        }
+    }
+
 
     public function adminContent()
     {
         Option::printForm(
             Bootstrap::SLUG,
-            $this->settings()
-        //            [
-        //                'on_save_success_message' => 'Successfully saved. To clear cache click <a href="' .
-        //                                             $this->getClearCacheUrl() . '">here</a>.'
-        //            ]
+            $this->settings(true)
         );
     }
 }

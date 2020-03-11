@@ -7,7 +7,7 @@ use NovemBit\i18n\system\helpers\Arrays;
 use NovemBit\wp\plugins\i18n\Bootstrap;
 use NovemBit\wp\plugins\i18n\integrations\I18n;
 
-class Languages
+class Regions
 {
 
     /**
@@ -36,14 +36,21 @@ class Languages
             function () {
                 add_submenu_page(
                     Bootstrap::SLUG,
-                    'Languages',
-                    'Languages',
+                    'Regions',
+                    'Regions',
                     'manage_options',
-                    Bootstrap::SLUG . '-integration-i18n-languages',
+                    Bootstrap::SLUG . '-integration-i18n-regions',
                     [$this, 'adminContent']
                 );
             }
         );
+    }
+
+    public function getList()
+    {
+        $items = $this->options('all');
+
+        return Arrays::map($items, 'code', 'name');
     }
 
     public function options($name = null, $default = null)
@@ -57,42 +64,26 @@ class Languages
         }
     }
 
-    public function getList()
-    {
-        $items = $this->options('all');
-
-        return Arrays::map($items, 'alpha1', 'name');
-    }
-
-    public function getAll()
-    {
-        return $this->options()['all'] ?? [];
-    }
-
-
+    /**
+     * @param bool $is_form
+     *
+     * @return array
+     */
     private function settings($is_form = false)
     {
-        $languages_list = \NovemBit\i18n\system\helpers\Languages::getData();
+        $regions_list = \NovemBit\i18n\system\helpers\Regions::getData();
 
         return [
             'all' => new Option(
                 str_replace('\\', '_', self::class) . '_all',
-                $languages_list,
+                $regions_list,
                 [
                     'type'        => Option::TYPE_GROUP,
                     'method'      => Option::METHOD_MULTIPLE,
-                    //                    'main_params' => ['style' => 'grid-template-columns: repeat(1, 1fr);'],
-                    'values'      => $languages_list,
+                    'values'      => $regions_list,
                     'template'    => [
-                        'alpha1'    => ['type' => Option::TYPE_TEXT],
-                        'name'      => ['type' => Option::TYPE_TEXT, 'label' => 'Name'],
-                        'native'    => ['type' => Option::TYPE_TEXT, 'label' => 'Native'],
-                        'countries' => [
-                            'type'   => Option::TYPE_TEXT,
-                            'method' => Option::METHOD_MULTIPLE,
-                            'values' => $is_form ? $this->parent->countries->getList() : [],
-                            'label'  => 'Countries'
-                        ],
+                        'name' => ['type' => Option::TYPE_TEXT],
+                        'code' => ['type' => Option::TYPE_TEXT, 'label' => 'Code']
                     ],
                     'label'       => 'To languages',
                     'description' => 'In what languages the site should be translated.'
