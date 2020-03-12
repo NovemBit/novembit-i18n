@@ -14,7 +14,7 @@ class Countries
      * @var I18n
      * */
     private $parent;
-    
+
     public function __construct($parent)
     {
         $this->parent = $parent;
@@ -45,7 +45,11 @@ class Countries
             }
         );
     }
-
+    public function getAll()
+    {
+        return $this->options('all');
+    }
+    
     public function getList()
     {
         $items = $this->options('all');
@@ -71,12 +75,12 @@ class Countries
                     'method'      => Option::METHOD_MULTIPLE,
                     'values'      => $countries_list,
                     'template'    => [
-                        
+
                         'name'    => ['type' => Option::TYPE_TEXT],
                         'alpha2'  => ['type' => Option::TYPE_TEXT],
                         'alpha3'  => ['type' => Option::TYPE_TEXT],
                         'numeric' => ['type' => Option::TYPE_TEXT],
-
+                        'domain'  => ['type' => Option::TYPE_TEXT, 'label' => 'Domain'],
                         'regions' => [
                             'type'   => Option::TYPE_TEXT,
                             'method' => Option::METHOD_MULTIPLE,
@@ -97,7 +101,7 @@ class Countries
             ),
         ];
     }
-    
+
     public function options($name = null, $default = null)
     {
         $options = Option::expandOptions($this->settings(), Bootstrap::SLUG);
