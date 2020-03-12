@@ -53,6 +53,11 @@ class Regions
         return Arrays::map($items, 'code', 'name');
     }
 
+    public function getAll()
+    {
+        return $this->options('all');
+    }
+
     public function options($name = null, $default = null)
     {
         $options = Option::expandOptions($this->settings(), Bootstrap::SLUG);
@@ -82,8 +87,15 @@ class Regions
                     'method'      => Option::METHOD_MULTIPLE,
                     'values'      => $regions_list,
                     'template'    => [
-                        'name' => ['type' => Option::TYPE_TEXT],
-                        'code' => ['type' => Option::TYPE_TEXT, 'label' => 'Code']
+                        'name'   => ['type' => Option::TYPE_TEXT],
+                        'code'   => ['type' => Option::TYPE_TEXT, 'label' => 'Code'],
+                        'domain' => ['type' => Option::TYPE_TEXT, 'label' => 'Domain'],
+                        'languages' => [
+                            'type'   => Option::TYPE_TEXT,
+                            'method' => Option::METHOD_MULTIPLE,
+                            'values' => $is_form ? $this->parent->languages->getList() : [],
+                            'label'  => 'Languages'
+                        ],
                     ],
                     'label'       => 'To languages',
                     'description' => 'In what languages the site should be translated.'
