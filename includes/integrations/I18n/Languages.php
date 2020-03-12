@@ -87,6 +87,7 @@ class Languages
                         'alpha1'    => ['type' => Option::TYPE_TEXT],
                         'name'      => ['type' => Option::TYPE_TEXT, 'label' => 'Name'],
                         'native'    => ['type' => Option::TYPE_TEXT, 'label' => 'Native'],
+                        'domain'    => ['type' => Option::TYPE_TEXT, 'label' => 'Domain'],
                         'countries' => [
                             'type'   => Option::TYPE_TEXT,
                             'method' => Option::METHOD_MULTIPLE,
