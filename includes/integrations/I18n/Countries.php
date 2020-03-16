@@ -49,12 +49,23 @@ class Countries
     {
         return $this->options('all');
     }
-    
+
     public function getList()
     {
         $items = $this->options('all');
 
         return Arrays::map($items, 'alpha2', 'name');
+    }
+
+    /**
+     *
+     */
+    private function getDefaultCountriesList()
+    {
+        return apply_filters(
+            __METHOD__,
+            \NovemBit\i18n\system\helpers\Countries::getData()
+        );
     }
 
     /**
@@ -64,7 +75,7 @@ class Countries
      */
     public function settings($is_form = false)
     {
-        $countries_list = \NovemBit\i18n\system\helpers\Countries::getData();
+        $countries_list = $this->getDefaultCountriesList();
 
         return [
             'all' => new Option(

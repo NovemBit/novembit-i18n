@@ -70,13 +70,24 @@ class Regions
     }
 
     /**
+     *
+     */
+    private function getDefaultRegionsList()
+    {
+        return apply_filters(
+            __METHOD__,
+            \NovemBit\i18n\system\helpers\Regions::getData()
+        );
+    }
+
+    /**
      * @param bool $is_form
      *
      * @return array
      */
     private function settings($is_form = false)
     {
-        $regions_list = \NovemBit\i18n\system\helpers\Regions::getData();
+        $regions_list = $this->getDefaultRegionsList();
 
         return [
             'all' => new Option(

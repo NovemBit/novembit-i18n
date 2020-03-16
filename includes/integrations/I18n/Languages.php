@@ -59,20 +59,28 @@ class Languages
 
     public function getList()
     {
-        $items = $this->options('all');
-
-        return Arrays::map($items, 'alpha1', 'name');
+        return Arrays::map($this->getAll(), 'alpha1', 'name');
     }
 
     public function getAll()
     {
-        return $this->options()['all'] ?? [];
+        return $this->options('all', []);
     }
 
+    /**
+     *
+     */
+    private function getDefaultLanguagesList()
+    {
+        return apply_filters(
+            __METHOD__,
+            \NovemBit\i18n\system\helpers\Languages::getData()
+        );
+    }
 
     private function settings($is_form = false)
     {
-        $languages_list = \NovemBit\i18n\system\helpers\Languages::getData();
+        $languages_list = $this->getDefaultLanguagesList();
 
         return [
             'all' => new Option(
