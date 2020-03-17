@@ -1,4 +1,5 @@
 <?php
+
 /** @var I18n $this */
 
 use diazoxide\wp\lib\option\Option;
@@ -6,9 +7,9 @@ use NovemBit\wp\plugins\i18n\Bootstrap;
 use NovemBit\wp\plugins\i18n\integrations\I18n;
 
 return [
-    'runtime_dir'         => Bootstrap::RUNTIME_DIR,
-    'all_languages'       => $this->languages->getAll(),
-    'from_language'       => new Option(
+    'runtime_dir'             => Bootstrap::RUNTIME_DIR,
+    'all_languages'           => $this->languages->getAll(),
+    'from_language'           => new Option(
         'from_language',
         'en',
         [
@@ -20,7 +21,16 @@ return [
             'description' => 'Website main content language.'
         ]
     ),
-    'accept_languages'    => new Option(
+    'localize_host'           => new Option(
+        'localize_host',
+        true,
+        [
+            'type'   => Option::TYPE_BOOL,
+            'method' => Option::METHOD_SINGLE,
+            'label'  => 'Localize Hosts'
+        ]
+    ),
+    'accept_languages'        => new Option(
         'accept_languages',
         [
             'cs',

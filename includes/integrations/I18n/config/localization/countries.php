@@ -5,5 +5,5 @@
 use NovemBit\wp\plugins\i18n\integrations\I18n;
 
 return [
-    'all'       => $this->countries->getAll(),
+    'all' => $this->countries->getAll(),
 ];

@@ -18,7 +18,15 @@ $config =
         ),
         'allow_editor' => current_user_can('administrator'),
         'default_http_host' => parse_url(site_url(), PHP_URL_HOST),
-
+        'localization_redirects' => new Option(
+            'localization_redirects',
+            true,
+            [
+            'type'   => Option::TYPE_BOOL,
+            'method' => Option::METHOD_SINGLE,
+            'label'  => 'Redirect non localized urls'
+            ]
+        ),
         'source_type_map' => new Option(
             'request_source_type_map',
             [
@@ -46,10 +54,12 @@ $config =
             function ($request) {
                 /** @var Request $request */
 
-                if (preg_match(
-                    '/(емисия-на-данни|data-feed|данни-подаване|zdroj-dat|projekt|datafeed|data-foder|Daten-Feed|daten-feed|Projekt|τροφοδοσία-δεδομένων|alimentación-de-datos|proyecto|andmevoog|projekti|flux-de-données|projet|feed-podataka|podaci-uvlačenja|feed-di-dati|progetto|データフィード|데이터-피드|gegevensfeed|data-toevoer|project|plik-danych|źródło-danych|feed-de-dados|projeto|flux-de-date|подача-данных|данные-подачи|проект|podajanje-podatkov|data-flöde)/i',
-                    $_SERVER['REQUEST_URI']
-                )) {
+                if (
+                    preg_match(
+                        '/(емисия-на-данни|data-feed|данни-подаване|zdroj-dat|projekt|datafeed|data-foder|Daten-Feed|daten-feed|Projekt|τροφοδοσία-δεδομένων|alimentación-de-datos|proyecto|andmevoog|projekti|flux-de-données|projet|feed-podataka|podaci-uvlačenja|feed-di-dati|progetto|データフィード|데이터-피드|gegevensfeed|data-toevoer|project|plik-danych|źródło-danych|feed-de-dados|projeto|flux-de-date|подача-данных|данные-подачи|проект|podajanje-podatkov|data-flöde)/i',
+                        $_SERVER['REQUEST_URI']
+                    )
+                ) {
                     return true;
                 }
 
@@ -67,8 +77,9 @@ $config =
                         && !wp_doing_ajax()
                     )
                     && (
-                        !isset($GLOBALS['pagenow']) ||
-                        (isset($GLOBALS['pagenow']) && $GLOBALS['pagenow'] != 'wp-login.php')
+                        !isset($GLOBALS['pagenow'])
+                        || (isset($GLOBALS['pagenow'])
+                        && $GLOBALS['pagenow'] != 'wp-login.php')
                     )
                 ) {
                     return true;
@@ -91,7 +102,7 @@ $config =
              * Clear supercache current page cache
              * */
             if (function_exists('wpsc_delete_url_cache')) {
-            	/** @var Request $request */
+                /** @var Request $request */
                 $url = $request->getOrigRequestUri();
                 $url = urldecode($url);
                 $url = preg_replace('/\?.*/', '', $url);
