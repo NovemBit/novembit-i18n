@@ -17,7 +17,7 @@
     "ext-mbstring": "*",
     "ext-json": "*",
     "novembit/i18n": "dev-master",
-    "diazoxide/wp-lib-option": "dev-master",
+    "diazoxide/wp-lib-option": "dev-split_localization",
     "select2/select2": "dev-master"
   },
   "require-dev": {
