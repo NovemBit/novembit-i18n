@@ -46,6 +46,12 @@ class Languages
         );
     }
 
+    /**
+     * @param null $name
+     * @param null $default
+     *
+     * @return array|mixed|null
+     */
     public function options($name = null, $default = null)
     {
         $options = Option::expandOptions($this->settings(), Bootstrap::SLUG);
@@ -57,18 +63,24 @@ class Languages
         }
     }
 
+    /**
+     * @return array
+     */
     public function getList()
     {
         return Arrays::map($this->getAll(), 'alpha1', 'name');
     }
 
+    /**
+     * @return array|mixed|null
+     */
     public function getAll()
     {
         return $this->options('all', []);
     }
 
     /**
-     *
+     * @return array
      */
     private function getDefaultLanguagesList()
     {
@@ -78,6 +90,11 @@ class Languages
         );
     }
 
+    /**
+     * @param bool $is_form
+     *
+     * @return array
+     */
     private function settings($is_form = false)
     {
         $languages_list = $this->getDefaultLanguagesList();
@@ -110,7 +127,10 @@ class Languages
         ];
     }
 
-    public function adminContent()
+    /**
+     * @return void
+     */
+    public function adminContent(): void
     {
         Option::printForm(
             Bootstrap::SLUG,
