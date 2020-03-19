@@ -19,11 +19,16 @@ if ( ! class_exists(NovemBit\i18n\system\helpers\Countries::class)) {
 $config =
     [
         'runtime_dir' => Bootstrap::RUNTIME_DIR,
-
         'languages' => require_once('localization/languages.php'),
         'regions'   => require_once('localization/regions.php'),
         'countries' => require_once('localization/countries.php'),
-
+        'global_domain' => new Option(
+            'localization_global_domain',
+            parse_url(site_url(), PHP_URL_HOST),
+            [
+                'type' => Option::TYPE_TEXT
+            ]
+        ),
         'localization_config' => new Option(
             'languages_localization_config',
             [
