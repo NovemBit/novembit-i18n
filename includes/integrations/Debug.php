@@ -47,6 +47,7 @@ class Debug extends Integration
             Languages::class . '::getDefaultLanguagesList',
             function ($list) {
                 $allow = [
+                    'hy',
                     'cs',
                     'da',
                     'el',

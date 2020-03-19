@@ -3,6 +3,7 @@
 namespace NovemBit\wp\plugins\i18n\integrations\I18n;
 
 use diazoxide\wp\lib\option\Option;
+use NovemBit\i18n\component\localization\regions\Regions as CoreRegions;
 use NovemBit\i18n\system\helpers\Arrays;
 use NovemBit\wp\plugins\i18n\Bootstrap;
 use NovemBit\wp\plugins\i18n\integrations\I18n;
@@ -98,10 +99,19 @@ class Regions
                     'method'      => Option::METHOD_MULTIPLE,
                     'values'      => $regions_list,
                     'template'    => [
-                        'name'   => ['type' => Option::TYPE_TEXT],
-                        'code'   => ['type' => Option::TYPE_TEXT, 'label' => 'Code'],
-                        'domain' => ['type' => Option::TYPE_TEXT, 'label' => 'Domain'],
-                        'languages' => [
+                        'name'              => ['type' => Option::TYPE_TEXT],
+                        'code'              => ['type' => Option::TYPE_TEXT, 'label' => 'Code'],
+                        'domain'            => ['type' => Option::TYPE_TEXT, 'label' => 'Domain'],
+                        'include_languages' => [
+                            'type'   => Option::TYPE_TEXT,
+                            'values' => [
+                                CoreRegions::DONT_INCLUDE_CHILD_LANGUAGES    => 'Dont include',
+                                CoreRegions::INCLUDE_CHILD_PRIMARY_LANGUAGES => 'Include child primary languages',
+                                CoreRegions::INCLUDE_CHILD_ALL_LANGUAGES     => 'Include child all languages',
+                            ],
+                            'label'  => 'Include languages'
+                        ],
+                        'languages'         => [
                             'type'   => Option::TYPE_TEXT,
                             'method' => Option::METHOD_MULTIPLE,
                             'values' => $is_form ? $this->parent->languages->getList() : [],
