@@ -129,7 +129,8 @@ class Regions
     {
         Option::printForm(
             Bootstrap::SLUG,
-            $this->settings(true)
+            $this->settings(true),
+            ['title' => 'Regions Configuration']
         );
     }
 }

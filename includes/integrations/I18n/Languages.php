@@ -114,7 +114,8 @@ class Languages
     {
         Option::printForm(
             Bootstrap::SLUG,
-            $this->settings(true)
+            $this->settings(true),
+            ['title' => 'Languages Configuration']
         );
     }
 }

@@ -129,7 +129,8 @@ class Countries
     {
         Option::printForm(
             Bootstrap::SLUG,
-            $this->settings(true)
+            $this->settings(true),
+            ['title' => 'Countries Configuration']
         );
     }
 }
