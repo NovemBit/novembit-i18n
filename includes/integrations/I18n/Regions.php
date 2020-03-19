@@ -106,8 +106,8 @@ class Regions
                             'type'   => Option::TYPE_TEXT,
                             'values' => [
                                 CoreRegions::DONT_INCLUDE_CHILD_LANGUAGES    => 'Dont include',
-                                CoreRegions::INCLUDE_CHILD_PRIMARY_LANGUAGES => 'Include child primary languages',
-                                CoreRegions::INCLUDE_CHILD_ALL_LANGUAGES     => 'Include child all languages',
+                                CoreRegions::INCLUDE_CHILD_PRIMARY_LANGUAGES => 'Countries primary languages',
+                                CoreRegions::INCLUDE_CHILD_ALL_LANGUAGES     => 'Countries all languages',
                             ],
                             'label'  => 'Include languages'
                         ],
