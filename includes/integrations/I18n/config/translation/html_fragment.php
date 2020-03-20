@@ -30,8 +30,8 @@ $config =
                             'values' => apply_filters(Bootstrap::SLUG . '_translation_content_types', [])
                         ],
                     ],
-                    'label'       => 'Test',
-                    'description' => 'Test.'
+                    'label'       => 'Map to translate DOM elements.',
+                    'description' => 'Write XPATH queries and determine type of translation.'
                 ]
             ),
         ],

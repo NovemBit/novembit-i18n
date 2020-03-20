@@ -8,11 +8,11 @@ use diazoxide\wp\lib\option\v2\Option;
 use NovemBit\wp\plugins\i18n\Bootstrap;
 use NovemBit\wp\plugins\i18n\integrations\I18n;
 
-if ( ! class_exists(NovemBit\i18n\system\helpers\Languages::class)) {
+if (! class_exists(NovemBit\i18n\system\helpers\Languages::class)) {
     include "vendor/novembit/i18n/src/system/helpers/Languages.php";
 }
 
-if ( ! class_exists(NovemBit\i18n\system\helpers\Countries::class)) {
+if (! class_exists(NovemBit\i18n\system\helpers\Countries::class)) {
     include "vendor/novembit/i18n/src/system/helpers/Countries.php";
 }
 
@@ -25,7 +25,9 @@ $config =
         'global_domain'       => new Option(
             [
                 'default' => parse_url(site_url(), PHP_URL_HOST),
-                'type'    => Option::TYPE_TEXT
+                'type'    => Option::TYPE_TEXT,
+                'label'   => 'Global domain',
+                'description'   => 'Default value is WordPress site url domain.'
             ]
         ),
         'localization_config' => new Option(

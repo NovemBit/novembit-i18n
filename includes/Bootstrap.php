@@ -125,7 +125,10 @@ class Bootstrap
         );
     }
 
-    private static function isWPCli()
+    /**
+     * @return bool
+     */
+    private static function isWPCli(): bool
     {
         if (defined('WP_CLI') && WP_CLI) {
             return true;
@@ -135,13 +138,20 @@ class Bootstrap
     }
 
 
-    public static function addNotice($message, $type = 'success', $dismissible = false)
+    /**
+     * @param $message
+     * @param string $type
+     * @param bool $dismissible
+     */
+    public static function addNotice($message, $type = 'success', $dismissible = false): void
     {
         $_SESSION[self::SLUG . '-notices'][] = ['type' => $type, 'message' => $message, 'dismissible' => $dismissible];
     }
 
-
-    public static function printNotices()
+    /**
+     * @return void
+     */
+    public static function printNotices(): void
     {
         if (! isset($_SESSION[self::SLUG . '-notices'])) {
             return;
@@ -162,7 +172,10 @@ class Bootstrap
         }
     }
 
-    public static function isWPRest()
+    /**
+     * @return bool
+     */
+    public static function isWPRest():bool
     {
         $rest_path = get_rest_url(null, '/', 'relative');
 

@@ -8,6 +8,7 @@ use NovemBit\i18n\Module;
 use NovemBit\wp\plugins\i18n\Bootstrap;
 use NovemBit\wp\plugins\i18n\integrations\I18n\Countries;
 use NovemBit\wp\plugins\i18n\integrations\I18n\Languages;
+use NovemBit\wp\plugins\i18n\integrations\I18n\Localization;
 use NovemBit\wp\plugins\i18n\integrations\I18n\Regions;
 use NovemBit\wp\plugins\i18n\system\Integration;
 use Psr\SimpleCache\InvalidArgumentException;
