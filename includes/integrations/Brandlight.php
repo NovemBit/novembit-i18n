@@ -30,34 +30,26 @@ class Brandlight extends Integration
 
     public function init(): void
     {
-        /*
-         * Google shopping `var` exclusion rules
-         * */
         add_filter(
-            Option::getOptionFilterName('translation_url_path_exclusion_patterns', Bootstrap::SLUG),
+            Option::getOptionFilterName('request>source_type_map', Bootstrap::SLUG),
             function ($patterns) {
+                $patterns = $patterns ?? [];
+                $patterns['/woocommerce_gpf\/google.*/is'] = 'gpf_xml';
+                return $patterns;
+            }
+        );
+
+        add_filter(
+            Option::getOptionFilterName('translation>url>path_exclusion_patterns', Bootstrap::SLUG),
+            function ($patterns) {
+                $patterns = $patterns ?? [];
                 if (array_search('/\/var\/.*/is', $patterns) === false) {
                     $patterns[] = '/\/var\/.*/is';
                 }
-
                 return $patterns;
             }
         );
-
-
-        /*
-         * Google shopping product feed
-         * */
-        add_filter(
-            Option::getOptionFilterName('request_source_type_map', Bootstrap::SLUG),
-            function ($patterns) {
-                $patterns['/woocommerce_gpf\/google.*/is'] = 'gpf_xml';
-
-                return $patterns;
-            }
-        );
-
-
+        
         add_filter(
             Countries::class . '::getDefaultCountriesList',
             function ($list) {
@@ -92,7 +84,7 @@ class Brandlight extends Integration
                     'gb'
                 ];
                 foreach ($list as $key => $item) {
-                    if ( ! in_array($item['alpha2'], $allow)) {
+                    if (! in_array($item['alpha2'], $allow)) {
                         unset($list[$key]);
                     }
                 }
@@ -127,7 +119,7 @@ class Brandlight extends Integration
                     'en'
                 ];
                 foreach ($list as $key => $item) {
-                    if ( ! in_array($item['alpha1'], $allow)) {
+                    if (! in_array($item['alpha1'], $allow)) {
                         unset($list[$key]);
                     }
                 }
