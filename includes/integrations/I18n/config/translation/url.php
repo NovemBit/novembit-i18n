@@ -47,7 +47,11 @@ $config = [
         ]
     ],
     'path_exclusion_patterns' => new Option(
-        ['type' => Option::TYPE_TEXT, 'method' => Option::METHOD_MULTIPLE]
+        [
+            'default' => [],
+            'type'    => Option::TYPE_TEXT,
+            'method'  => Option::METHOD_MULTIPLE
+        ]
     )
 ];
 if (Bootstrap::getCachePool()) {
