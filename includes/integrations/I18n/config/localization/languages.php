@@ -54,10 +54,12 @@ return [
     ),
     'localize_host'           => new Option(
         [
-            'default' => true,
-            'type'   => Option::TYPE_BOOL,
-            'method' => Option::METHOD_SINGLE,
-            'label'  => 'Localize Hosts'
+            'default'     => true,
+            'type'        => Option::TYPE_BOOL,
+            'method'      => Option::METHOD_SINGLE,
+            'label'       => 'Localize Hosts',
+            'description' => 'Use localization countries and regions to determine url domains.'
+
         ]
     ),
     'path_exclusion_patterns' => [

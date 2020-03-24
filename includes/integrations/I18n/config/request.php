@@ -12,16 +12,22 @@ $config =
     [
         'runtime_dir'                 => Bootstrap::RUNTIME_DIR,
         'restore_non_translated_urls' => new Option(
-            ['type' => Option::TYPE_BOOL, 'default' => true]
+            [
+                'type'        => Option::TYPE_BOOL,
+                'default'     => true,
+                'label'       => 'Restore non translated urls',
+                'description' => 'Restore non translated urls and redirect to translated route.'
+            ]
         ),
         'allow_editor'                => current_user_can('administrator'),
         'default_http_host'           => parse_url(site_url(), PHP_URL_HOST),
         'localization_redirects'      => new Option(
             [
-                'default' => true,
-                'type'    => Option::TYPE_BOOL,
-                'method'  => Option::METHOD_SINGLE,
-                'label'   => 'Redirect non localized urls'
+                'default'     => true,
+                'type'        => Option::TYPE_BOOL,
+                'method'      => Option::METHOD_SINGLE,
+                'label'       => 'Redirect non localized urls',
+                'description' => 'Check if url is not localized redirect to localized route.'
             ]
         ),
         'source_type_map'             => new Option(
