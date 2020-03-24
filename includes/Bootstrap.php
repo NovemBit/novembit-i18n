@@ -175,7 +175,7 @@ class Bootstrap
     /**
      * @return bool
      */
-    public static function isWPRest():bool
+    public static function isWPRest(): bool
     {
         $rest_path = get_rest_url(null, '/', 'relative');
 
@@ -188,6 +188,16 @@ class Bootstrap
         }
 
         return false;
+    }
+
+    /**
+     * Restriction mode
+     *
+     * @return mixed|void
+     */
+    public function isRestrictedMode(): bool
+    {
+        return apply_filters(self::SLUG . '-admin-restricted-mode', false);
     }
 
     /**
