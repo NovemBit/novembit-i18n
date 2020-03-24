@@ -110,18 +110,29 @@ class Languages
                     'values'      => $languages_list,
                     'template'    => [
                         'alpha1'    => ['type' => Option::TYPE_TEXT],
-                        'name'      => ['type' => Option::TYPE_TEXT, 'label' => 'Name'],
-                        'native'    => ['type' => Option::TYPE_TEXT, 'label' => 'Native'],
-                        'domain'    => ['type' => Option::TYPE_TEXT, 'label' => 'Domain'],
+                        'name'      => [
+                            'type'         => Option::TYPE_TEXT,
+                            'label'        => 'Name',
+                            'label_params' => ['style' => 'display:none']
+                        ],
+                        'native'    => [
+                            'type'         => Option::TYPE_TEXT,
+                            'label'        => 'Native',
+                            'label_params' => ['style' => 'display:none']
+                        ],
+                        'domain'    => [
+                            'type'         => Option::TYPE_TEXT,
+                            'label'        => 'Domain',
+                            'label_params' => ['style' => 'display:none']
+                        ],
                         'countries' => [
                             'type'   => Option::TYPE_TEXT,
                             'method' => Option::METHOD_MULTIPLE,
                             'values' => $is_form ? $this->parent->countries->getList() : [],
-                            'label'  => 'Countries'
+                            'label'  => 'Countries',
                         ],
                     ],
-                    'label'       => 'To languages',
-                    'description' => 'In what languages the site should be translated.'
+                    'label'       => 'Languages list'
                 ]
             ),
         ];

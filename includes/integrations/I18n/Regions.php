@@ -100,8 +100,16 @@ class Regions
                     'values'      => $regions_list,
                     'template'    => [
                         'name'              => ['type' => Option::TYPE_TEXT],
-                        'code'              => ['type' => Option::TYPE_TEXT, 'label' => 'Code'],
-                        'domain'            => ['type' => Option::TYPE_TEXT, 'label' => 'Domain'],
+                        'code'              => [
+                            'type'         => Option::TYPE_TEXT,
+                            'label'        => 'Code',
+                            'label_params' => ['style' => 'display:none']
+                        ],
+                        'domain'            => [
+                            'type'         => Option::TYPE_TEXT,
+                            'label'        => 'Domain',
+                            'label_params' => ['style' => 'display:none']
+                        ],
                         'include_languages' => [
                             'type'   => Option::TYPE_TEXT,
                             'values' => [

@@ -45,6 +45,7 @@ class Countries
             }
         );
     }
+
     public function getAll()
     {
         return $this->options('all');
@@ -87,18 +88,33 @@ class Countries
                     'values'      => $countries_list,
                     'template'    => [
 
-                        'name'    => ['type' => Option::TYPE_TEXT],
-                        'alpha2'  => ['type' => Option::TYPE_TEXT],
-                        'alpha3'  => ['type' => Option::TYPE_TEXT],
-                        'numeric' => ['type' => Option::TYPE_TEXT],
-                        'domain'  => ['type' => Option::TYPE_TEXT, 'label' => 'Domain'],
-                        'regions' => [
+                        'name'      => ['type' => Option::TYPE_TEXT],
+                        'alpha2'    => [
+                            'type'         => Option::TYPE_TEXT,
+                            'label_params' => ['style' => 'display:none'],
+                            'label'        => 'Alpha 2 code'
+                        ],
+                        'alpha3'    => [
+                            'type'         => Option::TYPE_TEXT,
+                            'label_params' => ['style' => 'display:none'],
+                            'label'        => 'Alpha 3 code'
+                        ],
+                        'numeric'   => [
+                            'type'         => Option::TYPE_TEXT,
+                            'label_params' => ['style' => 'display:none'],
+                            'label'        => 'Numeric value'
+                        ],
+                        'domain'    => [
+                            'type'         => Option::TYPE_TEXT,
+                            'label'        => 'Domain',
+                            'label_params' => ['style' => 'display:none']
+                        ],
+                        'regions'   => [
                             'type'   => Option::TYPE_TEXT,
                             'method' => Option::METHOD_MULTIPLE,
                             'values' => $is_form ? $this->parent->regions->getList() : [],
                             'label'  => 'Regions'
                         ],
-
                         'languages' => [
                             'type'   => Option::TYPE_TEXT,
                             'method' => Option::METHOD_MULTIPLE,
