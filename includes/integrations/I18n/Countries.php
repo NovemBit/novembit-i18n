@@ -31,19 +31,21 @@ class Countries
      */
     protected function adminInit(): void
     {
-        add_action(
-            'admin_menu',
-            function () {
-                add_submenu_page(
-                    Bootstrap::SLUG,
-                    'Countries',
-                    'Countries',
-                    'manage_options',
-                    Bootstrap::SLUG . '-integration-i18n-countries',
-                    [$this, 'adminContent']
-                );
-            }
-        );
+        if ( ! Bootstrap::instance()->isRestrictedMode()) {
+            add_action(
+                'admin_menu',
+                function () {
+                    add_submenu_page(
+                        Bootstrap::SLUG,
+                        'Countries',
+                        'Countries',
+                        'manage_options',
+                        Bootstrap::SLUG . '-integration-i18n-countries',
+                        [$this, 'adminContent']
+                    );
+                }
+            );
+        }
     }
 
     public function getAll()

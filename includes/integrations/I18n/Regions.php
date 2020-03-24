@@ -32,19 +32,21 @@ class Regions
      */
     protected function adminInit(): void
     {
-        add_action(
-            'admin_menu',
-            function () {
-                add_submenu_page(
-                    Bootstrap::SLUG,
-                    'Regions',
-                    'Regions',
-                    'manage_options',
-                    Bootstrap::SLUG . '-integration-i18n-regions',
-                    [$this, 'adminContent']
-                );
-            }
-        );
+        if (! Bootstrap::instance()->isRestrictedMode()) {
+            add_action(
+                'admin_menu',
+                function () {
+                    add_submenu_page(
+                        Bootstrap::SLUG,
+                        'Regions',
+                        'Regions',
+                        'manage_options',
+                        Bootstrap::SLUG . '-integration-i18n-regions',
+                        [$this, 'adminContent']
+                    );
+                }
+            );
+        }
     }
 
     public function getList()

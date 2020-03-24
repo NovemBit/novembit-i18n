@@ -31,19 +31,21 @@ class Languages
      */
     protected function adminInit(): void
     {
-        add_action(
-            'admin_menu',
-            function () {
-                add_submenu_page(
-                    Bootstrap::SLUG,
-                    'Languages',
-                    'Languages',
-                    'manage_options',
-                    Bootstrap::SLUG . '-integration-i18n-languages',
-                    [$this, 'adminContent']
-                );
-            }
-        );
+        if ( ! Bootstrap::instance()->isRestrictedMode()) {
+            add_action(
+                'admin_menu',
+                function () {
+                    add_submenu_page(
+                        Bootstrap::SLUG,
+                        'Languages',
+                        'Languages',
+                        'manage_options',
+                        Bootstrap::SLUG . '-integration-i18n-languages',
+                        [$this, 'adminContent']
+                    );
+                }
+            );
+        }
     }
 
     /**
@@ -104,11 +106,11 @@ class Languages
                 str_replace('\\', '_', self::class) . '_all',
                 $languages_list,
                 [
-                    'type'        => Option::TYPE_GROUP,
-                    'method'      => Option::METHOD_MULTIPLE,
+                    'type'     => Option::TYPE_GROUP,
+                    'method'   => Option::METHOD_MULTIPLE,
                     //                    'main_params' => ['style' => 'grid-template-columns: repeat(1, 1fr);'],
-                    'values'      => $languages_list,
-                    'template'    => [
+                    'values'   => $languages_list,
+                    'template' => [
                         'alpha1'    => ['type' => Option::TYPE_TEXT],
                         'name'      => [
                             'type'         => Option::TYPE_TEXT,
@@ -132,7 +134,7 @@ class Languages
                             'label'  => 'Countries',
                         ],
                     ],
-                    'label'       => 'Languages list'
+                    'label'    => 'Languages list'
                 ]
             ),
         ];
