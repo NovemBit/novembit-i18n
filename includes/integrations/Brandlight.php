@@ -203,7 +203,7 @@ class Brandlight extends Integration
     public static function brandlightConfig($site_name)
     {
         return ([
-                'default.wp' => [
+                'swanson.co.uk' => [
                     Countries::optionParent() => [
                         'all' => [
                             [
@@ -618,11 +618,17 @@ class Brandlight extends Integration
                             '/woocommerce_gpf\/google.*/is' => 'gpf_xml',
                             '/sitemap.xml/is'               => 'sitemap_xml',
                             '/sitemap-index.xml/is'         => 'sitemap_xml',
-                            'asd'                           => 'html'
                         ],
                         'translation>url>path_exclusion_patterns'          => [
                             '/\/var\/.*/is',
                         ],
+                        'translation>url>path_lowercase'                   => true,
+                        'translation>url>path_translation'                 => true,
+                        'translation>url>path_separator'                   => '-',
+                        'translation>method>api_limit_expire_delay'        => 3600,
+                        'translation>method>request_timeout'               => 5,
+                        'translation>method>ssl'                           => true,
+                        'localization>localization_config'                 => [],
                         'translation>method>remote_host'                   => 'i18n.brandlight.org',
                         'translation>method>api_key'                       => 'GmYg90HtUsd187I2lJ20k7s0oIhBBBAv',
                         'translation>method>exclusions'                    => [
@@ -716,14 +722,15 @@ class Brandlight extends Integration
         /**
          * Restrict admin interface
          * */
-        add_filter(Bootstrap::SLUG . '-admin-restricted-mode', '__return_true', PHP_INT_MAX);
+//        add_filter(Bootstrap::SLUG . '-admin-restricted-mode', '__return_true', PHP_INT_MAX);
 
-
+        /**
+         * Set configurations for all brandlight websites
+         * */
         $site_config = array_merge(
             self::brandlightConfig(parse_url(site_url(), PHP_URL_HOST)),
             self::brandlightConfig('common')
         );
-
         foreach ($site_config as $parent => $bulk) {
             foreach ($bulk as $option => $config) {
                 add_filter(
@@ -735,28 +742,6 @@ class Brandlight extends Integration
                 );
             }
         }
-
-//        add_filter(
-//            Option::getOptionFilterName('request>source_type_map', Bootstrap::SLUG),
-//            function ($patterns) {
-//                $patterns                                  = $patterns ?? [];
-//                $patterns['/woocommerce_gpf\/google.*/is'] = 'gpf_xml';
-//
-//                return $patterns;
-//            }
-//        );
-//
-//        add_filter(
-//            Option::getOptionFilterName('translation>url>path_exclusion_patterns', Bootstrap::SLUG),
-//            function ($patterns) {
-//                $patterns = $patterns ?? [];
-//                if (array_search('/\/var\/.*/is', $patterns) === false) {
-//                    $patterns[] = '/\/var\/.*/is';
-//                }
-//
-//                return $patterns;
-//            }
-//        );
 
         add_filter(
             Countries::class . '::getDefaultCountriesList',
