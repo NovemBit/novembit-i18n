@@ -40,10 +40,10 @@ class Regions
      */
     protected function adminInit(): void
     {
-        if ( ! Bootstrap::instance()->isRestrictedMode()) {
-            add_action(
-                'admin_menu',
-                function () {
+        add_action(
+            'admin_menu',
+            function () {
+                if (! Bootstrap::instance()->isRestrictedMode()) {
                     add_submenu_page(
                         Bootstrap::SLUG,
                         'Regions',
@@ -53,8 +53,8 @@ class Regions
                         [$this, 'adminContent']
                     );
                 }
-            );
-        }
+            }
+        );
     }
 
     public function getList()

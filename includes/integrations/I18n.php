@@ -144,7 +144,7 @@ class I18n extends Integration
          * Translation editor
          * */
         $urls = Module::instance()->request->getEditorUrlTranslations();
-        if (! empty($urls)) {
+        if ( ! empty($urls)) {
             $args = array(
                 'id'     => Bootstrap::SLUG . "_item_edit_translation",
                 'parent' => Bootstrap::SLUG,
@@ -172,7 +172,7 @@ class I18n extends Integration
          * Language Switcher
          * */
         $urls = Module::instance()->request->getUrlTranslations();
-        if (! empty($urls)) {
+        if ( ! empty($urls)) {
             $args = array(
                 'id'     => Bootstrap::SLUG . "_item_change_language",
                 'parent' => Bootstrap::SLUG,
@@ -338,10 +338,10 @@ class I18n extends Integration
      */
     protected function adminInit(): void
     {
-        if (! Bootstrap::instance()->isRestrictedMode()) {
-            add_action(
-                'admin_menu',
-                function () {
+        add_action(
+            'admin_menu',
+            function () {
+                if ( ! Bootstrap::instance()->isRestrictedMode()) {
                     add_submenu_page(
                         Bootstrap::SLUG,
                         'i18n options',
@@ -352,8 +352,8 @@ class I18n extends Integration
                         1
                     );
                 }
-            );
-        }
+            }
+        );
     }
 
     public function adminContent()
