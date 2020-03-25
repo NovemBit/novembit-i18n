@@ -30,6 +30,7 @@ class Debug extends Integration
 
     public function init(): void
     {
+
         add_filter(
             Countries::class . '::getDefaultCountriesList',
             function ($list) {

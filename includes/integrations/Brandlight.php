@@ -20,7 +20,6 @@ class Brandlight extends Integration
         [self::class, 'isBrandlightTheme']
     ];
 
-
     private static $xpath_query_accept = [
         '//head/title/text()'                                                                =>
             [
@@ -1094,7 +1093,7 @@ class Brandlight extends Integration
         /**
          * Restrict admin interface
          * */
-//        add_filter(Bootstrap::SLUG . '-admin-restricted-mode', '__return_true', PHP_INT_MAX);
+        add_filter(Bootstrap::SLUG . '-admin-restricted-mode', '__return_true', PHP_INT_MAX);
 
         /**
          * Set configurations for all brandlight websites
@@ -1149,7 +1148,7 @@ class Brandlight extends Integration
                     'gb'
                 ];
                 foreach ($list as $key => $item) {
-                    if ( ! in_array($item['alpha2'], $allow)) {
+                    if (! in_array($item['alpha2'], $allow)) {
                         unset($list[$key]);
                     }
                 }
@@ -1184,7 +1183,7 @@ class Brandlight extends Integration
                     'en'
                 ];
                 foreach ($list as $key => $item) {
-                    if ( ! in_array($item['alpha1'], $allow)) {
+                    if (! in_array($item['alpha1'], $allow)) {
                         unset($list[$key]);
                     }
                 }
