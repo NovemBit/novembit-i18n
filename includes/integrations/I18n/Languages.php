@@ -2,7 +2,7 @@
 
 namespace NovemBit\wp\plugins\i18n\integrations\I18n;
 
-use diazoxide\wp\lib\option\Option;
+use diazoxide\wp\lib\option\v2\Option;
 use NovemBit\i18n\system\helpers\Arrays;
 use NovemBit\wp\plugins\i18n\Bootstrap;
 use NovemBit\wp\plugins\i18n\integrations\I18n;
@@ -22,6 +22,14 @@ class Languages
         if (is_admin()) {
             $this->adminInit();
         }
+    }
+
+    /**
+     * @return string|string[]
+     */
+    public static function optionParent()
+    {
+        return Bootstrap::SLUG . '-' . str_replace('\\', '_', self::class);
     }
 
     /**
@@ -56,7 +64,10 @@ class Languages
      */
     public function options($name = null, $default = null)
     {
-        $options = Option::expandOptions($this->settings(), Bootstrap::SLUG);
+        $options = Option::expandOptions(
+            $this->settings(),
+            self::optionParent()
+        );
 
         if ($name === null) {
             return $options;
@@ -103,9 +114,8 @@ class Languages
 
         return [
             'all' => new Option(
-                str_replace('\\', '_', self::class) . '_all',
-                $languages_list,
                 [
+                    'default'  => $languages_list,
                     'type'     => Option::TYPE_GROUP,
                     'method'   => Option::METHOD_MULTIPLE,
                     //                    'main_params' => ['style' => 'grid-template-columns: repeat(1, 1fr);'],
@@ -146,7 +156,7 @@ class Languages
     public function adminContent(): void
     {
         Option::printForm(
-            Bootstrap::SLUG,
+            self::optionParent(),
             $this->settings(true),
             ['title' => 'Languages Configuration']
         );

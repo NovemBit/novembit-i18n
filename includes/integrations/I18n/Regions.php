@@ -2,7 +2,7 @@
 
 namespace NovemBit\wp\plugins\i18n\integrations\I18n;
 
-use diazoxide\wp\lib\option\Option;
+use diazoxide\wp\lib\option\v2\Option;
 use NovemBit\i18n\component\localization\regions\Regions as CoreRegions;
 use NovemBit\i18n\system\helpers\Arrays;
 use NovemBit\wp\plugins\i18n\Bootstrap;
@@ -26,13 +26,21 @@ class Regions
     }
 
     /**
+     * @return string|string[]
+     */
+    public static function optionParent()
+    {
+        return Bootstrap::SLUG . '-' . str_replace('\\', '_', self::class);
+    }
+
+    /**
      * Admin init
      *
      * @return void
      */
     protected function adminInit(): void
     {
-        if (! Bootstrap::instance()->isRestrictedMode()) {
+        if ( ! Bootstrap::instance()->isRestrictedMode()) {
             add_action(
                 'admin_menu',
                 function () {
@@ -63,7 +71,10 @@ class Regions
 
     public function options($name = null, $default = null)
     {
-        $options = Option::expandOptions($this->settings(), Bootstrap::SLUG);
+        $options = Option::expandOptions(
+            $this->settings(),
+            self::optionParent()
+        );
 
         if ($name === null) {
             return $options;
@@ -94,9 +105,8 @@ class Regions
 
         return [
             'all' => new Option(
-                str_replace('\\', '_', self::class) . '_all',
-                $regions_list,
                 [
+                    'default'     => $regions_list,
                     'type'        => Option::TYPE_GROUP,
                     'method'      => Option::METHOD_MULTIPLE,
                     'values'      => $regions_list,
@@ -138,7 +148,7 @@ class Regions
     public function adminContent()
     {
         Option::printForm(
-            Bootstrap::SLUG,
+            self::optionParent(),
             $this->settings(true),
             ['title' => 'Regions Configuration']
         );

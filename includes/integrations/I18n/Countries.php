@@ -2,7 +2,7 @@
 
 namespace NovemBit\wp\plugins\i18n\integrations\I18n;
 
-use diazoxide\wp\lib\option\Option;
+use diazoxide\wp\lib\option\v2\Option;
 use NovemBit\i18n\system\helpers\Arrays;
 use NovemBit\wp\plugins\i18n\Bootstrap;
 use NovemBit\wp\plugins\i18n\integrations\I18n;
@@ -31,7 +31,7 @@ class Countries
      */
     protected function adminInit(): void
     {
-        if ( ! Bootstrap::instance()->isRestrictedMode()) {
+        if (! Bootstrap::instance()->isRestrictedMode()) {
             add_action(
                 'admin_menu',
                 function () {
@@ -72,6 +72,14 @@ class Countries
     }
 
     /**
+     * @return string|string[]
+     */
+    public static function optionParent()
+    {
+        return Bootstrap::SLUG . '-' . str_replace('\\', '_', self::class);
+    }
+
+    /**
      * @param bool $is_form
      *
      * @return array
@@ -82,14 +90,12 @@ class Countries
 
         return [
             'all' => new Option(
-                str_replace('\\', '_', self::class) . '_all',
-                $countries_list,
                 [
+                    'default'     => $countries_list,
                     'type'        => Option::TYPE_GROUP,
                     'method'      => Option::METHOD_MULTIPLE,
                     'values'      => $countries_list,
                     'template'    => [
-
                         'name'      => ['type' => Option::TYPE_TEXT],
                         'alpha2'    => [
                             'type'         => Option::TYPE_TEXT,
@@ -131,9 +137,18 @@ class Countries
         ];
     }
 
+    /**
+     * @param null $name
+     * @param null $default
+     *
+     * @return array|mixed|null
+     */
     public function options($name = null, $default = null)
     {
-        $options = Option::expandOptions($this->settings(), Bootstrap::SLUG);
+        $options = Option::expandOptions(
+            $this->settings(),
+            self::optionParent()
+        );
 
         if ($name === null) {
             return $options;
@@ -143,10 +158,13 @@ class Countries
     }
 
 
-    public function adminContent()
+    /**
+     * @return void
+     */
+    public function adminContent(): void
     {
         Option::printForm(
-            Bootstrap::SLUG,
+            self::optionParent(),
             $this->settings(true),
             ['title' => 'Countries Configuration']
         );
