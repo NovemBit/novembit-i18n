@@ -10,11 +10,12 @@ class Integration extends system\Integration
 
     public static $integrations = [
         \NovemBit\wp\plugins\i18n\integrations\Debug::class,
+        \NovemBit\wp\plugins\i18n\integrations\Brandlight::class,
         \NovemBit\wp\plugins\i18n\integrations\I18n::class,
         \NovemBit\wp\plugins\i18n\integrations\Algolia::class,
         \NovemBit\wp\plugins\i18n\integrations\WooCommerce::class,
         \NovemBit\wp\plugins\i18n\integrations\TheSEOFramework::class,
-        \NovemBit\wp\plugins\i18n\integrations\Brandlight::class,
+
     ];
 
     public $options = [];

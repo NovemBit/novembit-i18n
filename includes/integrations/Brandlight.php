@@ -4,6 +4,7 @@ namespace NovemBit\wp\plugins\i18n\integrations;
 
 use diazoxide\wp\lib\option\Option;
 use NovemBit\i18n\component\translation\method\Rest;
+use NovemBit\i18n\system\helpers\Arrays;
 use NovemBit\wp\plugins\i18n\Bootstrap;
 use NovemBit\wp\plugins\i18n\integrations\I18n\Countries;
 use NovemBit\wp\plugins\i18n\integrations\I18n\Languages;
@@ -1169,9 +1170,11 @@ class Brandlight extends Integration
         /**
          * Set configurations for all brandlight websites
          * */
-        $site_config = array_merge(
-            self::brandlightConfig(parse_url(site_url(), PHP_URL_HOST)),
-            self::brandlightConfig('common')
+        $common = self::brandlightConfig('common');
+        $site = self::brandlightConfig(parse_url(site_url(), PHP_URL_HOST));
+        $site_config = Arrays::arrayMergeRecursiveDistinct(
+            $common,
+            $site
         );
         foreach ($site_config as $parent => $bulk) {
             foreach ($bulk as $option => $config) {
@@ -1219,7 +1222,7 @@ class Brandlight extends Integration
                     'gb'
                 ];
                 foreach ($list as $key => $item) {
-                    if (! in_array($item['alpha2'], $allow)) {
+                    if ( ! in_array($item['alpha2'], $allow)) {
                         unset($list[$key]);
                     }
                 }
@@ -1254,7 +1257,7 @@ class Brandlight extends Integration
                     'en'
                 ];
                 foreach ($list as $key => $item) {
-                    if (! in_array($item['alpha1'], $allow)) {
+                    if ( ! in_array($item['alpha1'], $allow)) {
                         unset($list[$key]);
                     }
                 }

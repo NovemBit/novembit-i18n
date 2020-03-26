@@ -344,8 +344,8 @@ class I18n extends Integration
                 if ( ! Bootstrap::instance()->isRestrictedMode()) {
                     add_submenu_page(
                         Bootstrap::SLUG,
-                        'i18n options',
-                        'i18n configurations',
+                        'Main configurations',
+                        'Main configurations',
                         'manage_options',
                         Bootstrap::SLUG . '-integration-i18n',
                         [$this, 'adminContent'],
