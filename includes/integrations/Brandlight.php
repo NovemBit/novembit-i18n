@@ -148,6 +148,7 @@ class Brandlight extends Integration
             'type' => 'url',
         ],
     ];
+
     private static $xpath_query_ignore = [
         'ancestor-or-self::*[@translate="no" or starts-with(@for, "payment_method_") or @id="wp-vaa-canonical" or @id="wpadminbar" or @id="query-monitor-main" or contains(@class,"dont-translate")]',
     ];
@@ -164,14 +165,23 @@ class Brandlight extends Integration
                     Countries::optionParent() => [
                         'all' => [
                             [
+                                'name'      => 'Japan',
+                                'alpha2'    => 'jp',
+                                'alpha3'    => 'jpn',
+                                'numeric'   => '392',
+                                'regions'   => ['as'],
+                                'languages' => [
+                                    'ja',
+                                    'en'
+                                ]
+                            ],
+                            [
                                 'name'      => 'Bulgaria',
                                 'alpha2'    => 'bg',
                                 'alpha3'    => 'bgr',
                                 'numeric'   => '100',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'bg',
                                     'en'
@@ -183,9 +193,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'hrv',
                                 'numeric'   => '191',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'hr',
                                     'en'
@@ -197,9 +205,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'cze',
                                 'numeric'   => '203',
                                 'domain'    => 'swanson.co.cz',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'cs',
                                     'en'
@@ -211,9 +217,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'dnk',
                                 'numeric'   => '208',
                                 'domain'    => 'swanson.co.dk',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'da',
                                     'en'
@@ -225,9 +229,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'est',
                                 'numeric'   => '233',
                                 'domain'    => 'swanson.ee',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'et',
                                     'en'
@@ -239,9 +241,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'fra',
                                 'numeric'   => '250',
                                 'domain'    => 'swanson.fr',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'fr',
                                     'en'
@@ -253,9 +253,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'deu',
                                 'numeric'   => '276',
                                 'domain'    => 'swanson.co.de',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'de',
                                     'en'
@@ -267,9 +265,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'ita',
                                 'numeric'   => '380',
                                 'domain'    => 'swanson.it',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'it',
                                     'en'
@@ -281,9 +277,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'nld',
                                 'numeric'   => '528',
                                 'domain'    => 'swanson.nl',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'nl',
                                     'en'
@@ -295,9 +289,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'pol',
                                 'numeric'   => '616',
                                 'domain'    => 'swanson.pl',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'pl',
                                     'en'
@@ -309,9 +301,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'prt',
                                 'numeric'   => '620',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'pt',
                                     'en'
@@ -323,9 +313,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'rou',
                                 'numeric'   => '642',
                                 'domain'    => 'swanson.co.ro',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'ro',
                                     'en'
@@ -337,9 +325,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'svn',
                                 'numeric'   => '705',
                                 'domain'    => 'swanson.si',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'sl',
                                     'en'
@@ -351,9 +337,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'esp',
                                 'numeric'   => '724',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'es',
                                     'en'
@@ -365,9 +349,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'gbr',
                                 'numeric'   => '826',
                                 'domain'    => 'swanson.co.uk',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'en'
                                 ],
@@ -378,9 +360,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'kor',
                                 'numeric'   => '410',
                                 'domain'    => 'swanson.kr',
-                                'regions'   => [
-                                    'as',
-                                ],
+                                'regions'   => ['as'],
                                 'languages' => [
                                     'ko',
                                     'en'
@@ -392,9 +372,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'sgp',
                                 'numeric'   => '702',
                                 'domain'    => 'swanson.sg',
-                                'regions'   => [
-                                    'as',
-                                ],
+                                'regions'   => ['as'],
                                 'languages' => [
                                     'en'
                                 ],
@@ -405,9 +383,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'nzl',
                                 'numeric'   => '554',
                                 'domain'    => 'swanson.co.nz',
-                                'regions'   => [
-                                    'oc',
-                                ],
+                                'regions'   => ['oc'],
                                 'languages' => [
                                     'en'
                                 ],
@@ -418,9 +394,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'grc',
                                 'numeric'   => '300',
                                 'domain'    => 'swanson.gr',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'el',
                                     'en'
@@ -432,9 +406,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'swe',
                                 'numeric'   => '752',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'sv',
                                     'en'
@@ -446,9 +418,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'rus',
                                 'numeric'   => '643',
                                 'domain'    => 'swanson.ru',
-                                'regions'   => [
-                                    'as',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'ru',
                                     'en'
@@ -491,7 +461,7 @@ class Brandlight extends Integration
                             [
                                 'name'              => 'Europe',
                                 'code'              => 'eu',
-                                'domain'            => 'swanson.eu',
+                                'domain'            => 'swanson.eu.com',
                                 'include_languages' => '1',
                             ],
                             [
@@ -503,7 +473,29 @@ class Brandlight extends Integration
                         ]
                     ],
                     Bootstrap::SLUG           => [
-                        'localization>global_domain' => 'swanson.co.uk'
+                        'localization>global_domain'              => 'swanson.co.uk',
+                        'localization>languages>accept_languages' => [
+                            'cs',
+                            'da',
+                            'el',
+                            'et',
+                            'es',
+                            'hr',
+                            'ja',
+                            'ko',
+                            'nl',
+                            'bg',
+                            'pl',
+                            'pt',
+                            'ro',
+                            'sl',
+                            'sv',
+                            'fr',
+                            'it',
+                            'de',
+                            'ru',
+                            'en',
+                        ],
                     ]
                 ],
                 'healthshop.net' => [
@@ -515,10 +507,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'bgr',
                                 'numeric'   => '100',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'as',
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'bg',
                                     'en'
@@ -530,9 +519,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'hrv',
                                 'numeric'   => '191',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'hr',
                                     'en'
@@ -544,9 +531,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'cze',
                                 'numeric'   => '203',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'cs',
                                     'en'
@@ -558,9 +543,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'dnk',
                                 'numeric'   => '208',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'da',
                                     'en'
@@ -572,9 +555,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'est',
                                 'numeric'   => '233',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'et',
                                     'en'
@@ -586,9 +567,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'fra',
                                 'numeric'   => '250',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'fr',
                                     'en'
@@ -600,9 +579,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'deu',
                                 'numeric'   => '276',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'de',
                                     'en'
@@ -614,9 +591,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'ita',
                                 'numeric'   => '380',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'it',
                                     'en'
@@ -628,9 +603,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'nld',
                                 'numeric'   => '528',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'nl',
                                     'en'
@@ -642,9 +615,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'pol',
                                 'numeric'   => '616',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'pl',
                                     'en'
@@ -656,9 +627,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'prt',
                                 'numeric'   => '620',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'pt',
                                     'en'
@@ -670,9 +639,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'rou',
                                 'numeric'   => '642',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'ro',
                                     'en'
@@ -684,9 +651,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'svn',
                                 'numeric'   => '705',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'sl',
                                     'en'
@@ -698,9 +663,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'esp',
                                 'numeric'   => '724',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'es',
                                     'en'
@@ -712,9 +675,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'gbr',
                                 'numeric'   => '826',
                                 'domain'    => 'healthshop.co.uk',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'en',
                                 ],
@@ -725,9 +686,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'kor',
                                 'numeric'   => '410',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'as',
-                                ],
+                                'regions'   => ['as'],
                                 'languages' => [
                                     'ko',
                                     'en'
@@ -739,9 +698,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'sgp',
                                 'numeric'   => '702',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'as',
-                                ],
+                                'regions'   => ['as'],
                                 'languages' => [
                                     'en',
                                 ],
@@ -752,9 +709,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'nzl',
                                 'numeric'   => '554',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'oc',
-                                ],
+                                'regions'   => ['oc'],
                                 'languages' => [
                                     'en',
                                 ],
@@ -765,9 +720,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'grc',
                                 'numeric'   => '300',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'el',
                                     'en'
@@ -779,9 +732,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'swe',
                                 'numeric'   => '752',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'sv',
                                     'en'
@@ -793,9 +744,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'rus',
                                 'numeric'   => '643',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'as',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'ru',
                                     'en'
@@ -814,25 +763,55 @@ class Brandlight extends Integration
                         ]
                     ],
                     Bootstrap::SLUG           => [
-                        'localization>global_domain' => 'healthshop.net'
+                        'localization>global_domain'              => 'healthshop.net',
+                        'localization>languages>accept_languages' => [
+                            'bg',
+                            'hr',
+                            'da',
+                            'nl',
+                            'en',
+                            'fr',
+                            'de',
+                            'el',
+                            'it',
+                            'ro',
+                            'pl',
+                            'pt',
+                            'ru',
+                            'es',
+                            'sv',
+                        ]
                     ]
                 ],
                 'brandlight.org' => [
                     Countries::optionParent() => [
                         'all' => [
                             [
+                                'name'      => 'Saudi Arabia',
+                                'alpha2'    => 'sa',
+                                'alpha3'    => 'sau',
+                                'numeric'   => '682',
+                                'domain'    => '',
+                                'regions'   => ['as'],
+                                'languages' => ['ar', 'en'],
+                            ],
+                            [
+                                'name'      => 'Malawi',
+                                'alpha2'    => 'mw',
+                                'alpha3'    => 'mwi',
+                                'numeric'   => '454',
+                                'domain'    => '',
+                                'regions'   => ['af'],
+                                'languages' => ['ny', 'en'],
+                            ],
+                            [
                                 'name'      => 'Bulgaria',
                                 'alpha2'    => 'bg',
                                 'alpha3'    => 'bgr',
                                 'numeric'   => '100',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
-                                'languages' => [
-                                    'bg',
-                                    'en'
-                                ],
+                                'regions'   => ['eu'],
+                                'languages' => ['bg', 'en'],
                             ],
                             [
                                 'name'      => 'Croatia',
@@ -840,9 +819,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'hrv',
                                 'numeric'   => '191',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'hr',
                                     'en'
@@ -854,9 +831,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'cze',
                                 'numeric'   => '203',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'cs',
                                     'en'
@@ -868,9 +843,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'dnk',
                                 'numeric'   => '208',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'da',
                                     'en'
@@ -882,9 +855,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'est',
                                 'numeric'   => '233',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'et',
                                     'en'
@@ -896,9 +867,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'fra',
                                 'numeric'   => '250',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'fr',
                                     'en'
@@ -910,9 +879,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'deu',
                                 'numeric'   => '276',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'de',
                                     'en'
@@ -924,9 +891,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'ita',
                                 'numeric'   => '380',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'it',
                                     'en'
@@ -938,9 +903,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'nld',
                                 'numeric'   => '528',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'nl',
                                     'en'
@@ -952,9 +915,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'pol',
                                 'numeric'   => '616',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'pl',
                                     'en'
@@ -966,9 +927,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'prt',
                                 'numeric'   => '620',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'pt',
                                     'en'
@@ -980,9 +939,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'rou',
                                 'numeric'   => '642',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'ro',
                                     'en'
@@ -994,9 +951,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'svn',
                                 'numeric'   => '705',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'sl',
                                     'en'
@@ -1008,9 +963,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'esp',
                                 'numeric'   => '724',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'es',
                                     'en'
@@ -1022,9 +975,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'gbr',
                                 'numeric'   => '826',
                                 'domain'    => 'brandlight.co.uk',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'en',
                                 ],
@@ -1035,9 +986,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'kor',
                                 'numeric'   => '410',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'as',
-                                ],
+                                'regions'   => ['as'],
                                 'languages' => [
                                     'ko',
                                     'en'
@@ -1049,9 +998,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'sgp',
                                 'numeric'   => '702',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'as',
-                                ],
+                                'regions'   => ['as'],
                                 'languages' => [
                                     'en',
                                 ],
@@ -1062,9 +1009,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'nzl',
                                 'numeric'   => '554',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'oc',
-                                ],
+                                'regions'   => ['oc'],
                                 'languages' => [
                                     'en',
                                 ],
@@ -1075,9 +1020,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'grc',
                                 'numeric'   => '300',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'el',
                                     'en'
@@ -1089,9 +1032,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'swe',
                                 'numeric'   => '752',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'eu',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'sv',
                                     'en'
@@ -1103,9 +1044,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'rus',
                                 'numeric'   => '643',
                                 'domain'    => '',
-                                'regions'   => [
-                                    'as',
-                                ],
+                                'regions'   => ['eu'],
                                 'languages' => [
                                     'ru',
                                     'en'
@@ -1124,7 +1063,18 @@ class Brandlight extends Integration
                         ]
                     ],
                     Bootstrap::SLUG           => [
-                        'localization>global_domain' => 'brandlight.org'
+                        'localization>global_domain'              => 'brandlight.org',
+                        'localization>languages>accept_languages' => [
+                            'ar',
+                            'ny',
+                            'en',
+                            'fr',
+                            'de',
+                            'it',
+                            'ja',
+                            'ru',
+                            'es',
+                        ]
                     ]
                 ],
                 'common'         => [
@@ -1181,28 +1131,6 @@ class Brandlight extends Integration
                         ],
                         'translation>method>class'                         => Rest::class,
                         'localization>languages>localize_host'             => true,
-                        'localization>languages>accept_languages'          => [
-                            'cs',
-                            'da',
-                            'el',
-                            'et',
-                            'es',
-                            'hr',
-                            'ja',
-                            'ko',
-                            'nl',
-                            'bg',
-                            'pl',
-                            'pt',
-                            'ro',
-                            'sl',
-                            'sv',
-                            'fr',
-                            'it',
-                            'de',
-                            'ru',
-                            'en',
-                        ],
                         'localization>languages>from_language'             => 'en',
                         'request>restore_non_translated_urls'              => true,
                         'request>localization_redirects'                   => true,
@@ -1291,7 +1219,7 @@ class Brandlight extends Integration
                     'gb'
                 ];
                 foreach ($list as $key => $item) {
-                    if ( ! in_array($item['alpha2'], $allow)) {
+                    if (! in_array($item['alpha2'], $allow)) {
                         unset($list[$key]);
                     }
                 }
@@ -1326,7 +1254,7 @@ class Brandlight extends Integration
                     'en'
                 ];
                 foreach ($list as $key => $item) {
-                    if ( ! in_array($item['alpha1'], $allow)) {
+                    if (! in_array($item['alpha1'], $allow)) {
                         unset($list[$key]);
                     }
                 }
