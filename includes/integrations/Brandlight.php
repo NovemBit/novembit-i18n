@@ -1084,7 +1084,7 @@ class Brandlight extends Integration
         /**
          * Restrict admin interface
          * */
-//        add_filter(Bootstrap::SLUG . '-admin-restricted-mode', '__return_true', 10);
+        add_filter(Bootstrap::SLUG . '-admin-restricted-mode', '__return_true', 10);
 
         /**
          * Set configurations for all brandlight websites
