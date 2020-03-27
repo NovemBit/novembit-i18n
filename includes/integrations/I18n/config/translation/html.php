@@ -10,19 +10,22 @@ $config = [
     'class'              => HTML::class,
     'runtime_dir'        => Bootstrap::RUNTIME_DIR,
     'title_tag_template' => function (array $params) {
+        $a = mb_convert_case(
+            $params['country_native'] ?? ($params['region_native'] ?? ''),
+            MB_CASE_TITLE,
+            "UTF-8"
+        );
+        $b = mb_convert_case(
+            ($params['language_native'] ?? $params['language_name'] ?? ''),
+            MB_CASE_TITLE,
+            "UTF-8"
+        );
+
         return sprintf(
-            '%s | %s, %s',
+            '%s | %s %s',
             $params['translate'],
-            mb_convert_case(
-                $params['country_native'] ?? ($params['region_native'] ?? ''),
-                MB_CASE_TITLE,
-                "UTF-8"
-            ),
-            mb_convert_case(
-                ($params['language_native'] ?? $params['language_name'] ?? ''),
-                MB_CASE_TITLE,
-                "UTF-8"
-            )
+            ! empty($a) ? $a . ',' : '',
+            $b
         );
     },
     'xpath_query_map'    => [
