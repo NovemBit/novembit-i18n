@@ -896,7 +896,7 @@ class Brandlight extends Integration
                             [
                                 'name'              => 'Europe',
                                 'code'              => 'eu',
-                                'domain'            => 'healthshop.eu',
+                                'domain'            => '',
                                 'include_languages' => '1',
                             ],
                         ]
