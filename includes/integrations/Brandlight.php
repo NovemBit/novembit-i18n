@@ -806,63 +806,6 @@ class Brandlight extends Integration
                                 'languages' => ['ny', 'en'],
                             ],
                             [
-                                'name'      => 'Bulgaria',
-                                'alpha2'    => 'bg',
-                                'alpha3'    => 'bgr',
-                                'numeric'   => '100',
-                                'domain'    => '',
-                                'regions'   => ['eu'],
-                                'languages' => ['bg', 'en'],
-                            ],
-                            [
-                                'name'      => 'Croatia',
-                                'alpha2'    => 'hr',
-                                'alpha3'    => 'hrv',
-                                'numeric'   => '191',
-                                'domain'    => '',
-                                'regions'   => ['eu'],
-                                'languages' => [
-                                    'hr',
-                                    'en'
-                                ],
-                            ],
-                            [
-                                'name'      => 'Czechia',
-                                'alpha2'    => 'cz',
-                                'alpha3'    => 'cze',
-                                'numeric'   => '203',
-                                'domain'    => '',
-                                'regions'   => ['eu'],
-                                'languages' => [
-                                    'cs',
-                                    'en'
-                                ],
-                            ],
-                            [
-                                'name'      => 'Denmark',
-                                'alpha2'    => 'dk',
-                                'alpha3'    => 'dnk',
-                                'numeric'   => '208',
-                                'domain'    => '',
-                                'regions'   => ['eu'],
-                                'languages' => [
-                                    'da',
-                                    'en'
-                                ],
-                            ],
-                            [
-                                'name'      => 'Estonia',
-                                'alpha2'    => 'ee',
-                                'alpha3'    => 'est',
-                                'numeric'   => '233',
-                                'domain'    => '',
-                                'regions'   => ['eu'],
-                                'languages' => [
-                                    'et',
-                                    'en'
-                                ],
-                            ],
-                            [
                                 'name'      => 'France',
                                 'alpha2'    => 'fr',
                                 'alpha3'    => 'fra',
@@ -899,66 +842,6 @@ class Brandlight extends Integration
                                 ],
                             ],
                             [
-                                'name'      => 'Netherlands',
-                                'alpha2'    => 'nl',
-                                'alpha3'    => 'nld',
-                                'numeric'   => '528',
-                                'domain'    => '',
-                                'regions'   => ['eu'],
-                                'languages' => [
-                                    'nl',
-                                    'en'
-                                ],
-                            ],
-                            [
-                                'name'      => 'Poland',
-                                'alpha2'    => 'pl',
-                                'alpha3'    => 'pol',
-                                'numeric'   => '616',
-                                'domain'    => '',
-                                'regions'   => ['eu'],
-                                'languages' => [
-                                    'pl',
-                                    'en'
-                                ],
-                            ],
-                            [
-                                'name'      => 'Portugal',
-                                'alpha2'    => 'pt',
-                                'alpha3'    => 'prt',
-                                'numeric'   => '620',
-                                'domain'    => '',
-                                'regions'   => ['eu'],
-                                'languages' => [
-                                    'pt',
-                                    'en'
-                                ],
-                            ],
-                            [
-                                'name'      => 'Romania',
-                                'alpha2'    => 'ro',
-                                'alpha3'    => 'rou',
-                                'numeric'   => '642',
-                                'domain'    => '',
-                                'regions'   => ['eu'],
-                                'languages' => [
-                                    'ro',
-                                    'en'
-                                ],
-                            ],
-                            [
-                                'name'      => 'Slovenia',
-                                'alpha2'    => 'si',
-                                'alpha3'    => 'svn',
-                                'numeric'   => '705',
-                                'domain'    => '',
-                                'regions'   => ['eu'],
-                                'languages' => [
-                                    'sl',
-                                    'en'
-                                ],
-                            ],
-                            [
                                 'name'      => 'Spain',
                                 'alpha2'    => 'es',
                                 'alpha3'    => 'esp',
@@ -981,29 +864,7 @@ class Brandlight extends Integration
                                     'en',
                                 ],
                             ],
-                            [
-                                'name'      => 'Korea (Republic of)',
-                                'alpha2'    => 'kr',
-                                'alpha3'    => 'kor',
-                                'numeric'   => '410',
-                                'domain'    => '',
-                                'regions'   => ['as'],
-                                'languages' => [
-                                    'ko',
-                                    'en'
-                                ],
-                            ],
-                            [
-                                'name'      => 'Singapore',
-                                'alpha2'    => 'sg',
-                                'alpha3'    => 'sgp',
-                                'numeric'   => '702',
-                                'domain'    => '',
-                                'regions'   => ['as'],
-                                'languages' => [
-                                    'en',
-                                ],
-                            ],
+
                             [
                                 'name'      => 'New Zealand',
                                 'alpha2'    => 'nz',
@@ -1015,30 +876,7 @@ class Brandlight extends Integration
                                     'en',
                                 ],
                             ],
-                            [
-                                'name'      => 'Greece',
-                                'alpha2'    => 'gr',
-                                'alpha3'    => 'grc',
-                                'numeric'   => '300',
-                                'domain'    => '',
-                                'regions'   => ['eu'],
-                                'languages' => [
-                                    'el',
-                                    'en'
-                                ],
-                            ],
-                            [
-                                'name'      => 'Sweden',
-                                'alpha2'    => 'se',
-                                'alpha3'    => 'swe',
-                                'numeric'   => '752',
-                                'domain'    => '',
-                                'regions'   => ['eu'],
-                                'languages' => [
-                                    'sv',
-                                    'en'
-                                ],
-                            ],
+
                             [
                                 'name'      => 'Russian',
                                 'alpha2'    => 'ru',
