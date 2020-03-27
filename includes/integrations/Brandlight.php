@@ -918,11 +918,35 @@ class Brandlight extends Integration
                 ],
                 'common'         => [
                     Bootstrap::SLUG => [
+
+                        /**
+                         * Performance
+                         * */
+                        'performance>cache_pool>type' => 'memcached',
+                        'pools>memcached>host'        => 'localhost',
+                        'pools>memcached>port'        => 11211,
+
+                        /**
+                         * Localization
+                         * */
+                        'localization>languages>localize_host'             => true,
+                        'localization>languages>from_language'             => 'en',
+                        'localization>localization_config'                 => [],
+
+                        /**
+                         * Request
+                         * */
                         'request>source_type_map'                          => [
                             '/woocommerce_gpf\/google.*/is' => 'gpf_xml',
                             '/sitemap.xml/is'               => 'sitemap_xml',
                             '/sitemap-index.xml/is'         => 'sitemap_xml',
                         ],
+                        'request>restore_non_translated_urls'              => true,
+                        'request>localization_redirects'                   => true,
+
+                        /**
+                         * Translations
+                         * */
                         'translation>url>path_exclusion_patterns'          => [
                             '/\/var\/.*/is',
                         ],
@@ -932,7 +956,6 @@ class Brandlight extends Integration
                         'translation>method>api_limit_expire_delay'        => 3600,
                         'translation>method>request_timeout'               => 5,
                         'translation>method>ssl'                           => true,
-                        'localization>localization_config'                 => [],
                         'translation>method>remote_host'                   => 'i18n.brandlight.org',
                         'translation>method>api_key'                       => 'GmYg90HtUsd187I2lJ20k7s0oIhBBBAv',
                         'translation>method>exclusions'                    => [
@@ -969,10 +992,6 @@ class Brandlight extends Integration
                             'Activpet',
                         ],
                         'translation>method>class'                         => Rest::class,
-                        'localization>languages>localize_host'             => true,
-                        'localization>languages>from_language'             => 'en',
-                        'request>restore_non_translated_urls'              => true,
-                        'request>localization_redirects'                   => true,
                         'translation>html_fragment>xpath_query_map>accept' => self::$xpath_query_accept,
                         'translation>html>xpath_query_map>accept'          => self::$xpath_query_accept,
                         'translation>html_fragment>xpath_query_map>ignore' => self::$xpath_query_ignore,
@@ -1003,13 +1022,13 @@ class Brandlight extends Integration
         /**
          * Restrict admin interface
          * */
-        add_filter(Bootstrap::SLUG . '-admin-restricted-mode', '__return_true', 10);
+//        add_filter(Bootstrap::SLUG . '-admin-restricted-mode', '__return_true', 10);
 
         /**
          * Set configurations for all brandlight websites
          * */
-        $common = self::brandlightConfig('common');
-        $site = self::brandlightConfig(parse_url(site_url(), PHP_URL_HOST));
+        $common      = self::brandlightConfig('common');
+        $site        = self::brandlightConfig(parse_url(site_url(), PHP_URL_HOST));
         $site_config = Arrays::arrayMergeRecursiveDistinct(
             $common,
             $site
