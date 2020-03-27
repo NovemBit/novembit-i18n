@@ -498,7 +498,7 @@ class Brandlight extends Integration
                         ]
                     ],
                     Bootstrap::SLUG           => [
-                        'localization>global_domain'              => 'swanson.co.uk',
+                        'localization>global_domains'             => ['swanson.co.uk'],
                         'localization>languages>accept_languages' => [
                             'cs',
                             'da',
@@ -807,7 +807,7 @@ class Brandlight extends Integration
                         ]
                     ],
                     Bootstrap::SLUG           => [
-                        'localization>global_domain'              => 'healthshop.net',
+                        'localization>global_domains'             => ['healthshop.net'],
                         'localization>languages>accept_languages' => [
                             'bg',
                             'hr',
@@ -952,7 +952,13 @@ class Brandlight extends Integration
                     ],
                     Languages::optionParent() => [
                         'all' => [
-                            ['alpha1' => 'ar', 'name' => 'Arabic', 'native' => 'Arabic', 'countries' => ['ae'], "dir" => "rtl"],
+                            [
+                                'alpha1'    => 'ar',
+                                'name'      => 'Arabic',
+                                'native'    => 'Arabic',
+                                'countries' => ['ae'],
+                                "dir"       => "rtl"
+                            ],
                             ['alpha1' => 'ny', 'name' => 'Chichewa', 'native' => 'Chichewa', 'countries' => ['mw']],
                             ['alpha1' => 'en', 'name' => 'English', 'native' => 'English', 'countries' => ['gb']],
                             ['alpha1' => 'fr', 'name' => 'French', 'native' => 'French', 'countries' => ['fr']],
@@ -964,7 +970,7 @@ class Brandlight extends Integration
                         ]
                     ],
                     Bootstrap::SLUG           => [
-                        'localization>global_domain'              => 'brandlight.org',
+                        'localization>global_domains'             => ['brandlight.org', 'brandlight.net'],
                         'localization>languages>accept_languages' => [
                             'ar',
                             'ny',
@@ -984,9 +990,9 @@ class Brandlight extends Integration
                         /**
                          * Performance
                          * */
-                        'performance>cache_pool>type' => 'memcached',
-                        'pools>memcached>host'        => 'localhost',
-                        'pools>memcached>port'        => 11211,
+                        'performance>cache_pool>type'                      => 'memcached',
+                        'pools>memcached>host'                             => 'localhost',
+                        'pools>memcached>port'                             => 11211,
 
                         /**
                          * Localization
@@ -1084,7 +1090,7 @@ class Brandlight extends Integration
         /**
          * Restrict admin interface
          * */
-        add_filter(Bootstrap::SLUG . '-admin-restricted-mode', '__return_true', 10);
+//        add_filter(Bootstrap::SLUG . '-admin-restricted-mode', '__return_true', 10);
 
         /**
          * Set configurations for all brandlight websites
