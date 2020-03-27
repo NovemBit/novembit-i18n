@@ -473,6 +473,30 @@ class Brandlight extends Integration
                             ],
                         ]
                     ],
+                    Languages::optionParent() => [
+                        'all' => [
+                            ['alpha1' => 'cs', 'name' => 'Czech', 'native' => 'Czech', 'countries' => ['cz']],
+                            ['alpha1' => 'da', 'name' => 'Danish', 'native' => 'Danish', 'countries' => ['dk']],
+                            ['alpha1' => 'el', 'name' => 'Greek', 'native' => 'Ελληνικά', 'countries' => ['gr']],
+                            ['alpha1' => 'et', 'name' => 'Estonian', 'native' => 'Estonian', 'countries' => ['ee']],
+                            ['alpha1' => 'es', 'name' => 'Spanish', 'native' => 'Spanish', 'countries' => ['es']],
+                            ['alpha1' => 'hr', 'name' => 'Croatian', 'native' => 'Croatian', 'countries' => ['hr']],
+                            ['alpha1' => 'ja', 'name' => 'Japanese', 'native' => 'Japanese', 'countries' => ['jp']],
+                            ['alpha1' => 'ko', 'name' => 'Korean', 'native' => 'Korean', 'countries' => ['kr']],
+                            ['alpha1' => 'nl', 'name' => 'Dutch', 'native' => 'Dutch', 'countries' => ['nl']],
+                            ['alpha1' => 'bg', 'name' => 'Bulgarian', 'native' => 'Bulgarian', 'countries' => ['bg']],
+                            ['alpha1' => 'pl', 'name' => 'Polish', 'native' => 'Polish', 'countries' => ['pl']],
+                            ['alpha1' => 'pt', 'name' => 'Portuguese', 'native' => 'Portuguese', 'countries' => ['pt']],
+                            ['alpha1' => 'ro', 'name' => 'Romanian', 'native' => 'Romanian', 'countries' => ['ro']],
+                            ['alpha1' => 'sl', 'name' => 'Slovenian', 'native' => 'Slovenian', 'countries' => ['si']],
+                            ['alpha1' => 'sv', 'name' => 'Swedish', 'native' => 'Swedish', 'countries' => ['se']],
+                            ['alpha1' => 'fr', 'name' => 'French', 'native' => 'French', 'countries' => ['fr']],
+                            ['alpha1' => 'it', 'name' => 'Italian', 'native' => 'Italian', 'countries' => ['it']],
+                            ['alpha1' => 'de', 'name' => 'German', 'native' => 'German', 'countries' => ['de']],
+                            ['alpha1' => 'ru', 'name' => 'Russian', 'native' => 'Russian', 'countries' => ['ru']],
+                            ['alpha1' => 'en', 'name' => 'English', 'native' => 'English', 'countries' => ['gb']],
+                        ]
+                    ],
                     Bootstrap::SLUG           => [
                         'localization>global_domain'              => 'swanson.co.uk',
                         'localization>languages>accept_languages' => [
@@ -763,6 +787,25 @@ class Brandlight extends Integration
                             ],
                         ]
                     ],
+                    Languages::optionParent() => [
+                        'all' => [
+                            ['alpha1' => 'bg', 'name' => 'Bulgarian', 'native' => 'Bulgarian', 'countries' => ['bg']],
+                            ['alpha1' => 'hr', 'name' => 'Croatian', 'native' => 'Croatian', 'countries' => ['hr']],
+                            ['alpha1' => 'da', 'name' => 'Danish', 'native' => 'Danish', 'countries' => ['dk']],
+                            ['alpha1' => 'nl', 'name' => 'Dutch', 'native' => 'Dutch', 'countries' => ['nl']],
+                            ['alpha1' => 'en', 'name' => 'English', 'native' => 'English', 'countries' => ['gb']],
+                            ['alpha1' => 'fr', 'name' => 'French', 'native' => 'French', 'countries' => ['fr']],
+                            ['alpha1' => 'de', 'name' => 'German', 'native' => 'German', 'countries' => ['de']],
+                            ['alpha1' => 'el', 'name' => 'Greek', 'native' => 'Ελληνικά', 'countries' => ['gr']],
+                            ['alpha1' => 'it', 'name' => 'Italian', 'native' => 'Italian', 'countries' => ['it']],
+                            ['alpha1' => 'ro', 'name' => 'Romanian', 'native' => 'Romanian', 'countries' => ['ro']],
+                            ['alpha1' => 'pl', 'name' => 'Polish', 'native' => 'Polish', 'countries' => ['pl']],
+                            ['alpha1' => 'pt', 'name' => 'Portuguese', 'native' => 'Portuguese', 'countries' => ['pt']],
+                            ['alpha1' => 'ru', 'name' => 'Russian', 'native' => 'Russian', 'countries' => ['ru']],
+                            ['alpha1' => 'es', 'name' => 'Spanish', 'native' => 'Spanish', 'countries' => ['es']],
+                            ['alpha1' => 'sv', 'name' => 'Swedish', 'native' => 'Swedish', 'countries' => ['se']],
+                        ]
+                    ],
                     Bootstrap::SLUG           => [
                         'localization>global_domain'              => 'healthshop.net',
                         'localization>languages>accept_languages' => [
@@ -901,6 +944,19 @@ class Brandlight extends Integration
                             ],
                         ]
                     ],
+                    Languages::optionParent() => [
+                        'all' => [
+                            ['alpha1' => 'ar', 'name' => 'Arabic', 'native' => 'Arabic', 'countries' => ['ae'], "dir" => "rtl"],
+                            ['alpha1' => 'ny', 'name' => 'Chichewa', 'native' => 'Chichewa', 'countries' => ['mw']],
+                            ['alpha1' => 'en', 'name' => 'English', 'native' => 'English', 'countries' => ['gb']],
+                            ['alpha1' => 'fr', 'name' => 'French', 'native' => 'French', 'countries' => ['fr']],
+                            ['alpha1' => 'de', 'name' => 'German', 'native' => 'German', 'countries' => ['de']],
+                            ['alpha1' => 'it', 'name' => 'Italian', 'native' => 'Italian', 'countries' => ['it']],
+                            ['alpha1' => 'ja', 'name' => 'Japanese', 'native' => 'Japanese', 'countries' => ['jp']],
+                            ['alpha1' => 'ru', 'name' => 'Russian', 'native' => 'Russian', 'countries' => ['ru']],
+                            ['alpha1' => 'es', 'name' => 'Spanish', 'native' => 'Spanish', 'countries' => ['es']],
+                        ]
+                    ],
                     Bootstrap::SLUG           => [
                         'localization>global_domain'              => 'brandlight.org',
                         'localization>languages>accept_languages' => [
@@ -917,6 +973,32 @@ class Brandlight extends Integration
                     ]
                 ],
                 'common'         => [
+                    Languages::optionParent() => [
+                        'all' => [
+                            ['alpha1' => 'ar', 'name' => 'Arabic', 'native' => 'Arabic', 'countries' => ['ae'], "dir" => "rtl"],
+                            ['alpha1' => 'bg', 'name' => 'Bulgarian', 'native' => 'Bulgarian', 'countries' => ['bg']],
+                            ['alpha1' => 'ny', 'name' => 'Chichewa', 'native' => 'Chichewa', 'countries' => ['mw']],
+                            ['alpha1' => 'hr', 'name' => 'Croatian', 'native' => 'Croatian', 'countries' => ['hr']],
+                            ['alpha1' => 'cs', 'name' => 'Czech', 'native' => 'Czech', 'countries' => ['cz']],
+                            ['alpha1' => 'da', 'name' => 'Danish', 'native' => 'Danish', 'countries' => ['dk']],
+                            ['alpha1' => 'nl', 'name' => 'Dutch', 'native' => 'Dutch', 'countries' => ['nl']],
+                            ['alpha1' => 'en', 'name' => 'English', 'native' => 'English', 'countries' => ['gb']],
+                            ['alpha1' => 'et', 'name' => 'Estonian', 'native' => 'Estonian', 'countries' => ['ee']],
+                            ['alpha1' => 'fr', 'name' => 'French', 'native' => 'French', 'countries' => ['fr']],
+                            ['alpha1' => 'de', 'name' => 'German', 'native' => 'German', 'countries' => ['de']],
+                            ['alpha1' => 'el', 'name' => 'Greek', 'native' => 'Ελληνικά', 'countries' => ['gr']],
+                            ['alpha1' => 'it', 'name' => 'Italian', 'native' => 'Italian', 'countries' => ['it']],
+                            ['alpha1' => 'ja', 'name' => 'Japanese', 'native' => 'Japanese', 'countries' => ['jp']],
+                            ['alpha1' => 'ko', 'name' => 'Korean', 'native' => 'Korean', 'countries' => ['kr']],
+                            ['alpha1' => 'ro', 'name' => 'Romanian', 'native' => 'Romanian', 'countries' => ['ro']],
+                            ['alpha1' => 'pl', 'name' => 'Polish', 'native' => 'Polish', 'countries' => ['pl']],
+                            ['alpha1' => 'pt', 'name' => 'Portuguese', 'native' => 'Portuguese', 'countries' => ['pt']],
+                            ['alpha1' => 'ru', 'name' => 'Russian', 'native' => 'Russian', 'countries' => ['ru']],
+                            ['alpha1' => 'sl', 'name' => 'Slovenian', 'native' => 'Slovenian', 'countries' => ['si']],
+                            ['alpha1' => 'es', 'name' => 'Spanish', 'native' => 'Spanish', 'countries' => ['es']],
+                            ['alpha1' => 'sv', 'name' => 'Swedish', 'native' => 'Swedish', 'countries' => ['se']],
+                        ]
+                    ],
                     Bootstrap::SLUG => [
 
                         /**
