@@ -28,7 +28,6 @@ class Integration extends system\Integration
                     'type'  => new Option(
                         [
                             'default' => 'file',
-                            'parent'  => Bootstrap::SLUG,
                             'type'    => Option::TYPE_TEXT,
                             'method'  => Option::METHOD_SINGLE,
                             'values'  => [
@@ -42,7 +41,6 @@ class Integration extends system\Integration
                             'host' => new Option(
                                 [
                                     'default' => 'localhost',
-                                    'parent'  => Bootstrap::SLUG,
                                     'type'    => Option::TYPE_TEXT,
                                     'method'  => Option::METHOD_SINGLE
                                 ]
@@ -50,7 +48,6 @@ class Integration extends system\Integration
                             'port' => new Option(
                                 [
                                     'default' => 11211,
-                                    'parent'  => Bootstrap::SLUG,
                                     'type'    => Option::TYPE_TEXT,
                                     'markup'  => Option::MARKUP_NUMBER,
                                     'method'  => Option::METHOD_SINGLE
@@ -96,16 +93,6 @@ class Integration extends system\Integration
 
     protected function adminInit(): void
     {
-//        wp_enqueue_style(Bootstrap::SLUG . '-bs-grid',
-//            plugin_dir_url(NOVEMBIT_I18N_PLUGIN_FILE) . '/vendor/twbs/bootstrap/dist/css/bootstrap-grid.min.css', [], '0.1');
-//
-//        wp_enqueue_style(Bootstrap::SLUG . '-admin',
-//            plugin_dir_url(NOVEMBIT_I18N_PLUGIN_FILE) . '/includes/assets/style/admin.css',
-//            [], '0.2');
-
-//        wp_enqueue_script(Bootstrap::SLUG,
-//            plugin_dir_url(NOVEMBIT_I18N_PLUGIN_FILE) . '/includes/assets/scripts/admin.js', [], '0.2');
-
         add_action('admin_menu', [$this, 'adminMenu']);
     }
 
@@ -150,14 +137,16 @@ class Integration extends system\Integration
             75
         );
 
-        add_submenu_page(
-            Bootstrap::SLUG,
-            __('NovemBit i18n - Performance'),
-            __('Performance'),
-            'manage_options',
-            Bootstrap::SLUG . '-performance',
-            [$this, 'adminContentPerformance']
-        );
+        if ( ! Bootstrap::instance()->isRestrictedMode()) {
+            add_submenu_page(
+                Bootstrap::SLUG,
+                __('NovemBit i18n - Performance'),
+                __('Performance'),
+                'manage_options',
+                Bootstrap::SLUG . '-performance',
+                [$this, 'adminContentPerformance']
+            );
+        }
     }
 
     public function adminContentPerformance()
