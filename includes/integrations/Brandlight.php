@@ -503,7 +503,7 @@ class Brandlight extends Integration
                         ]
                     ],
                     Bootstrap::SLUG           => [
-                        'localization>global_domains'             => ['swanson.co.uk'],
+                        'localization>global_domains'   => ['swanson.co.uk'],
                         'localization>accept_languages' => [
                             'cs',
                             'da',
@@ -707,7 +707,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'gbr',
                                 'numeric'   => '826',
                                 'domain'    => 'healthshop.co.uk',
-                                'regions'   => ['eu'],
+                                'regions'   => ['eu', 'gd', 'cy'],
                                 'languages' => [
                                     'en',
                                 ],
@@ -811,10 +811,12 @@ class Brandlight extends Integration
                             ['alpha1' => 'ru', 'name' => 'Russian', 'native' => 'Russian', 'countries' => ['ru']],
                             ['alpha1' => 'es', 'name' => 'Spanish', 'native' => 'Spanish', 'countries' => ['es']],
                             ['alpha1' => 'sv', 'name' => 'Swedish', 'native' => 'Swedish', 'countries' => ['se']],
+                            ['alpha1' => 'gd', 'name' => 'Gaelic', 'native' => 'Scots Gaelic', 'countries' => ['gb']],
+                            ['alpha1' => 'cy', 'name' => 'Welsh', 'native' => 'Welsh', 'countries' => ['gb']],
                         ]
                     ],
                     Bootstrap::SLUG           => [
-                        'localization>global_domains'             => ['healthshop.net'],
+                        'localization>global_domains'   => ['healthshop.net'],
                         'localization>accept_languages' => [
                             'bg',
                             'hr',
@@ -914,6 +916,8 @@ class Brandlight extends Integration
                                 'regions'   => ['eu'],
                                 'languages' => [
                                     'en',
+                                    'gd',
+                                    'cy'
                                 ],
                             ],
 
@@ -976,10 +980,12 @@ class Brandlight extends Integration
                             ['alpha1' => 'ja', 'name' => 'Japanese', 'native' => 'Japanese', 'countries' => ['jp']],
                             ['alpha1' => 'ru', 'name' => 'Russian', 'native' => 'Russian', 'countries' => ['ru']],
                             ['alpha1' => 'es', 'name' => 'Spanish', 'native' => 'Spanish', 'countries' => ['es']],
+                            ['alpha1' => 'gd', 'name' => 'Gaelic', 'native' => 'Scots Gaelic', 'countries' => ['gb']],
+                            ['alpha1' => 'cy', 'name' => 'Welsh', 'native' => 'Welsh', 'countries' => ['gb']],
                         ]
                     ],
                     Bootstrap::SLUG           => [
-                        'localization>global_domains'             => ['brandlight.org', 'brandlight.net'],
+                        'localization>global_domains'   => ['brandlight.org', 'brandlight.net'],
                         'localization>accept_languages' => [
                             'ar',
                             'ny',
@@ -990,6 +996,8 @@ class Brandlight extends Integration
                             'ja',
                             'ru',
                             'es',
+                            'gd',
+                            'cy'
                         ]
                     ]
                 ],
@@ -1006,8 +1014,8 @@ class Brandlight extends Integration
                         /**
                          * Localization
                          * */
-                        'localization>localize_host'             => true,
-                        'localization>from_language'             => 'en',
+                        'localization>localize_host'                       => true,
+                        'localization>from_language'                       => 'en',
                         'localization>localization_config'                 => [],
 
                         /**
