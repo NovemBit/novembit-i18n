@@ -1017,6 +1017,8 @@ class Brandlight extends Integration
                          * */
                         'translation>url>path_exclusion_patterns'          => [
                             '/\/var\/.*/is',
+                            '/sitemap\.xml/is',
+                            '/sitemap-index\.xml/is'
                         ],
                         'translation>url>path_lowercase'                   => true,
                         'translation>url>path_translation'                 => true,
