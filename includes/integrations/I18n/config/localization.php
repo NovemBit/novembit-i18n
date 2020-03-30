@@ -22,6 +22,68 @@ $config =
         'languages'           => require_once('localization/languages.php'),
         'regions'             => require_once('localization/regions.php'),
         'countries'           => require_once('localization/countries.php'),
+
+        'from_language'           => new Option(
+            [
+                'default'     => 'en',
+                'type'        => Option::TYPE_TEXT,
+                'method'      => Option::METHOD_SINGLE,
+                'values'      => $this->languages->getList(),
+                'label'       => 'From language',
+                'description' => 'Website main content language.'
+            ]
+        ),
+        'accept_languages'        => new Option(
+            [
+                'default'     => [
+                    'cs',
+                    'da',
+                    'el',
+                    'et',
+                    'es',
+                    'hr',
+                    'ja',
+                    'ko',
+                    'nl',
+                    'bg',
+                    'pl',
+                    'pt',
+                    'ro',
+                    'sl',
+                    'sv',
+                    'fr',
+                    'it',
+                    'de',
+                    'ru',
+                    'en'
+                ],
+                'type'        => Option::TYPE_TEXT,
+                'method'      => Option::METHOD_MULTIPLE,
+                'markup'      => Option::MARKUP_SELECT,
+                'main_params' => ['style' => 'grid-template-columns: repeat(1, 1fr);'],
+                'values'      => $this->languages->getList(),
+                'label'       => 'Global to translate languages',
+                'description' => 'In what languages the site should be translated.'
+            ]
+        ),
+        'localize_host'           => new Option(
+            [
+                'default'     => true,
+                'type'        => Option::TYPE_BOOL,
+                'method'      => Option::METHOD_SINGLE,
+                'label'       => 'Localize Hosts',
+                'description' => 'Use localization countries and regions to determine url domains.'
+
+            ]
+        ),
+        'path_exclusion_patterns' => [
+            '.*\.php',
+            '.*wp-admin',
+            '.*wp-json',
+            '(?<=^search)\/.*$',
+            '^aff\/.*$'
+        ],
+
         'global_domains'      => new Option(
             [
                 'default'     => [parse_url(site_url(), PHP_URL_HOST)],

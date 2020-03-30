@@ -499,7 +499,7 @@ class Brandlight extends Integration
                     ],
                     Bootstrap::SLUG           => [
                         'localization>global_domains'             => ['swanson.co.uk'],
-                        'localization>languages>accept_languages' => [
+                        'localization>accept_languages' => [
                             'cs',
                             'da',
                             'el',
@@ -808,7 +808,7 @@ class Brandlight extends Integration
                     ],
                     Bootstrap::SLUG           => [
                         'localization>global_domains'             => ['healthshop.net'],
-                        'localization>languages>accept_languages' => [
+                        'localization>accept_languages' => [
                             'bg',
                             'hr',
                             'da',
@@ -971,7 +971,7 @@ class Brandlight extends Integration
                     ],
                     Bootstrap::SLUG           => [
                         'localization>global_domains'             => ['brandlight.org', 'brandlight.net'],
-                        'localization>languages>accept_languages' => [
+                        'localization>accept_languages' => [
                             'ar',
                             'ny',
                             'en',
@@ -997,8 +997,8 @@ class Brandlight extends Integration
                         /**
                          * Localization
                          * */
-                        'localization>languages>localize_host'             => true,
-                        'localization>languages>from_language'             => 'en',
+                        'localization>localize_host'             => true,
+                        'localization>from_language'             => 'en',
                         'localization>localization_config'                 => [],
 
                         /**
