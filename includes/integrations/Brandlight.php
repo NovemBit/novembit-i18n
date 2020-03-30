@@ -352,7 +352,9 @@ class Brandlight extends Integration
                                 'domain'    => 'swanson.co.uk',
                                 'regions'   => ['eu'],
                                 'languages' => [
-                                    'en'
+                                    'en',
+                                    'gd',
+                                    'cv'
                                 ],
                             ],
                             [
@@ -495,6 +497,9 @@ class Brandlight extends Integration
                             ['alpha1' => 'de', 'name' => 'German', 'native' => 'German', 'countries' => ['de']],
                             ['alpha1' => 'ru', 'name' => 'Russian', 'native' => 'Russian', 'countries' => ['ru']],
                             ['alpha1' => 'en', 'name' => 'English', 'native' => 'English', 'countries' => ['gb']],
+                            ['alpha1' => 'gd', 'name' => 'Gaelic', 'native' => 'Scots Gaelic', 'countries' => ['gb']],
+                            ['alpha1' => 'cy', 'name' => 'Welsh', 'native' => 'Welsh', 'countries' => ['gb']],
+
                         ]
                     ],
                     Bootstrap::SLUG           => [
@@ -520,6 +525,8 @@ class Brandlight extends Integration
                             'de',
                             'ru',
                             'en',
+                            'cy',
+                            'gd'
                         ],
                     ]
                 ],
@@ -824,6 +831,8 @@ class Brandlight extends Integration
                             'ru',
                             'es',
                             'sv',
+                            'cy',
+                            'gd'
                         ]
                     ]
                 ],
@@ -1026,7 +1035,7 @@ class Brandlight extends Integration
                         'translation>method>api_limit_expire_delay'        => 3600,
                         'translation>method>request_timeout'               => 5,
                         'translation>method>ssl'                           => true,
-                        'translation>method>remote_host'                   => 'i18n.brandlight.org',
+                        'translation>method>remote_host'                   => 'dev.i18n.brandlight.org',
                         'translation>method>api_key'                       => 'GmYg90HtUsd187I2lJ20k7s0oIhBBBAv',
                         'translation>method>exclusions'                    => [
                             'vitamin',
