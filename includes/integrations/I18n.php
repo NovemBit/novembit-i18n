@@ -138,7 +138,7 @@ class I18n extends Integration
     {
         global $wp_admin_bar;
 
-        $languages = Module::instance()->localization->languages->getAcceptLanguages(true);
+        $languages = Module::instance()->request->getAcceptLanguages(true);
 
         /**
          * Translation editor
