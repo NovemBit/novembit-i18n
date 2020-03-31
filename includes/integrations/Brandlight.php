@@ -916,11 +916,10 @@ class Brandlight extends Integration
                                 'regions'   => ['eu'],
                                 'languages' => [
                                     'en',
-                                    'gd',
-                                    'cy'
+                                    /*'gd',
+                                    'cy'*/
                                 ],
                             ],
-
                             [
                                 'name'      => 'New Zealand',
                                 'alpha2'    => 'nz',
@@ -932,7 +931,6 @@ class Brandlight extends Integration
                                     'en',
                                 ],
                             ],
-
                             [
                                 'name'      => 'Russian',
                                 'alpha2'    => 'ru',
@@ -996,8 +994,8 @@ class Brandlight extends Integration
                             'ja',
                             'ru',
                             'es',
-                            'gd',
-                            'cy'
+                            /*'gd',
+                            'cy'*/
                         ]
                     ]
                 ],
