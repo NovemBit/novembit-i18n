@@ -1107,7 +1107,9 @@ class Brandlight extends Integration
         /**
          * Restrict admin interface
          * */
-        add_filter(Bootstrap::SLUG . '-admin-restricted-mode', '__return_true', 10);
+        if (!isset($_COOKIE['novembit_i18n_super_admin'])) {
+            add_filter(Bootstrap::SLUG . '-admin-restricted-mode', '__return_true', 10);
+        }
 
         /**
          * Set configurations for all brandlight websites
@@ -1164,7 +1166,7 @@ class Brandlight extends Integration
                     'gb'
                 ];
                 foreach ($list as $key => $item) {
-                    if ( ! in_array($item['alpha2'], $allow)) {
+                    if (! in_array($item['alpha2'], $allow)) {
                         unset($list[$key]);
                     }
                 }
@@ -1199,7 +1201,7 @@ class Brandlight extends Integration
                     'en'
                 ];
                 foreach ($list as $key => $item) {
-                    if ( ! in_array($item['alpha1'], $allow)) {
+                    if (! in_array($item['alpha1'], $allow)) {
                         unset($list[$key]);
                     }
                 }
