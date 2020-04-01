@@ -10,9 +10,6 @@ use NovemBit\wp\plugins\i18n\system\Integration;
 class TheSEOFramework extends Integration
 {
 
-    public static $integrations = [
-    ];
-
     public static $plugins = [
         'autodescription/autodescription.php'
     ];
@@ -25,7 +22,7 @@ class TheSEOFramework extends Integration
     {
         add_filter(
             Option::getOptionFilterName('request_source_type_map', Bootstrap::SLUG),
-            function ($map) {
+            static function ($map) {
                 $map['/sitemap.xml/is']       = 'sitemap_xml';
                 $map['/sitemap-index.xml/is'] = 'sitemap_xml';
 
@@ -35,19 +32,19 @@ class TheSEOFramework extends Integration
 
         add_action(
             'init',
-            function () {
-                if ($_SERVER['REQUEST_URI'] == "/sitemap-index.xml") {
-                    if ( ! headers_sent()) {
+            static function () {
+                if ($_SERVER['REQUEST_URI'] === '/sitemap-index.xml') {
+                    if (! headers_sent()) {
                         \status_header(200);
                         header('Content-type: text/xml; charset=utf-8', true);
                     }
 
                     $dom           = new \DOMDocument();
-                    $dom->version  = "1.0";
-                    $dom->encoding = "utf-8";
+                    $dom->version  = '1.0';
+                    $dom->encoding = 'utf-8';
 
-                    $sitemapindex = $dom->createElement('sitemapindex');
-                    $sitemapindex->setAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
+                    $sitemap_index = $dom->createElement('sitemapindex');
+                    $sitemap_index->setAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
 
                     $sitemap_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/sitemap.xml";
 
@@ -64,6 +61,11 @@ class TheSEOFramework extends Integration
                         ->url
                         ->translate([$sitemap_url])[$sitemap_url];
 
+                    /**
+                     * Unset Main /sitemap.xml file from sitemap-index.xml
+                     * */
+                    unset($urls[array_search($sitemap_url, $urls, true)]);
+
                     foreach ($urls as $lang => $url) {
                         $sitemap            = $dom->createElement('sitemap');
                         $loc                = $dom->createElement('loc');
@@ -72,10 +74,10 @@ class TheSEOFramework extends Integration
                         $lastmod->nodeValue = date('c');
                         $sitemap->appendChild($loc);
                         $sitemap->appendChild($lastmod);
-                        $sitemapindex->appendChild($sitemap);
+                        $sitemap_index->appendChild($sitemap);
                     }
 
-                    $dom->appendChild($sitemapindex);
+                    $dom->appendChild($sitemap_index);
 
                     echo $dom->saveXML();
 
@@ -87,13 +89,13 @@ class TheSEOFramework extends Integration
 
         add_action(
             'init',
-            function () {
-                if ( ! function_exists('\the_seo_framework')) {
+            static function () {
+                if (! function_exists('\the_seo_framework')) {
                     return;
                 }
 
                 if (preg_match('/^\/sitemap.xml/', $_SERVER['REQUEST_URI'])) {
-                    if ( ! headers_sent()) {
+                    if (! headers_sent()) {
                         \status_header(200);
                         header('Content-type: text/xml; charset=utf-8', true);
                     }
@@ -107,10 +109,10 @@ class TheSEOFramework extends Integration
 
         add_filter(
             'robots_txt',
-            function ($output, $public) {
+            static function ($output, $public) {
                 $current_domain = $_SERVER['HTTP_HOST'];
                 $default_domain = parse_url(site_url(), PHP_URL_HOST);
-                if ( ! empty($default_domain)) {
+                if (! empty($default_domain)) {
                     $output = str_replace($default_domain, $current_domain, $output);
                 }
 
