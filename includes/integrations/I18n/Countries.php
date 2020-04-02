@@ -72,9 +72,9 @@ class Countries
     }
 
     /**
-     * @return string|string[]
+     * @return string
      */
-    public static function optionParent()
+    public static function optionParent(): string
     {
         return Bootstrap::SLUG . '-' . str_replace('\\', '_', self::class);
     }
@@ -152,9 +152,9 @@ class Countries
 
         if ($name === null) {
             return $options;
-        } else {
-            return $options[$name] ?? $default;
         }
+
+        return $options[$name] ?? $default;
     }
 
 

@@ -19,9 +19,9 @@ if ( ! class_exists(NovemBit\i18n\system\helpers\Countries::class)) {
 $config =
     [
         'runtime_dir'         => Bootstrap::RUNTIME_DIR,
-        'languages'           => require_once('localization/languages.php'),
-        'regions'             => require_once('localization/regions.php'),
-        'countries'           => require_once('localization/countries.php'),
+        'languages'           => require('localization/languages.php'),
+        'regions'             => require('localization/regions.php'),
+        'countries'           => require('localization/countries.php'),
 
         'from_language'           => new Option(
             [

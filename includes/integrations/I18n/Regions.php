@@ -26,9 +26,9 @@ class Regions
     }
 
     /**
-     * @return string|string[]
+     * @return string
      */
-    public static function optionParent()
+    public static function optionParent(): string
     {
         return Bootstrap::SLUG . '-' . str_replace('\\', '_', self::class);
     }
@@ -78,9 +78,9 @@ class Regions
 
         if ($name === null) {
             return $options;
-        } else {
-            return $options[$name] ?? $default;
         }
+
+        return $options[$name] ?? $default;
     }
 
     /**
@@ -99,7 +99,7 @@ class Regions
      *
      * @return array
      */
-    private function settings($is_form = false)
+    private function settings($is_form = false): array
     {
         $regions_list = $this->getDefaultRegionsList();
 

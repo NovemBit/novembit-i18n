@@ -465,7 +465,7 @@ class Brandlight extends Integration
                                 'name'              => 'Europe',
                                 'code'              => 'eu',
                                 'domain'            => 'swanson.eu.com',
-                                'include_languages' => '1',
+                                'include_languages' => \NovemBit\i18n\component\localization\regions\Regions::INCLUDE_CHILD_PRIMARY_LANGUAGES,
                             ],
                             [
                                 'name'              => 'South America',
@@ -790,7 +790,7 @@ class Brandlight extends Integration
                                 'name'              => 'Europe',
                                 'code'              => 'eu',
                                 'domain'            => 'healthshop.eu',
-                                'include_languages' => '1',
+                                'include_languages' => \NovemBit\i18n\component\localization\regions\Regions::INCLUDE_CHILD_PRIMARY_LANGUAGES,
                             ],
                         ]
                     ],
@@ -951,7 +951,7 @@ class Brandlight extends Integration
                                 'name'              => 'Europe',
                                 'code'              => 'eu',
                                 'domain'            => '',
-                                'include_languages' => '1',
+                                'include_languages' => \NovemBit\i18n\component\localization\regions\Regions::INCLUDE_CHILD_PRIMARY_LANGUAGES,
                             ],
                             [
                                 'name'              => 'Africa',
