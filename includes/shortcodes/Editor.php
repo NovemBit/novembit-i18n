@@ -5,6 +5,7 @@ namespace NovemBit\wp\plugins\i18n\shortcodes;
 
 
 use NovemBit\i18n\Module;
+use NovemBit\wp\plugins\i18n\Bootstrap;
 
 class Editor
 {
@@ -29,7 +30,7 @@ class Editor
 
         wp_enqueue_style(
             self::$name . '-style',
-            plugins_url('/includes/shortcodes/assets/dropdown/style.css', NOVEMBIT_I18N_PLUGIN_FILE),
+            plugins_url('/includes/shortcodes/assets/dropdown/style.css', Bootstrap::instance()->getPluginFile()),
             [],
             '1.0.6'
         );
@@ -81,7 +82,7 @@ class Editor
 
         $urls = Module::instance()->request->getEditorUrlTranslations();
 
-        $languages = Module::instance()->languages->getAcceptLanguages(true);
+        $languages = Module::instance()->request->getAcceptLanguages(true);
 
         foreach ($urls as $code => $url) {
 

@@ -5,9 +5,14 @@ namespace NovemBit\wp\plugins\i18n\integrations;
 use diazoxide\wp\lib\option\Option;
 use Exception;
 use NovemBit\i18n\Module;
+use NovemBit\i18n\system\helpers\Environment;
 use NovemBit\wp\plugins\i18n\Bootstrap;
+use NovemBit\wp\plugins\i18n\integrations\I18n\Countries;
+use NovemBit\wp\plugins\i18n\integrations\I18n\Languages;
+use NovemBit\wp\plugins\i18n\integrations\I18n\Regions;
 use NovemBit\wp\plugins\i18n\system\Integration;
 use Psr\SimpleCache\InvalidArgumentException;
+use WP_Admin_Bar;
 
 class I18n extends Integration
 {
@@ -17,10 +22,29 @@ class I18n extends Integration
     ];
 
     /**
+     * @var Countries
+     * */
+    public $countries;
+
+    /**
+     * @var Languages
+     * */
+    public $languages;
+
+    /**
+     * @var Regions
+     * */
+    public $regions;
+
+    /**
      * @return void
      */
     public function init(): void
     {
+        $this->languages = new Languages($this);
+        $this->countries = new Countries($this);
+        $this->regions   = new Regions($this);
+
         /**
          * Creating instance of i18n
          * */
@@ -42,7 +66,7 @@ class I18n extends Integration
 
                     add_filter(
                         'redirect_canonical',
-                        function () {
+                        static function () {
                             return false;
                         },
                         PHP_INT_MAX,
@@ -51,7 +75,7 @@ class I18n extends Integration
 
                     add_action(
                         'admin_init',
-                        function () {
+                        static function () {
                             remove_action('admin_head', 'wp_admin_canonical_url');
                         },
                         PHP_INT_MAX
@@ -66,14 +90,11 @@ class I18n extends Integration
          * */
         if (
             is_admin()
-            && isset($_GET[Bootstrap::SLUG . '-action'])
-            && $_GET[Bootstrap::SLUG . '-action'] == 'clear-cache'
+            && Environment::get(Bootstrap::SLUG . '-action') === 'clear-cache'
             && current_user_can('administrator')
         ) {
             self::deleteI18nCache();
-            if (is_admin()) {
-                Bootstrap::addNotice('Translation cache successfully cleared.');
-            }
+            Bootstrap::addNotice('Translation cache successfully cleared.');
             wp_redirect(wp_get_referer() ?? site_url());
             exit;
         }
@@ -85,7 +106,7 @@ class I18n extends Integration
      *
      * @return bool
      */
-    public static function deleteI18nCache()
+    public static function deleteI18nCache(): bool
     {
         try {
             Module::instance()->getCachePool()->clear();
@@ -111,11 +132,11 @@ class I18n extends Integration
         return true;
     }
 
-    public function adminToolbar()
+    public function adminToolbar(): void
     {
         global $wp_admin_bar;
 
-        $languages = Module::instance()->languages->getAcceptLanguages(true);
+        $languages = Module::instance()->request->getAcceptLanguages(true);
 
         /**
          * Translation editor
@@ -123,17 +144,17 @@ class I18n extends Integration
         $urls = Module::instance()->request->getEditorUrlTranslations();
         if (! empty($urls)) {
             $args = array(
-                'id'     => Bootstrap::SLUG . "_item_edit_translation",
+                'id'     => Bootstrap::SLUG . '_item_edit_translation',
                 'parent' => Bootstrap::SLUG,
-                'title'  => __("Edit translation", 'novembit-i18n'),
+                'title'  => __('Edit translation', 'novembit-i18n'),
             );
             $wp_admin_bar->add_node($args);
             foreach ($urls as $language => $url) {
                 $flag = $languages[$language]['flag'];
                 $name = $languages[$language]['name'];
                 $args = [
-                    'id'     => Bootstrap::SLUG . "_item_edit_translation_item_" . $language,
-                    'parent' => Bootstrap::SLUG . "_item_edit_translation",
+                    'id'     => Bootstrap::SLUG . '_item_edit_translation_item_' . $language,
+                    'parent' => Bootstrap::SLUG . '_item_edit_translation',
                     'title'  => sprintf(
                         '<img alt="%2$s" src="%1$s" style="display:inline; width: 18px !important; height: 12px !important;"/>&nbsp;%2$s',
                         $flag,
@@ -151,9 +172,9 @@ class I18n extends Integration
         $urls = Module::instance()->request->getUrlTranslations();
         if (! empty($urls)) {
             $args = array(
-                'id'     => Bootstrap::SLUG . "_item_change_language",
+                'id'     => Bootstrap::SLUG . '_item_change_language',
                 'parent' => Bootstrap::SLUG,
-                'title'  => __("Change language", 'novembit-i18n'),
+                'title'  => __('Change language', 'novembit-i18n'),
             );
 
             $wp_admin_bar->add_node($args);
@@ -163,8 +184,8 @@ class I18n extends Integration
                 $flag = $languages[$language]['flag'];
                 $name = $languages[$language]['name'];
                 $args = [
-                    'id'     => Bootstrap::SLUG . "_item_change_language_item" . $language,
-                    'parent' => Bootstrap::SLUG . "_item_change_language",
+                    'id'     => Bootstrap::SLUG . '_item_change_language_item' . $language,
+                    'parent' => Bootstrap::SLUG . '_item_change_language',
                     'title'  => sprintf(
                         '<img alt="%2$s" src="%1$s" style="display:inline; width: 18px !important; height: 12px !important;"/>&nbsp;%2$s',
                         $flag,
@@ -175,8 +196,6 @@ class I18n extends Integration
                 $wp_admin_bar->add_node($args);
             }
         }
-
-        return;
     }
 
 
@@ -186,7 +205,7 @@ class I18n extends Integration
     }
 
     /**
-     * @param \WP_Admin_Bar $admin_bar
+     * @param WP_Admin_Bar $admin_bar
      */
     public function adminBarMenu($admin_bar): void
     {
@@ -214,7 +233,7 @@ class I18n extends Integration
 
         if (Module::instance()->request->isReady()) {
             $language_code = Module::instance()->request->getLanguage();
-            $language_data = Module::instance()->languages->getLanguageData($language_code);
+            $language_data = Module::instance()->localization->languages->getLanguageData($language_code);
             $direction     = $language_data['direction'] ?? null;
             if ($direction) {
                 global $wp_locale;
@@ -230,13 +249,13 @@ class I18n extends Integration
      * @throws Exception
      * @throws InvalidArgumentException
      */
-    public function redirectUrlTranslation($url)
+    public function redirectUrlTranslation($url): string
     {
         $parsed = parse_url($url);
 
         if (
             isset($parsed['host']) &&
-            ! in_array($parsed['host'], [$_SERVER['HTTP_HOST'], parse_url(site_url(), PHP_URL_HOST)])
+            ! in_array($parsed['host'], [$_SERVER['HTTP_HOST'], parse_url(site_url(), PHP_URL_HOST)], true)
         ) {
             return $url;
         }
@@ -260,7 +279,7 @@ class I18n extends Integration
     {
         add_filter(
             Bootstrap::SLUG . '_translation_content_types',
-            function ($types) {
+            static function ($types) {
                 $types += [
                     'text'          => 'Text',
                     'url'           => 'URL',
@@ -270,7 +289,7 @@ class I18n extends Integration
                     'sitemap_xml'   => 'Sitemap XML',
                     'gpf_xml'       => 'Google Product Feed XML',
                     'json'          => 'JSON',
-                    'jsonld'        => "JSON LD"
+                    'jsonld'        => 'JSON LD'
                 ];
 
                 return $types;
@@ -281,18 +300,18 @@ class I18n extends Integration
             /**
              * Runtime Dir for module global instance
              * */
-            'runtime_dir' => Bootstrap::RUNTIME_DIR,
+            'runtime_dir'  => Bootstrap::RUNTIME_DIR,
             /**
              * Components configs
              * */
-            'languages'   => include(__DIR__ . '/I18n/config/languages.php'),
-            'translation' => include(__DIR__ . '/I18n/config/translation.php'),
-            'request'     => include(__DIR__ . '/I18n/config/request.php'),
-            'rest'        => include(__DIR__ . '/I18n/config/rest.php'),
-            'db'          => include(__DIR__ . '/I18n/config/db.php'),
+            'localization' => require(__DIR__ . '/I18n/config/localization.php'),
+            'translation'  => require(__DIR__ . '/I18n/config/translation.php'),
+            'request'      => require(__DIR__ . '/I18n/config/request.php'),
+            'rest'         => require(__DIR__ . '/I18n/config/rest.php'),
+            'db'           => require(__DIR__ . '/I18n/config/db.php'),
         ];
 
-        $options = Option::expandOptions($this->options);
+        $options = Option::expandOptions($this->options, Bootstrap::SLUG);
 
         Module::instance(
             $options
@@ -318,27 +337,31 @@ class I18n extends Integration
         add_action(
             'admin_menu',
             function () {
-                add_submenu_page(
-                    Bootstrap::SLUG,
-                    'i18n options',
-                    'i18n configurations',
-                    'manage_options',
-                    Bootstrap::SLUG . '-integration-i18n',
-                    [$this, 'adminContent'],
-                    1
-                );
+                if (! Bootstrap::instance()->isRestrictedMode()) {
+                    add_submenu_page(
+                        Bootstrap::SLUG,
+                        'Main configurations',
+                        'Main configurations',
+                        'manage_options',
+                        Bootstrap::SLUG . '-integration-i18n',
+                        [$this, 'adminContent'],
+                        1
+                    );
+                }
             }
         );
     }
 
-    public function adminContent()
+    public function adminContent(): void
     {
         Option::printForm(
             Bootstrap::SLUG,
             $this->options,
             [
-                'on_save_success_message' => 'Successfully saved. To clear cache click <a href="' .
-                                             $this->getClearCacheUrl() . '">here</a>.'
+                'on_save_success_message' => sprintf(
+                    'Successfully saved. To clear cache click <a href="%s">here</a>.',
+                    $this->getClearCacheUrl()
+                )
             ]
         );
     }

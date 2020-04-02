@@ -3,17 +3,19 @@
 namespace NovemBit\wp\plugins\i18n;
 
 use Cache\Adapter\Memcached\MemcachedCachePool;
-use diazoxide\wp\lib\option\Option;
+use diazoxide\wp\lib\option\v2\Option;
 
 class Integration extends system\Integration
 {
 
     public static $integrations = [
+        \NovemBit\wp\plugins\i18n\integrations\Debug::class,
+        \NovemBit\wp\plugins\i18n\integrations\Brandlight::class,
         \NovemBit\wp\plugins\i18n\integrations\I18n::class,
         \NovemBit\wp\plugins\i18n\integrations\Algolia::class,
         \NovemBit\wp\plugins\i18n\integrations\WooCommerce::class,
         \NovemBit\wp\plugins\i18n\integrations\TheSEOFramework::class,
-        \NovemBit\wp\plugins\i18n\integrations\Brandlight::class,
+
     ];
 
     public $options = [];
@@ -23,15 +25,13 @@ class Integration extends system\Integration
         $this->options = [
             'performance' => [
                 'cache_pool' => [
-                    'type' => new Option(
-                        'performance_cache_pool_type',
-                        'file',
+                    'type'  => new Option(
                         [
-                            'parent' => Bootstrap::SLUG,
-                            'type' => Option::TYPE_TEXT,
-                            'method' => Option::METHOD_SINGLE,
-                            'values' => [
-                                'file' => 'File cache',
+                            'default' => 'file',
+                            'type'    => Option::TYPE_TEXT,
+                            'method'  => Option::METHOD_SINGLE,
+                            'values'  => [
+                                'file'      => 'File cache',
                                 'memcached' => 'Memcached'
                             ],
                         ]
@@ -39,22 +39,18 @@ class Integration extends system\Integration
                     'pools' => [
                         'memcached' => [
                             'host' => new Option(
-                                'performance_cache_pool_pools_memcached_host',
-                                'localhost',
                                 [
-                                    'parent' => Bootstrap::SLUG,
-                                    'type' => Option::TYPE_TEXT,
-                                    'method' => Option::METHOD_SINGLE
+                                    'default' => 'localhost',
+                                    'type'    => Option::TYPE_TEXT,
+                                    'method'  => Option::METHOD_SINGLE
                                 ]
                             ),
                             'port' => new Option(
-                                'performance_cache_pool_pools_memcached_port',
-                                11211,
                                 [
-                                    'parent' => Bootstrap::SLUG,
-                                    'type' => Option::TYPE_TEXT,
-                                    'markup' => Option::MARKUP_NUMBER,
-                                    'method' => Option::METHOD_SINGLE
+                                    'default' => 11211,
+                                    'type'    => Option::TYPE_TEXT,
+                                    'markup'  => Option::MARKUP_NUMBER,
+                                    'method'  => Option::METHOD_SINGLE
                                 ]
                             )
                         ],
@@ -77,8 +73,7 @@ class Integration extends system\Integration
      */
     private function setBootstrapCachePool()
     {
-
-        $options = Option::expandOptions($this->options);
+        $options = Option::expandOptions($this->options, Bootstrap::SLUG);
 
         $type = $options['performance']['cache_pool']['type'] ?? 'file';
 
@@ -98,17 +93,6 @@ class Integration extends system\Integration
 
     protected function adminInit(): void
     {
-
-//        wp_enqueue_style(Bootstrap::SLUG . '-bs-grid',
-//            plugin_dir_url(NOVEMBIT_I18N_PLUGIN_FILE) . '/vendor/twbs/bootstrap/dist/css/bootstrap-grid.min.css', [], '0.1');
-//
-//        wp_enqueue_style(Bootstrap::SLUG . '-admin',
-//            plugin_dir_url(NOVEMBIT_I18N_PLUGIN_FILE) . '/includes/assets/style/admin.css',
-//            [], '0.2');
-
-//        wp_enqueue_script(Bootstrap::SLUG,
-//            plugin_dir_url(NOVEMBIT_I18N_PLUGIN_FILE) . '/includes/assets/scripts/admin.js', [], '0.2');
-
         add_action('admin_menu', [$this, 'adminMenu']);
     }
 
@@ -118,28 +102,31 @@ class Integration extends system\Integration
     public function adminBarMenu($admin_bar): void
     {
         /** @var \WP_Admin_Bar $admin_bar */
-        $admin_bar->add_menu(array(
-            'id' => Bootstrap::SLUG,
-            'title' => __('NovemBit i18n', 'novembit-18n'),
-            'meta' => array(
+        $admin_bar->add_menu(
+            array(
+                'id'    => Bootstrap::SLUG,
                 'title' => __('NovemBit i18n', 'novembit-18n'),
-            ),
-        ));
+                'meta'  => array(
+                    'title' => __('NovemBit i18n', 'novembit-18n'),
+                ),
+            )
+        );
 
-        $admin_bar->add_menu(array(
-            'id' => 'settings',
-            'parent' => Bootstrap::SLUG,
-            'href' => admin_url('admin.php?page=' . Bootstrap::SLUG),
-            'title' => 'Settings',
-            'meta' => array(
-                'title' => 'Settings',
-            ),
-        ));
+        $admin_bar->add_menu(
+            array(
+                'id'     => 'settings',
+                'parent' => Bootstrap::SLUG,
+                'href'   => admin_url('admin.php?page=' . Bootstrap::SLUG),
+                'title'  => 'Settings',
+                'meta'   => array(
+                    'title' => 'Settings',
+                ),
+            )
+        );
     }
 
     public function adminMenu()
     {
-
         add_menu_page(
             __('NovemBit i18n', 'novembit-18n'),
             __('NovemBit i18n', 'novembit-18n'),
@@ -150,14 +137,16 @@ class Integration extends system\Integration
             75
         );
 
-        add_submenu_page(
-            Bootstrap::SLUG,
-            __('NovemBit i18n - Performance'),
-            __('Performance'),
-            'manage_options',
-            Bootstrap::SLUG . '-performance',
-            [$this, 'adminContentPerformance']
-        );
+        if ( ! Bootstrap::instance()->isRestrictedMode()) {
+            add_submenu_page(
+                Bootstrap::SLUG,
+                __('NovemBit i18n - Performance'),
+                __('Performance'),
+                'manage_options',
+                Bootstrap::SLUG . '-performance',
+                [$this, 'adminContentPerformance']
+            );
+        }
     }
 
     public function adminContentPerformance()

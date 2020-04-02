@@ -22,6 +22,7 @@ return
 
         '//input[(@id="affwp-url") and contains(@value, "' . site_url() . '")]/@value' => ['type' => 'url'],
         '//p/text()' => ['type' => 'text'],
+        '//time/text()' => ['type' => 'text'],
         '//small/text()' => ['type' => 'text'],
         '//strong/text()' => ['type' => 'text'],
         '//b/text()' => ['type' => 'text'],

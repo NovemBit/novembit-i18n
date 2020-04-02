@@ -2,67 +2,22 @@
 
 namespace NovemBit\wp\plugins\i18n;
 
-
 use diazoxide\wp\lib\option\Option;
 
 class Install
 {
-
-    private static $filename = '0_novembit_i18n.php';
 
     private static $migration_version = "1.0.1";
 
     public static function install()
     {
         self::migration();
-
-        self::installMUPlugin();
     }
 
     public static function uninstall()
     {
-        self::uninstallMUPlugin();
     }
 
-    private static function installMUPlugin()
-    {
-        $source = dirname(__FILE__) . '/../mu-plugins/i18n.php';
-        $target = WPMU_PLUGIN_DIR . '/' . self::$filename;
-
-        if (!file_exists(WPMU_PLUGIN_DIR) || !is_dir(WPMU_PLUGIN_DIR)) {
-            mkdir(WPMU_PLUGIN_DIR);
-        }
-
-        if (!copy($source, $target)) {
-            add_action(
-                'admin_notices',
-                function () {
-                    ?>
-                    <div class="notice notice-success is-dismissible">
-                        <p><?php _e('Can\'t install mu-plugin file!', 'novembit-i18n'); ?></p>
-                    </div>
-                    <?php
-                }
-            );
-        }
-    }
-
-    /**
-     * @return bool
-     */
-    private static function uninstallMUPlugin()
-    {
-        $target = WPMU_PLUGIN_DIR . '/' . self::$filename;
-
-        if (unlink($target)) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     *
-     */
     private static function migration()
     {
         if (Option::getOption('migration_version', Bootstrap::SLUG, null) != self::$migration_version) {
@@ -78,5 +33,4 @@ class Install
             }
         }
     }
-
 }
