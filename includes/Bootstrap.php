@@ -87,7 +87,7 @@ class Bootstrap
     /**
      * @deprecated
      * */
-    public static function init()
+    public static function init(): void
     {
         $old_mu = WPMU_PLUGIN_DIR . '/0_novembit_i18n.php';
         if (file_exists(WPMU_PLUGIN_DIR . '/0_novembit_i18n.php')) {
@@ -102,7 +102,7 @@ class Bootstrap
     {
         add_action(
             'init',
-            function () {
+            static function () {
                 if (! session_id()) {
                     session_start();
                 }
@@ -118,7 +118,7 @@ class Bootstrap
 
         add_action(
             'init',
-            function () {
+            static function () {
                 Switcher::init();
                 Editor::init();
             }
@@ -130,11 +130,7 @@ class Bootstrap
      */
     private static function isWPCli(): bool
     {
-        if (defined('WP_CLI') && WP_CLI) {
-            return true;
-        }
-
-        return false;
+        return defined('WP_CLI') && WP_CLI;
     }
 
 
@@ -183,11 +179,7 @@ class Bootstrap
 
         $url = trim($_SERVER['REQUEST_URI'] ?? '', '/');
 
-        if (substr($url, 0, strlen($rest_path)) === $rest_path) {
-            return true;
-        }
-
-        return false;
+        return strpos($url, $rest_path) === 0;
     }
 
     /**
