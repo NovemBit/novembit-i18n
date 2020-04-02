@@ -3,6 +3,7 @@
 namespace NovemBit\wp\plugins\i18n\integrations;
 
 use diazoxide\wp\lib\option\Option;
+use NovemBit\i18n\component\localization\regions\Regions as RegionsAlias;
 use NovemBit\i18n\component\translation\method\Rest;
 use NovemBit\i18n\system\helpers\Arrays;
 use NovemBit\wp\plugins\i18n\Bootstrap;
@@ -465,7 +466,8 @@ class Brandlight extends Integration
                                 'name'              => 'Europe',
                                 'code'              => 'eu',
                                 'domain'            => 'swanson.eu.com',
-                                'include_languages' => \NovemBit\i18n\component\localization\regions\Regions::INCLUDE_CHILD_PRIMARY_LANGUAGES,
+                                'languages'         => ['en'],
+                                'include_languages' => RegionsAlias::INCLUDE_CHILD_PRIMARY_LANGUAGES,
                             ],
                             [
                                 'name'              => 'South America',
@@ -707,7 +709,7 @@ class Brandlight extends Integration
                                 'alpha3'    => 'gbr',
                                 'numeric'   => '826',
                                 'domain'    => 'healthshop.co.uk',
-                                'regions'   => ['eu', 'gd', 'cy'],
+                                'regions'   => ['eu', /*'gd', 'cy'*/],
                                 'languages' => [
                                     'en',
                                 ],
@@ -790,7 +792,8 @@ class Brandlight extends Integration
                                 'name'              => 'Europe',
                                 'code'              => 'eu',
                                 'domain'            => 'healthshop.eu',
-                                'include_languages' => \NovemBit\i18n\component\localization\regions\Regions::INCLUDE_CHILD_PRIMARY_LANGUAGES,
+                                'languages'         => ['en'],
+                                'include_languages' => RegionsAlias::INCLUDE_CHILD_PRIMARY_LANGUAGES,
                             ],
                         ]
                     ],
@@ -833,8 +836,8 @@ class Brandlight extends Integration
                             'ru',
                             'es',
                             'sv',
-                            'cy',
-                            'gd'
+                            /*'cy',
+                            'gd'*/
                         ]
                     ]
                 ],
@@ -951,7 +954,8 @@ class Brandlight extends Integration
                                 'name'              => 'Europe',
                                 'code'              => 'eu',
                                 'domain'            => '',
-                                'include_languages' => \NovemBit\i18n\component\localization\regions\Regions::INCLUDE_CHILD_PRIMARY_LANGUAGES,
+                                'languages'         => ['en'],
+                                'include_languages' => RegionsAlias::INCLUDE_CHILD_PRIMARY_LANGUAGES,
                             ],
                             [
                                 'name'              => 'Africa',
@@ -1107,7 +1111,7 @@ class Brandlight extends Integration
         /**
          * Restrict admin interface
          * */
-        if (!isset($_COOKIE['novembit_i18n_super_admin'])) {
+        if ( ! isset($_COOKIE['novembit_i18n_super_admin'])) {
             add_filter(Bootstrap::SLUG . '-admin-restricted-mode', '__return_true', 10);
         }
 
@@ -1166,7 +1170,7 @@ class Brandlight extends Integration
                     'gb'
                 ];
                 foreach ($list as $key => $item) {
-                    if (! in_array($item['alpha2'], $allow)) {
+                    if ( ! in_array($item['alpha2'], $allow)) {
                         unset($list[$key]);
                     }
                 }
@@ -1201,7 +1205,7 @@ class Brandlight extends Integration
                     'en'
                 ];
                 foreach ($list as $key => $item) {
-                    if (! in_array($item['alpha1'], $allow)) {
+                    if ( ! in_array($item['alpha1'], $allow)) {
                         unset($list[$key]);
                     }
                 }
