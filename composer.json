@@ -22,6 +22,7 @@
     "select2/select2": "dev-master"
   },
   "require-dev": {
+    "roave/security-advisories": "dev-master",
     "wp-coding-standards/wpcs": "*"
   },
   "autoload": {
