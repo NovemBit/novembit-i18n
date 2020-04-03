@@ -1000,6 +1000,115 @@ class Brandlight extends Integration
                         ]
                     ]
                 ],
+
+                'cms.agentdesign.co.uk' => [
+                    Bootstrap::SLUG           => [
+                        'localization>global_domains'   => ['cms.agentdesign.co.uk'],
+                        'localization>accept_languages' => [
+                            'en'
+                        ],
+                    ]
+                ],
+
+                // Devs
+                'master-clone.waves.agentdesign.co.uk' => [
+                    Bootstrap::SLUG           => [
+                        'localization>global_domains'   => ['master-clone.waves.agentdesign.co.uk'],
+                        'localization>accept_languages' => [
+                            'en'
+                        ],
+                    ]
+                ],
+                'dev.doctorsbest.co.uk' => [
+                    Bootstrap::SLUG           => [
+                        'localization>global_domains'   => ['dev.doctorsbest.co.uk'],
+                        'localization>accept_languages' => [
+                            'en','es'
+                        ],
+                    ]
+                ],
+                'dev.drmercola.uk' => [
+                    Bootstrap::SLUG           => [
+                        'localization>global_domains'   => ['dev.drmercola.uk'],
+                        'localization>accept_languages' => [
+                            'en','es'
+                        ],
+                    ]
+                ],
+                'dev.fairhavenhealth.co.uk' => [
+                    Bootstrap::SLUG           => [
+                        'localization>global_domains'   => ['dev.fairhavenhealth.co.uk'],
+                        'localization>accept_languages' => [
+                            'en','fr','de','it','ja','ru','es'
+                        ],
+                    ]
+                ],
+                'dev.garden-of-life.co.uk' => [
+                    Bootstrap::SLUG           => [
+                        'localization>global_domains'   => ['dev.fairhavenhealth.co.uk'],
+                        'localization>accept_languages' => [
+                            'en','es'
+                        ],
+                    ]
+                ],
+                'dev.jarrow.co.uk' => [
+                    Bootstrap::SLUG           => [
+                        'localization>global_domains'   => ['dev.jarrow.co.uk'],
+                        'localization>accept_languages' => [
+                            'en','es'
+                        ],
+                    ]
+                ],
+                'dev.naturalfactors.co.uk' => [
+                    Bootstrap::SLUG           => [
+                        'localization>global_domains'   => ['dev.naturalfactors.co.uk'],
+                        'localization>accept_languages' => [
+                            'en','es'
+                        ],
+                    ]
+                ],
+                'dev.planetaryherbals.co.uk' => [
+                    Bootstrap::SLUG => [
+                        'localization>global_domains'   => ['dev.planetaryherbals.co.uk'],
+                        'localization>accept_languages' => [
+                            'en'
+                        ],
+                    ]
+                ],
+                'dev.sourcenaturals.co.uk' => [
+                    Bootstrap::SLUG => [
+                        'localization>global_domains'   => ['dev.sourcenaturals.co.uk'],
+                        'localization>accept_languages' => [
+                            'en',
+                            'es'
+                        ],
+                    ]
+                ],
+                'mychelle.agentdesign.co.uk' => [
+                    Bootstrap::SLUG => [
+                        'localization>global_domains'   => ['mychelle.agentdesign.co.uk'],
+                        'localization>accept_languages' => [
+                            'en',
+                        ],
+                    ]
+                ],
+                'dev.agentdesign.co.uk' => [
+                    Bootstrap::SLUG => [
+                        'localization>global_domains'   => ['dev.agentdesign.co.uk'],
+                        'localization>accept_languages' => [
+                            'en',
+                        ],
+                    ]
+                ],
+                'dev.authenticproduce.com' => [
+                    Bootstrap::SLUG => [
+                        'localization>global_domains'   => ['dev.authenticproduce.com'],
+                        'localization>accept_languages' => [
+                            'en',
+                        ],
+                    ]
+                ],
+
                 'common'         => [
                     Bootstrap::SLUG => [
 
@@ -1042,7 +1151,7 @@ class Brandlight extends Integration
                         'translation>method>api_limit_expire_delay'        => 3600,
                         'translation>method>request_timeout'               => 5,
                         'translation>method>ssl'                           => true,
-                        'translation>method>remote_host'                   => 'dev.i18n.brandlight.org',
+                        'translation>method>remote_host'                   => 'i18n.brandlight.org',
                         'translation>method>api_key'                       => 'GmYg90HtUsd187I2lJ20k7s0oIhBBBAv',
                         'translation>method>exclusions'                    => [
                             'vitamin',
