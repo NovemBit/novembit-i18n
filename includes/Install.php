@@ -9,18 +9,27 @@ class Install
 
     private static $migration_version = "1.0.1";
 
-    public static function install()
+    /**
+     * @return void
+     */
+    public static function install(): void
     {
         self::migration();
     }
 
-    public static function uninstall()
+    /**
+     * @return void
+     */
+    public static function uninstall(): void
     {
     }
 
-    private static function migration()
+    /**
+     * @return void
+     */
+    private static function migration(): void
     {
-        if (Option::getOption('migration_version', Bootstrap::SLUG, null) != self::$migration_version) {
+        if (Option::getOption('migration_version', Bootstrap::SLUG, null) !== self::$migration_version) {
             $sql = file_get_contents(__DIR__ . '/../vendor/novembit/i18n/migrations/structure.sql');
 
             global $wpdb;
