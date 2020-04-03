@@ -502,7 +502,7 @@ class Brandlight extends Integration
                         ]
                     ],
                     Bootstrap::SLUG           => [
-                        'localization>global_domains'   => ['swanson.eu.com'],
+                        'localization>global_domains'   => ['swanson.co.uk'],
                         'localization>accept_languages' => [
                             'cs',
                             'da',
