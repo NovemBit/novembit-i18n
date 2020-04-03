@@ -15,6 +15,6 @@ use NovemBit\wp\plugins\i18n\Bootstrap;
 
 defined('ABSPATH') || exit;
 
-include_once dirname(__FILE__) . '/vendor/autoload.php';
+include_once __DIR__ . '/vendor/autoload.php';
 
 Bootstrap::instance(__FILE__);
