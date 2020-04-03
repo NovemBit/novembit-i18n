@@ -4,6 +4,7 @@ namespace NovemBit\wp\plugins\i18n;
 
 use Cache\Adapter\Memcached\MemcachedCachePool;
 use diazoxide\wp\lib\option\v2\Option;
+use WP_Admin_Bar;
 
 class Integration extends system\Integration
 {
@@ -69,15 +70,15 @@ class Integration extends system\Integration
     }
 
     /**
-     *
+     * @return void
      */
-    private function setBootstrapCachePool()
+    private function setBootstrapCachePool(): void
     {
         $options = Option::expandOptions($this->options, Bootstrap::SLUG);
 
         $type = $options['performance']['cache_pool']['type'] ?? 'file';
 
-        if ($type == 'memcached' && class_exists('Memcached')) {
+        if ($type === 'memcached' && class_exists('Memcached')) {
             $client = new \Memcached();
 
             $host = $options['performance']['cache_pool']['pools']['memcached']['host'] ?? 'localhost';
@@ -97,11 +98,10 @@ class Integration extends system\Integration
     }
 
     /**
-     * @param \WP_Admin_Bar $admin_bar
+     * @param WP_Admin_Bar $admin_bar
      */
     public function adminBarMenu($admin_bar): void
     {
-        /** @var \WP_Admin_Bar $admin_bar */
         $admin_bar->add_menu(
             array(
                 'id'    => Bootstrap::SLUG,
@@ -125,7 +125,10 @@ class Integration extends system\Integration
         );
     }
 
-    public function adminMenu()
+    /**
+     * @return void
+     */
+    public function adminMenu(): void
     {
         add_menu_page(
             __('NovemBit i18n', 'novembit-18n'),
@@ -137,7 +140,7 @@ class Integration extends system\Integration
             75
         );
 
-        if ( ! Bootstrap::instance()->isRestrictedMode()) {
+        if (! Bootstrap::instance()->isRestrictedMode()) {
             add_submenu_page(
                 Bootstrap::SLUG,
                 __('NovemBit i18n - Performance'),
@@ -149,7 +152,10 @@ class Integration extends system\Integration
         }
     }
 
-    public function adminContentPerformance()
+    /**
+     * @return void
+     */
+    public function adminContentPerformance(): void
     {
         ?>
         <div class="wrap">
@@ -162,7 +168,10 @@ class Integration extends system\Integration
         <?php
     }
 
-    public function adminContent()
+    /**
+     * @return void
+     */
+    public function adminContent(): void
     {
         ?>
         <div class="wrap">
