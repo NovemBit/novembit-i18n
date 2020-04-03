@@ -22,7 +22,7 @@ abstract class Integration
     /**
      * @throws \Exception
      */
-    final public static function runIntegrations()
+    final public static function runIntegrations(): void
     {
         foreach (static::$integrations as $integration) {
             $instance = new $integration();
@@ -36,17 +36,25 @@ abstract class Integration
         }
     }
 
+    /**
+     * @param $name
+     *
+     * @return mixed
+     */
     final public static function getIntegration($name)
     {
         return static::$integrationsInstances[$name];
     }
 
-    final public static function getIntegrationsInstances()
+    final public static function getIntegrationsInstances(): array
     {
         return static::$integrationsInstances;
     }
 
-    final public static function getName()
+    /**
+     * @return string
+     */
+    final public static function getName(): string
     {
         return static::$name ?? static::class;
     }
@@ -55,7 +63,7 @@ abstract class Integration
     /**
      * @throws \Exception
      */
-    final public function run()
+    final public function run(): void
     {
         foreach (static::$rules as $rule) {
             if (is_callable($rule)) {
@@ -94,5 +102,8 @@ abstract class Integration
         static::runIntegrations();
     }
 
+    /**
+     *
+     */
     abstract protected function init(): void;
 }
