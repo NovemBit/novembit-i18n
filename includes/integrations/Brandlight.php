@@ -351,8 +351,8 @@ class Brandlight extends Integration
                                 'regions'   => ['eu'],
                                 'languages' => [
                                     'en',
-                                    'gd',
-                                    'cv'
+                                    /*'gd',
+                                    'cv'*/
                                 ],
                             ],
                             [
@@ -524,8 +524,8 @@ class Brandlight extends Integration
                             'de',
                             'ru',
                             'en',
-                            'cy',
-                            'gd'
+                            /*'cy',
+                            'gd'*/
                         ],
                     ]
                 ],
