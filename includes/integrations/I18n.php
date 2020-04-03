@@ -344,11 +344,11 @@ class I18n extends Integration
                         'Main configurations',
                         'manage_options',
                         Bootstrap::SLUG . '-integration-i18n',
-                        [$this, 'adminContent'],
-                        1
+                        [$this, 'adminContent']
                     );
                 }
-            }
+            },
+            11
         );
     }
 
