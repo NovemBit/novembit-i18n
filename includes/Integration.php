@@ -140,7 +140,7 @@ class Integration extends system\Integration
             75
         );
 
-        if (! Bootstrap::instance()->isRestrictedMode()) {
+        if ( ! Bootstrap::instance()->isRestrictedMode()) {
             add_submenu_page(
                 Bootstrap::SLUG,
                 __('NovemBit i18n - Performance'),
@@ -176,10 +176,12 @@ class Integration extends system\Integration
         ?>
         <div class="wrap">
             <h1>NovemBit i18n internationalization plugin.</h1>
+            <h4>Version: <?php echo Bootstrap::VERSION; ?></h4>
 
             <p>NovemBit-i18n is powerful WordPress framework to provide multilingual web site, and translates site
                 content without human intervention. Plugin to automatically translate your site. Just need to make the
                 right settings.</p>
+
         </div>
         <?php
     }
