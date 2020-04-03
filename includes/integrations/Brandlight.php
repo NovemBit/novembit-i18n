@@ -287,7 +287,7 @@ class Brandlight extends Integration
                                 'alpha2'    => 'pl',
                                 'alpha3'    => 'pol',
                                 'numeric'   => '616',
-                                'domain'    => 'swanson.pl',
+                                'domain'    => '',
                                 'regions'   => ['eu'],
                                 'languages' => [
                                     'pl',
@@ -372,7 +372,7 @@ class Brandlight extends Integration
                                 'alpha2'    => 'sg',
                                 'alpha3'    => 'sgp',
                                 'numeric'   => '702',
-                                'domain'    => 'swanson.sg',
+                                'domain'    => '',
                                 'regions'   => ['as'],
                                 'languages' => [
                                     'en'
@@ -383,7 +383,7 @@ class Brandlight extends Integration
                                 'alpha2'    => 'nz',
                                 'alpha3'    => 'nzl',
                                 'numeric'   => '554',
-                                'domain'    => 'swanson.co.nz',
+                                'domain'    => '',
                                 'regions'   => ['oc'],
                                 'languages' => [
                                     'en'
@@ -502,7 +502,7 @@ class Brandlight extends Integration
                         ]
                     ],
                     Bootstrap::SLUG           => [
-                        'localization>global_domains'   => ['swanson.co.uk'],
+                        'localization>global_domains'   => ['swanson.eu.com'],
                         'localization>accept_languages' => [
                             'cs',
                             'da',
