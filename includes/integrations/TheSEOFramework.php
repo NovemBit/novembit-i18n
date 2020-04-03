@@ -3,9 +3,12 @@
 namespace NovemBit\wp\plugins\i18n\integrations;
 
 use diazoxide\wp\lib\option\Option;
+use DOMDocument;
 use NovemBit\i18n\Module;
 use NovemBit\wp\plugins\i18n\Bootstrap;
 use NovemBit\wp\plugins\i18n\system\Integration;
+
+use function status_header;
 
 class TheSEOFramework extends Integration
 {
@@ -35,11 +38,11 @@ class TheSEOFramework extends Integration
             static function () {
                 if ($_SERVER['REQUEST_URI'] === '/sitemap-index.xml') {
                     if (! headers_sent()) {
-                        \status_header(200);
+                        status_header(200);
                         header('Content-type: text/xml; charset=utf-8', true);
                     }
 
-                    $dom           = new \DOMDocument();
+                    $dom           = new DOMDocument();
                     $dom->version  = '1.0';
                     $dom->encoding = 'utf-8';
 
@@ -96,7 +99,7 @@ class TheSEOFramework extends Integration
 
                 if (preg_match('/^\/sitemap.xml/', $_SERVER['REQUEST_URI'])) {
                     if (! headers_sent()) {
-                        \status_header(200);
+                        status_header(200);
                         header('Content-type: text/xml; charset=utf-8', true);
                     }
                     echo \the_seo_framework()->get_view('sitemap/xml-sitemap');
