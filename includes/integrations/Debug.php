@@ -19,7 +19,7 @@ class Debug extends Integration
         [self::class, 'isDevelopDomain']
     ];
 
-    public static function isDevelopDomain()
+    public static function isDevelopDomain(): bool
     {
 
         if (preg_match('/^default\.*/', Environment::server('HTTP_HOST'))) {
@@ -33,10 +33,10 @@ class Debug extends Integration
 
         add_filter(
             Countries::class . '::getDefaultCountriesList',
-            function ($list) {
+            static function ($list) {
                 $allow = ['gb', 'fr', 'ru', 'am', 'de', 'es'];
                 foreach ($list as $key => $item) {
-                    if (! in_array($item['alpha2'], $allow)) {
+                    if (! in_array($item['alpha2'], $allow, true)) {
                         unset($list[$key]);
                     }
                 }
@@ -46,7 +46,7 @@ class Debug extends Integration
 
         add_filter(
             Languages::class . '::getDefaultLanguagesList',
-            function ($list) {
+            static function ($list) {
                 $allow = [
                     'hy',
                     'cs',

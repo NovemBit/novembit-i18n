@@ -15,9 +15,6 @@ use NovemBit\wp\plugins\i18n\system\Integration;
 class Brandlight extends Integration
 {
 
-    public static $integrations = [
-    ];
-
     public static $rules = [
         [self::class, 'isBrandlightTheme']
     ];
@@ -972,7 +969,7 @@ class Brandlight extends Integration
                                 'name'      => 'Arabic',
                                 'native'    => 'Arabic',
                                 'countries' => ['ae'],
-                                "dir"       => "rtl"
+                                'dir' => 'rtl'
                             ],
                             ['alpha1' => 'ny', 'name' => 'Chichewa', 'native' => 'Chichewa', 'countries' => ['mw']],
                             ['alpha1' => 'en', 'name' => 'English', 'native' => 'English', 'countries' => ['gb']],
@@ -1093,14 +1090,11 @@ class Brandlight extends Integration
     /**
      * @return bool
      */
-    public static function isBrandlightTheme()
+    public static function isBrandlightTheme(): bool
     {
         $theme = wp_get_theme();
-        if ($theme->get_template() == 'brandlight') {
-            return true;
-        }
 
-        return false;
+        return $theme->get_template() === 'brandlight';
     }
 
     /**
@@ -1111,7 +1105,7 @@ class Brandlight extends Integration
         /**
          * Restrict admin interface
          * */
-        if ( ! isset($_COOKIE['novembit_i18n_super_admin'])) {
+        if (! isset($_COOKIE['novembit_i18n_super_admin'])) {
             add_filter(Bootstrap::SLUG . '-admin-restricted-mode', '__return_true', 10);
         }
 
@@ -1136,7 +1130,7 @@ class Brandlight extends Integration
             }
         }
 
-        add_filter(
+        /*add_filter(
             Countries::class . '::getDefaultCountriesList',
             function ($list) {
                 $allow = [
@@ -1212,7 +1206,7 @@ class Brandlight extends Integration
 
                 return $list;
             }
-        );
+        );*/
     }
 
     protected function adminInit(): void
