@@ -7,3 +7,4 @@ defined('ABSPATH') || exit;
 require WP_PLUGIN_DIR . '/novembit-i18n/vendor/autoload.php';
 
 Bootstrap::init();
+

@@ -13,6 +13,8 @@ class Bootstrap
 
     public const SLUG = 'novembit-i18n';
 
+    public const VERSION = '2.4.0';
+
     /**
      * Main plugin file
      *
@@ -217,4 +219,5 @@ class Bootstrap
     {
         return plugin_basename($this->getPluginFile());
     }
+
 }
