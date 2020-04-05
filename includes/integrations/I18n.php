@@ -309,6 +309,8 @@ class I18n extends Integration
             'request'      => require(__DIR__ . '/I18n/config/request.php'),
             'rest'         => require(__DIR__ . '/I18n/config/rest.php'),
             'db'           => require(__DIR__ . '/I18n/config/db.php'),
+
+            'ssl'          => is_ssl()
         ];
 
         $options = Option::expandOptions($this->options, Bootstrap::SLUG);
