@@ -1113,13 +1113,6 @@ class Brandlight extends Integration
                     Bootstrap::SLUG => [
 
                         /**
-                         * Performance
-                         * */
-                        'performance>cache_pool>type'                      => 'memcached',
-                        'pools>memcached>host'                             => 'localhost',
-                        'pools>memcached>port'                             => 11211,
-
-                        /**
                          * Localization
                          * */
                         'localization>localize_host'                       => true,
