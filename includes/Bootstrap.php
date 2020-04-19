@@ -9,7 +9,7 @@ use Psr\SimpleCache\CacheInterface;
 class Bootstrap
 {
 
-    public const RUNTIME_DIR = WP_CONTENT_DIR . '/novembit-i18n';
+    public const RUNTIME_DIR = WP_CONTENT_DIR . '/uploads/novembit-i18n';
 
     public const SLUG = 'novembit-i18n';
 
