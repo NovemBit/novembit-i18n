@@ -1,5 +1,5 @@
 # Template for GitLab CI configuration for AgentDesign WordPress Themes/Plugins.
-# (Revision 1.3)
+# (Revision 1.5)
 
 
 # The standard stages for a CI/CD pipeline
@@ -13,7 +13,11 @@ image: registry.gitlab.com/agentdesign/sysadmin/docker/docker-agentdesign-wordpr
 
 # Copy our private SSH key and known hosts keys into place for SFTP deployments
 before_script:
-  - aws s3 sync s3://agentdesign-gitlab-ci/ssh /root/.ssh && chmod 400 /root/.ssh/id_rsa
+  - mkdir ~/.ssh
+  - vault write -field=token auth/approle/login role_id=$VAULT_ROLE_ID secret_id=$VAULT_SECRET_ID >~/.vault-token
+  - vault kv get -field=id_rsa cisecrets/ssh | base64 -d >~/.ssh/id_rsa && chmod 400 ~/.ssh/id_rsa
+  - vault kv get -field=id_rsa.pub cisecrets/ssh | base64 -d >~/.ssh/id_rsa.pub
+  - vault kv get -field=known_hosts cisecrets/ssh | base64 -d >~/.ssh/known_hosts
 
 
 #########
@@ -27,7 +31,7 @@ build:
     - build-wp-plugin -v
   artifacts:
     paths:
-    - wpcd-artefacts/*.zip
+      - wpcd-artefacts/*.zip
 
 
 ########
@@ -56,14 +60,14 @@ test:
 # the 'environment.name' setting.
 #
 
-# For 'master' branch builds, put the latest copy in our S3 archive for subsequently run site builds.
-deploy:aws:s3:
+# For 'master' branch builds, store the latest copy in our Minio archive for subsequently run site builds.
+deploy:minio:
   stage: deploy
   only:
     - master
   environment:
-    name: aws-s3-production-plugins-bucket
-    url: https://s3-eu-west-1.amazonaws.com/plugins.agentdesign.co.uk/production/${CI_PROJECT_NAME}.zip
+    name: minio
+    url: https://minio.brandlight.org/wordpress-plugins/production/${CI_PROJECT_NAME}.zip
   variables:
     WPCD_PLATFORM: "s3"
   script:
@@ -80,7 +84,7 @@ deploy:runcloud:development:waves:
     url: https://dev.waves.agentdesign.co.uk
   variables:
     SSH_HOST: dev.runcloud.agentdesign.co.uk
-    SSH_USER: waves
+    SSH_USER: deploy-bot
     SSH_PATH: /home/waves/webapps/waves
   script:
     - deploy-wp-plugin -v
@@ -96,7 +100,7 @@ deploy:runcloud:development:cms:
     url: https://dev.cms.agentdesign.co.uk
   variables:
     SSH_HOST: dev.runcloud.agentdesign.co.uk
-    SSH_USER: cms
+    SSH_USER: deploy-bot
     SSH_PATH: /home/cms/webapps/cms
   script:
     - deploy-wp-plugin -v
@@ -116,7 +120,7 @@ deploy:runcloud:production:cms:
     url: https://cms.agentdesign.co.uk
   variables:
     SSH_HOST: cms.runcloud.agentdesign.co.uk
-    SSH_USER: cms
+    SSH_USER: deploy-bot
     SSH_PATH: /home/cms/webapps/cms
   script:
     - deploy-wp-plugin -v
