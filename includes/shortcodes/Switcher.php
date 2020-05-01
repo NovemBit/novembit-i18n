@@ -13,7 +13,7 @@ class Switcher
 
     private static $_id = 0;
 
-    public static function init()
+    public static function init(): void
     {
         /**
          * @Todo remove this line. This is temporary shortcode name (Prisna legacy)
@@ -22,7 +22,7 @@ class Switcher
         add_shortcode(self::$name, [self::class, 'callback']);
     }
 
-    public static function renderAssets()
+    public static function renderAssets(): void
     {
         wp_enqueue_style(
             self::$name . '-style',
@@ -37,13 +37,13 @@ class Switcher
      *
      * @return string
      */
-    public static function callback($atts)
+    public static function callback($atts): string
     {
         static::$_id++;
 
         $atts = shortcode_atts(
             array(
-                'id'    => self::$name . '-' . self::$_id,
+                'id' => self::$name . '-' . self::$_id,
                 'class' => implode(' ', [self::$name, 'novembit-i18n-translation-dropdown']),
                 'title' => __('Change language', 'novembit-18n'),
             ),
@@ -51,7 +51,7 @@ class Switcher
         );
 
         $html = sprintf(
-            '<a href="%s" translate="no" id="%s" class="%s"><span class="i18n-label">%s</span></a>',
+            '<a href="%s" id="%s" class="%s"><span class="i18n-label">%s</span></a>',
             '#',
             $atts['id'],
             $atts['class'],
@@ -68,9 +68,10 @@ class Switcher
      *
      * @return string
      * */
-    private static function _getURLList()
+    private static function _getURLList(): string
     {
-        $html = '<ul translate="no" class="i18n-list">';
+        $html = '';
+        $html .= '<ul translate="no" class="i18n-list">';
 
         $urls = Module::instance()->request->getUrlTranslations();
 
@@ -88,7 +89,7 @@ class Switcher
             );
         }
 
-        $html .= "</ul>";
+        $html .= '</ul>';
 
         return $html;
     }
