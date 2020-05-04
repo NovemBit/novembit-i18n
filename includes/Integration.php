@@ -105,7 +105,7 @@ class Integration extends system\Integration
         $admin_bar->add_menu(
             array(
                 'id'    => Bootstrap::SLUG,
-                'title' => __('I18n', 'novembit-18n'),
+                'title' => __('Translation', 'novembit-18n'),
                 'meta'  => array(
                     'title' => __('NovemBit i18n', 'novembit-18n'),
                 ),
