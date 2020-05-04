@@ -112,17 +112,19 @@ class Integration extends system\Integration
             )
         );
 
-        $admin_bar->add_menu(
-            array(
-                'id'     => 'settings',
-                'parent' => Bootstrap::SLUG,
-                'href'   => admin_url('admin.php?page=' . Bootstrap::SLUG),
-                'title'  => 'Settings',
-                'meta'   => array(
+        if(!Bootstrap::instance()->isRestrictedMode()) {
+            $admin_bar->add_menu(
+                array(
+                    'id' => 'settings',
+                    'parent' => Bootstrap::SLUG,
+                    'href' => admin_url('admin.php?page=' . Bootstrap::SLUG),
                     'title' => 'Settings',
-                ),
-            )
-        );
+                    'meta' => array(
+                        'title' => 'Settings',
+                    ),
+                )
+            );
+        }
     }
 
     /**

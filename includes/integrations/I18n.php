@@ -57,8 +57,9 @@ class I18n extends Integration
             function () {
                 add_action('admin_bar_menu', [$this, 'adminBarMenu'], 100);
 
-                add_action('wp_before_admin_bar_render', [$this, 'adminToolbar'], 100);
-
+                if(!Bootstrap::instance()->isRestrictedMode()) {
+                    add_action('wp_before_admin_bar_render', [$this, 'adminToolbar'], 100);
+                }
                 if (Module::instance()->request->isReady()) {
                     add_filter('wp_redirect', [$this, 'redirectUrlTranslation'], PHP_INT_MAX, 1);
 
