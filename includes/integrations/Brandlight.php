@@ -1035,7 +1035,7 @@ class Brandlight extends Integration
                             [
                                 'name' => 'Europe',
                                 'code' => 'eu',
-                                'domain' => 'swanson.eu.com',
+                                'domain' => 'cms.agentdesign.co.uk',
                                 'languages' => ['en'],
                                 'include_languages' => RegionsAlias::INCLUDE_CHILD_PRIMARY_LANGUAGES,
                             ],
@@ -1327,7 +1327,7 @@ class Brandlight extends Integration
                             [
                                 'name' => 'Europe',
                                 'code' => 'eu',
-                                'domain' => 'swanson.eu.com',
+                                'domain' => 'dev.garden-of-life.co.uk',
                                 'languages' => ['en'],
                                 'include_languages' => RegionsAlias::INCLUDE_CHILD_PRIMARY_LANGUAGES,
                             ],
