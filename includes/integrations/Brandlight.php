@@ -157,9 +157,10 @@ class Brandlight extends Integration
      *
      * @return array
      */
-    public static function brandlightConfig($site_name)
+    public static function brandlightConfig($site_name): array
     {
         return ([
+                // Live sites
                 'swanson.co.uk' => [
                     Countries::optionParent() => [
                         'all' => [
@@ -1000,7 +1001,6 @@ class Brandlight extends Integration
                         ]
                     ]
                 ],
-
                 'cms.agentdesign.co.uk' => [
                     Bootstrap::SLUG => [
                         'localization>global_domains' => ['cms.agentdesign.co.uk'],
@@ -1049,9 +1049,7 @@ class Brandlight extends Integration
                     ],
                 ],
 
-
-                // Devs
-
+                // Dev sites
                 'dev.cms.agentdesign.co.uk' => [
                     Bootstrap::SLUG => [
                         'localization>global_domains' => ['dev.cms.agentdesign.co.uk'],
@@ -1099,7 +1097,6 @@ class Brandlight extends Integration
                         ]
                     ],
                 ],
-
                 'master-clone.waves.agentdesign.co.uk' => [
                     Bootstrap::SLUG => [
                         'localization>global_domains' => ['master-clone.waves.agentdesign.co.uk'],
@@ -1812,90 +1809,13 @@ class Brandlight extends Integration
             foreach ($bulk as $option => $config) {
                 add_filter(
                     Option::getOptionFilterName($option, $parent),
-                    function ($_config) use ($config, $parent) {
+                    static function ($_config) use ($config, $parent) {
                         return $config;
                     },
                     PHP_INT_MAX
                 );
             }
         }
-        /*add_filter(
-            Countries::class . '::getDefaultCountriesList',
-            function ($list) {
-                $allow = [
-                    'be',
-                    'el',
-                    'lt',
-                    'pt',
-                    'bg',
-                    'es',
-                    'lu',
-                    'ro',
-                    'cz',
-                    'fr',
-                    'hu',
-                    'si',
-                    'dk',
-                    'hr',
-                    'mt',
-                    'sk',
-                    'de',
-                    'it',
-                    'nl',
-                    'fi',
-                    'ee',
-                    'cy',
-                    'at',
-                    'se',
-                    'ie',
-                    'lv',
-                    'pl',
-                    'gb'
-                ];
-                foreach ($list as $key => $item) {
-                    if ( ! in_array($item['alpha2'], $allow)) {
-                        unset($list[$key]);
-                    }
-                }
-
-                return $list;
-            }
-        );
-
-        add_filter(
-            Languages::class . '::getDefaultLanguagesList',
-            function ($list) {
-                $allow = [
-                    'cs',
-                    'da',
-                    'el',
-                    'et',
-                    'es',
-                    'hr',
-                    'ja',
-                    'ko',
-                    'nl',
-                    'bg',
-                    'pl',
-                    'pt',
-                    'ro',
-                    'sl',
-                    'sv',
-                    'fr',
-                    'it',
-                    'de',
-                    'ru',
-                    'en'
-                ];
-                foreach ($list as $key => $item) {
-                    if ( ! in_array($item['alpha1'], $allow)) {
-                        unset($list[$key]);
-                    }
-                }
-
-                return $list;
-            }
-        );*/
     }
 
     protected function adminInit(): void
