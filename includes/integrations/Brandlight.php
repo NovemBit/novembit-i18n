@@ -1048,7 +1048,58 @@ class Brandlight extends Integration
                         ]
                     ],
                 ],
+
+
                 // Devs
+
+                'dev.cms.agentdesign.co.uk' => [
+                    Bootstrap::SLUG => [
+                        'localization>global_domains' => ['dev.cms.agentdesign.co.uk'],
+                        'localization>accept_languages' => [
+                            'en'
+                        ],
+                    ],
+                    Languages::optionParent() => [
+                        'all' => [
+                            ['alpha1' => 'en', 'name' => 'English', 'native' => 'English', 'countries' => ['gb']],
+                        ]
+                    ],
+                    Countries::optionParent() => [
+                        'all' => [
+                            [
+                                'name' => 'United Kingdom of Great Britain',
+                                'alpha2' => 'gb',
+                                'alpha3' => 'gbr',
+                                'numeric' => '826',
+                                'domain' => 'dev.cms.agentdesign.co.uk',
+                                'regions' => ['eu'],
+                                'languages' => [
+                                    'en',
+                                    /*'gd',
+                                    'cv'*/
+                                ],
+                            ],
+                        ],
+                    ],
+                    Regions::optionParent() => [
+                        'all' => [
+                            [
+                                'name' => 'Europe',
+                                'code' => 'eu',
+                                'domain' => 'cms.agentdesign.co.uk',
+                                'languages' => ['en'],
+                                'include_languages' => RegionsAlias::INCLUDE_CHILD_PRIMARY_LANGUAGES,
+                            ],
+                            [
+                                'name' => 'South America',
+                                'code' => 'sa',
+                                'domain' => '',
+                                'include_languages' => '',
+                            ],
+                        ]
+                    ],
+                ],
+
                 'master-clone.waves.agentdesign.co.uk' => [
                     Bootstrap::SLUG => [
                         'localization>global_domains' => ['master-clone.waves.agentdesign.co.uk'],
