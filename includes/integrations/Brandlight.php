@@ -1086,7 +1086,7 @@ class Brandlight extends Integration
                             [
                                 'name' => 'Europe',
                                 'code' => 'eu',
-                                'domain' => 'cms.agentdesign.co.uk',
+                                'domain' => 'dev.cms.agentdesign.co.uk',
                                 'languages' => ['en'],
                                 'include_languages' => RegionsAlias::INCLUDE_CHILD_PRIMARY_LANGUAGES,
                             ],
@@ -1122,9 +1122,7 @@ class Brandlight extends Integration
                                 'domain' => 'master-clone.waves.agentdesign.co.uk',
                                 'regions' => ['eu'],
                                 'languages' => [
-                                    'en',
-                                    /*'gd',
-                                    'cv'*/
+                                    'en'
                                 ],
                             ],
                         ],
@@ -1137,13 +1135,7 @@ class Brandlight extends Integration
                                 'domain' => 'master-clone.waves.agentdesign.co.uk',
                                 'languages' => ['en'],
                                 'include_languages' => RegionsAlias::INCLUDE_CHILD_PRIMARY_LANGUAGES,
-                            ],
-                            [
-                                'name' => 'South America',
-                                'code' => 'sa',
-                                'domain' => '',
-                                'include_languages' => '',
-                            ],
+                            ]
                         ]
                     ],
                 ],
@@ -1170,8 +1162,6 @@ class Brandlight extends Integration
                                 'regions' => ['eu'],
                                 'languages' => [
                                     'en',
-                                    /*'gd',
-                                    'cv'*/
                                 ],
                             ],
                         ],
@@ -1184,13 +1174,7 @@ class Brandlight extends Integration
                                 'domain' => 'dev.waves.agentdesign.co.uk',
                                 'languages' => ['en'],
                                 'include_languages' => RegionsAlias::INCLUDE_CHILD_PRIMARY_LANGUAGES,
-                            ],
-                            [
-                                'name' => 'South America',
-                                'code' => 'sa',
-                                'domain' => '',
-                                'include_languages' => '',
-                            ],
+                            ]
                         ]
                     ],
                 ],
@@ -1198,8 +1182,7 @@ class Brandlight extends Integration
                     Bootstrap::SLUG => [
                         'localization>global_domains' => ['dev.doctorsbest.co.uk'],
                         'localization>accept_languages' => [
-                            'en',
-                            'es'
+                            'en'
                         ],
                     ],
                     Languages::optionParent() => [
@@ -1217,9 +1200,7 @@ class Brandlight extends Integration
                                 'domain' => 'dev.doctorsbest.co.uk',
                                 'regions' => ['eu'],
                                 'languages' => [
-                                    'en',
-                                    /*'gd',
-                                    'cv'*/
+                                    'en'
                                 ],
                             ],
                         ],
@@ -1232,13 +1213,7 @@ class Brandlight extends Integration
                                 'domain' => 'dev.doctorsbest.co.uk',
                                 'languages' => ['en'],
                                 'include_languages' => RegionsAlias::INCLUDE_CHILD_PRIMARY_LANGUAGES,
-                            ],
-                            [
-                                'name' => 'South America',
-                                'code' => 'sa',
-                                'domain' => '',
-                                'include_languages' => '',
-                            ],
+                            ]
                         ]
                     ],
                 ],
@@ -1246,8 +1221,7 @@ class Brandlight extends Integration
                     Bootstrap::SLUG => [
                         'localization>global_domains' => ['dev.drmercola.uk'],
                         'localization>accept_languages' => [
-                            'en',
-                            'es'
+                            'en'
                         ],
                     ],
                     Languages::optionParent() => [
@@ -1265,9 +1239,7 @@ class Brandlight extends Integration
                                 'domain' => 'dev.drmercola.uk',
                                 'regions' => ['eu'],
                                 'languages' => [
-                                    'en',
-                                    /*'gd',
-                                    'cv'*/
+                                    'en'
                                 ],
                             ],
                         ],
@@ -1280,13 +1252,7 @@ class Brandlight extends Integration
                                 'domain' => 'dev.drmercola.uk',
                                 'languages' => ['en'],
                                 'include_languages' => RegionsAlias::INCLUDE_CHILD_PRIMARY_LANGUAGES,
-                            ],
-                            [
-                                'name' => 'South America',
-                                'code' => 'sa',
-                                'domain' => '',
-                                'include_languages' => '',
-                            ],
+                            ]
                         ]
                     ],
                 ],
@@ -1306,21 +1272,96 @@ class Brandlight extends Integration
                     Languages::optionParent() => [
                         'all' => [
                             ['alpha1' => 'en', 'name' => 'English', 'native' => 'English', 'countries' => ['gb']],
+                            ['alpha1' => 'fr', 'name' => 'French', 'native' => 'French', 'countries' => ['fr']],
+                            ['alpha1' => 'de', 'name' => 'German', 'native' => 'German', 'countries' => ['de']],
+                            ['alpha1' => 'it', 'name' => 'Italian', 'native' => 'Italian', 'countries' => ['it']],
+                            ['alpha1' => 'ja', 'name' => 'Japanese', 'native' => 'Japanese', 'countries' => ['jp']],
+                            ['alpha1' => 'ru', 'name' => 'Russian', 'native' => 'Russian', 'countries' => ['ru']],
+                            ['alpha1' => 'es', 'name' => 'Spanish', 'native' => 'Spanish', 'countries' => ['es']],
                         ]
                     ],
                     Countries::optionParent() => [
                         'all' => [
                             [
+                                'name' => 'Japan',
+                                'alpha2' => 'jp',
+                                'alpha3' => 'jpn',
+                                'numeric' => '392',
+                                'regions' => ['as'],
+                                'languages' => [
+                                    'ja',
+                                    'en'
+                                ]
+                            ],
+                            [
+                                'name' => 'France',
+                                'alpha2' => 'fr',
+                                'alpha3' => 'fra',
+                                'numeric' => '250',
+                                'domain' => 'swanson.fr',
+                                'regions' => ['eu'],
+                                'languages' => [
+                                    'fr',
+                                    'en'
+                                ],
+                            ],
+                            [
+                                'name' => 'Germany',
+                                'alpha2' => 'de',
+                                'alpha3' => 'deu',
+                                'numeric' => '276',
+                                'domain' => 'swanson.co.de',
+                                'regions' => ['eu'],
+                                'languages' => [
+                                    'de',
+                                    'en'
+                                ],
+                            ],
+                            [
+                                'name' => 'Italy',
+                                'alpha2' => 'it',
+                                'alpha3' => 'ita',
+                                'numeric' => '380',
+                                'domain' => 'swanson.it',
+                                'regions' => ['eu'],
+                                'languages' => [
+                                    'it',
+                                    'en'
+                                ],
+                            ],
+                            [
+                                'name' => 'Spain',
+                                'alpha2' => 'es',
+                                'alpha3' => 'esp',
+                                'numeric' => '724',
+                                'domain' => '',
+                                'regions' => ['eu'],
+                                'languages' => [
+                                    'es',
+                                    'en'
+                                ],
+                            ],
+                            [
                                 'name' => 'United Kingdom of Great Britain',
                                 'alpha2' => 'gb',
                                 'alpha3' => 'gbr',
                                 'numeric' => '826',
-                                'domain' => 'dev.fairhavenhealth.co.uk',
+                                'domain' => 'swanson.co.uk',
                                 'regions' => ['eu'],
                                 'languages' => [
-                                    'en',
-                                    /*'gd',
-                                    'cv'*/
+                                    'en'
+                                ],
+                            ],
+                            [
+                                'name' => 'Russian',
+                                'alpha2' => 'ru',
+                                'alpha3' => 'rus',
+                                'numeric' => '643',
+                                'domain' => 'swanson.ru',
+                                'regions' => ['eu'],
+                                'languages' => [
+                                    'ru',
+                                    'en'
                                 ],
                             ],
                         ],
@@ -1333,22 +1374,15 @@ class Brandlight extends Integration
                                 'domain' => 'dev.fairhavenhealth.co.uk',
                                 'languages' => ['en'],
                                 'include_languages' => RegionsAlias::INCLUDE_CHILD_PRIMARY_LANGUAGES,
-                            ],
-                            [
-                                'name' => 'South America',
-                                'code' => 'sa',
-                                'domain' => '',
-                                'include_languages' => '',
-                            ],
+                            ]
                         ]
                     ],
                 ],
                 'dev.garden-of-life.co.uk' => [
                     Bootstrap::SLUG => [
-                        'localization>global_domains' => ['dev.fairhavenhealth.co.uk'],
+                        'localization>global_domains' => ['dev.garden-of-life.co.uk'],
                         'localization>accept_languages' => [
-                            'en',
-                            'es'
+                            'en'
                         ],
                     ],
                     Languages::optionParent() => [
@@ -1363,12 +1397,10 @@ class Brandlight extends Integration
                                 'alpha2' => 'gb',
                                 'alpha3' => 'gbr',
                                 'numeric' => '826',
-                                'domain' => 'dev.fairhavenhealth.co.uk',
+                                'domain' => 'dev.garden-of-life.co.uk',
                                 'regions' => ['eu'],
                                 'languages' => [
-                                    'en',
-                                    /*'gd',
-                                    'cv'*/
+                                    'en'
                                 ],
                             ],
                         ],
@@ -1381,13 +1413,7 @@ class Brandlight extends Integration
                                 'domain' => 'dev.garden-of-life.co.uk',
                                 'languages' => ['en'],
                                 'include_languages' => RegionsAlias::INCLUDE_CHILD_PRIMARY_LANGUAGES,
-                            ],
-                            [
-                                'name' => 'South America',
-                                'code' => 'sa',
-                                'domain' => '',
-                                'include_languages' => '',
-                            ],
+                            ]
                         ]
                     ],
                 ],
@@ -1395,8 +1421,7 @@ class Brandlight extends Integration
                     Bootstrap::SLUG => [
                         'localization>global_domains' => ['dev.jarrow.co.uk'],
                         'localization>accept_languages' => [
-                            'en',
-                            'es'
+                            'en'
                         ],
                     ],
                     Languages::optionParent() => [
@@ -1414,9 +1439,7 @@ class Brandlight extends Integration
                                 'domain' => 'dev.jarrow.co.uk',
                                 'regions' => ['eu'],
                                 'languages' => [
-                                    'en',
-                                    /*'gd',
-                                    'cv'*/
+                                    'en'
                                 ],
                             ],
                         ],
@@ -1429,13 +1452,7 @@ class Brandlight extends Integration
                                 'domain' => 'dev.jarrow.co.uk',
                                 'languages' => ['en'],
                                 'include_languages' => RegionsAlias::INCLUDE_CHILD_PRIMARY_LANGUAGES,
-                            ],
-                            [
-                                'name' => 'South America',
-                                'code' => 'sa',
-                                'domain' => '',
-                                'include_languages' => '',
-                            ],
+                            ]
                         ]
                     ],
                 ],
@@ -1443,8 +1460,7 @@ class Brandlight extends Integration
                     Bootstrap::SLUG => [
                         'localization>global_domains' => ['dev.naturalfactors.co.uk'],
                         'localization>accept_languages' => [
-                            'en',
-                            'es'
+                            'en'
                         ],
                     ],
                     Languages::optionParent() => [
@@ -1462,9 +1478,7 @@ class Brandlight extends Integration
                                 'domain' => 'dev.naturalfactors.co.uk',
                                 'regions' => ['eu'],
                                 'languages' => [
-                                    'en',
-                                    /*'gd',
-                                    'cv'*/
+                                    'en'
                                 ],
                             ],
                         ],
@@ -1477,13 +1491,7 @@ class Brandlight extends Integration
                                 'domain' => 'dev.naturalfactors.co.uk',
                                 'languages' => ['en'],
                                 'include_languages' => RegionsAlias::INCLUDE_CHILD_PRIMARY_LANGUAGES,
-                            ],
-                            [
-                                'name' => 'South America',
-                                'code' => 'sa',
-                                'domain' => '',
-                                'include_languages' => '',
-                            ],
+                            ]
                         ]
                     ],
                 ],
@@ -1509,9 +1517,7 @@ class Brandlight extends Integration
                                 'domain' => 'dev.planetaryherbals.co.uk',
                                 'regions' => ['eu'],
                                 'languages' => [
-                                    'en',
-                                    /*'gd',
-                                    'cv'*/
+                                    'en'
                                 ],
                             ],
                         ],
@@ -1524,13 +1530,7 @@ class Brandlight extends Integration
                                 'domain' => 'dev.planetaryherbals.co.uk',
                                 'languages' => ['en'],
                                 'include_languages' => RegionsAlias::INCLUDE_CHILD_PRIMARY_LANGUAGES,
-                            ],
-                            [
-                                'name' => 'South America',
-                                'code' => 'sa',
-                                'domain' => '',
-                                'include_languages' => '',
-                            ],
+                            ]
                         ]
                     ],
                 ],
@@ -1538,8 +1538,7 @@ class Brandlight extends Integration
                     Bootstrap::SLUG => [
                         'localization>global_domains' => ['dev.sourcenaturals.co.uk'],
                         'localization>accept_languages' => [
-                            'en',
-                            'es'
+                            'en'
                         ],
                     ],
                     Languages::optionParent() => [
@@ -1557,9 +1556,7 @@ class Brandlight extends Integration
                                 'domain' => 'dev.sourcenaturals.co.uk',
                                 'regions' => ['eu'],
                                 'languages' => [
-                                    'en',
-                                    /*'gd',
-                                    'cv'*/
+                                    'en'
                                 ],
                             ],
                         ],
@@ -1572,13 +1569,7 @@ class Brandlight extends Integration
                                 'domain' => 'dev.sourcenaturals.co.uk',
                                 'languages' => ['en'],
                                 'include_languages' => RegionsAlias::INCLUDE_CHILD_PRIMARY_LANGUAGES,
-                            ],
-                            [
-                                'name' => 'South America',
-                                'code' => 'sa',
-                                'domain' => '',
-                                'include_languages' => '',
-                            ],
+                            ]
                         ]
                     ],
                 ],
@@ -1604,9 +1595,7 @@ class Brandlight extends Integration
                                 'domain' => 'mychelle.agentdesign.co.uk',
                                 'regions' => ['eu'],
                                 'languages' => [
-                                    'en',
-                                    /*'gd',
-                                    'cv'*/
+                                    'en'
                                 ],
                             ],
                         ],
@@ -1619,13 +1608,7 @@ class Brandlight extends Integration
                                 'domain' => 'mychelle.agentdesign.co.uk',
                                 'languages' => ['en'],
                                 'include_languages' => RegionsAlias::INCLUDE_CHILD_PRIMARY_LANGUAGES,
-                            ],
-                            [
-                                'name' => 'South America',
-                                'code' => 'sa',
-                                'domain' => '',
-                                'include_languages' => '',
-                            ],
+                            ]
                         ]
                     ],
                 ],
@@ -1651,9 +1634,7 @@ class Brandlight extends Integration
                                 'domain' => 'dev.agentdesign.co.uk',
                                 'regions' => ['eu'],
                                 'languages' => [
-                                    'en',
-                                    /*'gd',
-                                    'cv'*/
+                                    'en'
                                 ],
                             ],
                         ],
@@ -1666,13 +1647,7 @@ class Brandlight extends Integration
                                 'domain' => 'dev.agentdesign.co.uk',
                                 'languages' => ['en'],
                                 'include_languages' => RegionsAlias::INCLUDE_CHILD_PRIMARY_LANGUAGES,
-                            ],
-                            [
-                                'name' => 'South America',
-                                'code' => 'sa',
-                                'domain' => '',
-                                'include_languages' => '',
-                            ],
+                            ]
                         ]
                     ],
                 ],
@@ -1698,9 +1673,7 @@ class Brandlight extends Integration
                                 'domain' => 'dev.authenticproduce.com',
                                 'regions' => ['eu'],
                                 'languages' => [
-                                    'en',
-                                    /*'gd',
-                                    'cv'*/
+                                    'en'
                                 ],
                             ],
                         ],
