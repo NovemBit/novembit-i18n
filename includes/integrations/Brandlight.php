@@ -1050,6 +1050,162 @@ class Brandlight extends Integration
                 ],
 
                 // Dev sites
+                'dev.swanson.co.uk' => [
+                    Bootstrap::SLUG => [
+                        'localization>global_domains' => ['dev.swanson.co.uk'],
+                        'localization>accept_languages' => [
+                            'en'
+                        ],
+                    ],
+                    Languages::optionParent() => [
+                        'all' => [
+                            ['alpha1' => 'en', 'name' => 'English', 'native' => 'English', 'countries' => ['gb']],
+                        ]
+                    ],
+                    Countries::optionParent() => [
+                        'all' => [
+                            [
+                                'name' => 'United Kingdom of Great Britain',
+                                'alpha2' => 'gb',
+                                'alpha3' => 'gbr',
+                                'numeric' => '826',
+                                'domain' => 'dev.swanson.co.uk',
+                                'regions' => ['eu'],
+                                'languages' => [
+                                    'en'
+                                ],
+                            ],
+                        ],
+                    ],
+                    Regions::optionParent() => [
+                        'all' => [
+                            [
+                                'name' => 'Europe',
+                                'code' => 'eu',
+                                'domain' => 'dev.swanson.co.uk',
+                                'languages' => ['en'],
+                                'include_languages' => RegionsAlias::INCLUDE_CHILD_PRIMARY_LANGUAGES,
+                            ]
+                        ]
+                    ],
+                ],
+                'dev.healthshop.net' => [
+                    Bootstrap::SLUG => [
+                        'localization>global_domains' => ['dev.healthshop.net'],
+                        'localization>accept_languages' => [
+                            'en'
+                        ],
+                    ],
+                    Languages::optionParent() => [
+                        'all' => [
+                            ['alpha1' => 'en', 'name' => 'English', 'native' => 'English', 'countries' => ['gb']],
+                        ]
+                    ],
+                    Countries::optionParent() => [
+                        'all' => [
+                            [
+                                'name' => 'United Kingdom of Great Britain',
+                                'alpha2' => 'gb',
+                                'alpha3' => 'gbr',
+                                'numeric' => '826',
+                                'domain' => 'dev.healthshop.net',
+                                'regions' => ['eu'],
+                                'languages' => [
+                                    'en'
+                                ],
+                            ],
+                        ],
+                    ],
+                    Regions::optionParent() => [
+                        'all' => [
+                            [
+                                'name' => 'Europe',
+                                'code' => 'eu',
+                                'domain' => 'dev.healthshop.net',
+                                'languages' => ['en'],
+                                'include_languages' => RegionsAlias::INCLUDE_CHILD_PRIMARY_LANGUAGES,
+                            ]
+                        ]
+                    ],
+                ],
+                'demo.brandlight.org' => [
+                    Bootstrap::SLUG => [
+                        'localization>global_domains' => ['demo.brandlight.org'],
+                        'localization>accept_languages' => [
+                            'en'
+                        ],
+                    ],
+                    Languages::optionParent() => [
+                        'all' => [
+                            ['alpha1' => 'en', 'name' => 'English', 'native' => 'English', 'countries' => ['gb']],
+                        ]
+                    ],
+                    Countries::optionParent() => [
+                        'all' => [
+                            [
+                                'name' => 'United Kingdom of Great Britain',
+                                'alpha2' => 'gb',
+                                'alpha3' => 'gbr',
+                                'numeric' => '826',
+                                'domain' => 'demo.brandlight.org',
+                                'regions' => ['eu'],
+                                'languages' => [
+                                    'en'
+                                ],
+                            ],
+                        ],
+                    ],
+                    Regions::optionParent() => [
+                        'all' => [
+                            [
+                                'name' => 'Europe',
+                                'code' => 'eu',
+                                'domain' => 'demo.brandlight.org',
+                                'languages' => ['en'],
+                                'include_languages' => RegionsAlias::INCLUDE_CHILD_PRIMARY_LANGUAGES,
+                            ]
+                        ]
+                    ],
+                ],
+                'dev.demo.brandlight.org' => [
+                    Bootstrap::SLUG => [
+                        'localization>global_domains' => ['dev.demo.brandlight.org'],
+                        'localization>accept_languages' => [
+                            'en'
+                        ],
+                    ],
+                    Languages::optionParent() => [
+                        'all' => [
+                            ['alpha1' => 'en', 'name' => 'English', 'native' => 'English', 'countries' => ['gb']],
+                        ]
+                    ],
+                    Countries::optionParent() => [
+                        'all' => [
+                            [
+                                'name' => 'United Kingdom of Great Britain',
+                                'alpha2' => 'gb',
+                                'alpha3' => 'gbr',
+                                'numeric' => '826',
+                                'domain' => 'dev.demo.brandlight.org',
+                                'regions' => ['eu'],
+                                'languages' => [
+                                    'en'
+                                ],
+                            ],
+                        ],
+                    ],
+                    Regions::optionParent() => [
+                        'all' => [
+                            [
+                                'name' => 'Europe',
+                                'code' => 'eu',
+                                'domain' => 'dev.demo.brandlight.org',
+                                'languages' => ['en'],
+                                'include_languages' => RegionsAlias::INCLUDE_CHILD_PRIMARY_LANGUAGES,
+                            ]
+                        ]
+                    ],
+                ],
                 'dev.cms.agentdesign.co.uk' => [
                     Bootstrap::SLUG => [
                         'localization>global_domains' => ['dev.cms.agentdesign.co.uk'],
