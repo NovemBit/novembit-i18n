@@ -1167,6 +1167,45 @@ class Brandlight extends Integration
                         ]
                     ],
                 ],
+                'new.brandlight.org' => [
+                    Bootstrap::SLUG => [
+                        'localization>global_domains' => ['new.brandlight.org'],
+                        'localization>accept_languages' => [
+                            'en'
+                        ],
+                    ],
+                    Languages::optionParent() => [
+                        'all' => [
+                            ['alpha1' => 'en', 'name' => 'English', 'native' => 'English', 'countries' => ['gb']],
+                        ]
+                    ],
+                    Countries::optionParent() => [
+                        'all' => [
+                            [
+                                'name' => 'United Kingdom of Great Britain',
+                                'alpha2' => 'gb',
+                                'alpha3' => 'gbr',
+                                'numeric' => '826',
+                                'domain' => 'new.brandlight.org',
+                                'regions' => ['eu'],
+                                'languages' => [
+                                    'en'
+                                ],
+                            ],
+                        ],
+                    ],
+                    Regions::optionParent() => [
+                        'all' => [
+                            [
+                                'name' => 'Europe',
+                                'code' => 'eu',
+                                'domain' => 'new.brandlight.org',
+                                'languages' => ['en'],
+                                'include_languages' => RegionsAlias::INCLUDE_CHILD_PRIMARY_LANGUAGES,
+                            ]
+                        ]
+                    ],
+                ],
                 'dev.demo.brandlight.org' => [
                     Bootstrap::SLUG => [
                         'localization>global_domains' => ['dev.demo.brandlight.org'],
