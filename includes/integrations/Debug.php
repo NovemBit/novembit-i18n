@@ -71,7 +71,7 @@ class Debug extends Integration
                     'en'
                 ];
                 foreach ($list as $key => $item) {
-                    if (! in_array($item['alpha1'], $allow)) {
+                    if (!in_array($item['alpha1'], $allow, true)) {
                         unset($list[$key]);
                     }
                 }
