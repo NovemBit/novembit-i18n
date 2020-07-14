@@ -11,7 +11,7 @@ $config = [
     'xpath_query_map' => [
         'accept' => [
             "//*[name()='title']/text()"     => ['type' => 'text'],
-            "//*[name()='description']/text()" => ['type' => 'html_fragment'],
+            "//*[name()='description']/text()" => ['type' => 'text'],
             "//*[name()='link']/text()" => ['type' => 'url'],
         ]
     ]
