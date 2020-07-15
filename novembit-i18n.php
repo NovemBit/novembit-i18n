@@ -4,7 +4,7 @@
  * Plugin Name: WordPress NovemBit i18n
  * Plugin URI:
  * Description: Dom translation
- * Version: 2.4.5
+ * Version: 2.4.6
  * Author: Novembit
  * Author URI:
  * License: GPLv3
