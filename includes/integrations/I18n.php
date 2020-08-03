@@ -256,7 +256,11 @@ class I18n extends Integration
 
         if (
             isset($parsed['host']) &&
-            ! in_array($parsed['host'], [$_SERVER['HTTP_HOST'], parse_url(site_url(), PHP_URL_HOST)], true)
+            ! in_array($parsed['host'], [
+                \diazoxide\helpers\Environment::server('HTTP_HOST'),
+                parse_url(site_url(), PHP_URL_HOST)],
+                true
+            )
         ) {
             return $url;
         }
