@@ -1652,12 +1652,14 @@ class Brandlight extends Integration
                     Bootstrap::SLUG => [
                         'localization>global_domains' => ['dev.naturalfactors.co.uk'],
                         'localization>accept_languages' => [
-                            'en'
+                            'en',
+	                        'fr'
                         ],
                     ],
                     Languages::optionParent() => [
                         'all' => [
                             ['alpha1' => 'en', 'name' => 'English', 'native' => 'English', 'countries' => ['gb']],
+	                        ['alpha1' => 'fr', 'name' => 'French', 'native' => 'French', 'countries' => ['fr']],
                         ]
                     ],
                     Countries::optionParent() => [
@@ -1670,9 +1672,22 @@ class Brandlight extends Integration
                                 'domain' => 'dev.naturalfactors.co.uk',
                                 'regions' => ['eu'],
                                 'languages' => [
-                                    'en'
+                                    'en',
+	                                'fr'
                                 ],
                             ],
+	                        [
+		                        'name' => 'France',
+		                        'alpha2' => 'fr',
+		                        'alpha3' => 'fra',
+		                        'numeric' => '250',
+		                        'domain' => '',
+		                        'regions' => ['eu'],
+		                        'languages' => [
+			                        'fr',
+			                        'en'
+		                        ],
+	                        ],
                         ],
                     ],
                     Regions::optionParent() => [
