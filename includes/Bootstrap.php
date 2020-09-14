@@ -13,7 +13,7 @@ class Bootstrap
 
     public const SLUG = 'novembit-i18n';
 
-    public const VERSION = '2.4.7';
+    public const VERSION = '2.4.8';
 
     /**
      * Main plugin file
