@@ -82,14 +82,14 @@ deploy:cloudron:cms:dev:
 # Prod #
 ########
 
-#### For 'master' branch builds, store the latest copy in our Minio archive for subsequently run site builds.
-deploy:minio:
+#### For 'master' branch builds, store the latest copy in our Wasabi archive for subsequently run site builds.
+deploy:wasabi:
   stage: deploy_prod
   only:
     - master
   environment:
-    name: minio
-    url: https://minio.brandlight.org/wordpress-plugins/production/${CI_PROJECT_NAME}.zip
+    name: wasabi
+    url: https://s3.eu-central-1.wasabisys.com/wordpress-plugins/production/${CI_PROJECT_NAME}.zip
   variables:
     WPCD_PLATFORM: "s3"
   script:
