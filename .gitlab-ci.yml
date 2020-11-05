@@ -27,7 +27,8 @@ before_script:
   - function cmkdir {  cloudron exec --app $1 -- bash -c "mkdir -p /app/data/ci/$CI_PROJECT_NAME; "; }
   - function cupload { cloudron push --app $1 wpcd-artefacts /app/data/ci/$CI_PROJECT_NAME; }
   - function cextract { cloudron exec --app $1 -- bash -c "rm -rf $depdir/$CI_PROJECT_NAME && unzip /app/data/ci/$CI_PROJECT_NAME/wpcd-artefacts/$CI_PROJECT_NAME.zip -d $depdir"; }
-  - function cpush { cmkdir $1 && cupload $1; cextract $1; }
+  - function cpostaction { cloudron exec --app $1 -- bash -c "rm -rf /app/data/public/wp-content/cache/supercache; rm -rf /app/data/public/wp-content/uploads/novembit-i18n/cache"; }
+  - function cpush { cmkdir $1 && cupload $1 && cextract $1 && cpostaction $1; }
 
 #########
 # BUILD #
