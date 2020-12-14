@@ -161,7 +161,7 @@ class Brandlight extends Integration
     {
         return ([
                 // Live sites
-                'swanson.co.uk' => [
+                'swanson.healthshop.co.uk' => [
                     Countries::optionParent() => [
                         'all' => [
                             [
@@ -204,7 +204,7 @@ class Brandlight extends Integration
                                 'alpha2' => 'cz',
                                 'alpha3' => 'cze',
                                 'numeric' => '203',
-                                'domain' => 'swanson.co.cz',
+                                'domain' => '',
                                 'regions' => ['eu'],
                                 'languages' => [
                                     'cs',
@@ -216,7 +216,7 @@ class Brandlight extends Integration
                                 'alpha2' => 'dk',
                                 'alpha3' => 'dnk',
                                 'numeric' => '208',
-                                'domain' => 'swanson.co.dk',
+                                'domain' => '',
                                 'regions' => ['eu'],
                                 'languages' => [
                                     'da',
@@ -228,7 +228,7 @@ class Brandlight extends Integration
                                 'alpha2' => 'ee',
                                 'alpha3' => 'est',
                                 'numeric' => '233',
-                                'domain' => 'swanson.ee',
+                                'domain' => '',
                                 'regions' => ['eu'],
                                 'languages' => [
                                     'et',
@@ -240,7 +240,7 @@ class Brandlight extends Integration
                                 'alpha2' => 'fr',
                                 'alpha3' => 'fra',
                                 'numeric' => '250',
-                                'domain' => 'swanson.fr',
+                                'domain' => '',
                                 'regions' => ['eu'],
                                 'languages' => [
                                     'fr',
@@ -252,7 +252,7 @@ class Brandlight extends Integration
                                 'alpha2' => 'de',
                                 'alpha3' => 'deu',
                                 'numeric' => '276',
-                                'domain' => 'swanson.co.de',
+                                'domain' => '',
                                 'regions' => ['eu'],
                                 'languages' => [
                                     'de',
@@ -264,7 +264,7 @@ class Brandlight extends Integration
                                 'alpha2' => 'it',
                                 'alpha3' => 'ita',
                                 'numeric' => '380',
-                                'domain' => 'swanson.it',
+                                'domain' => '',
                                 'regions' => ['eu'],
                                 'languages' => [
                                     'it',
@@ -276,7 +276,7 @@ class Brandlight extends Integration
                                 'alpha2' => 'nl',
                                 'alpha3' => 'nld',
                                 'numeric' => '528',
-                                'domain' => 'swanson.nl',
+                                'domain' => '',
                                 'regions' => ['eu'],
                                 'languages' => [
                                     'nl',
@@ -312,7 +312,7 @@ class Brandlight extends Integration
                                 'alpha2' => 'ro',
                                 'alpha3' => 'rou',
                                 'numeric' => '642',
-                                'domain' => 'swanson.co.ro',
+                                'domain' => '',
                                 'regions' => ['eu'],
                                 'languages' => [
                                     'ro',
@@ -324,7 +324,7 @@ class Brandlight extends Integration
                                 'alpha2' => 'si',
                                 'alpha3' => 'svn',
                                 'numeric' => '705',
-                                'domain' => 'swanson.si',
+                                'domain' => '',
                                 'regions' => ['eu'],
                                 'languages' => [
                                     'sl',
@@ -348,7 +348,7 @@ class Brandlight extends Integration
                                 'alpha2' => 'gb',
                                 'alpha3' => 'gbr',
                                 'numeric' => '826',
-                                'domain' => 'swanson.co.uk',
+                                'domain' => 'swanson.healthshop.co.uk',
                                 'regions' => ['eu'],
                                 'languages' => [
                                     'en',
@@ -361,7 +361,7 @@ class Brandlight extends Integration
                                 'alpha2' => 'kr',
                                 'alpha3' => 'kor',
                                 'numeric' => '410',
-                                'domain' => 'swanson.kr',
+                                'domain' => '',
                                 'regions' => ['as'],
                                 'languages' => [
                                     'ko',
@@ -395,7 +395,7 @@ class Brandlight extends Integration
                                 'alpha2' => 'gr',
                                 'alpha3' => 'grc',
                                 'numeric' => '300',
-                                'domain' => 'swanson.gr',
+                                'domain' => '',
                                 'regions' => ['eu'],
                                 'languages' => [
                                     'el',
@@ -419,7 +419,7 @@ class Brandlight extends Integration
                                 'alpha2' => 'ru',
                                 'alpha3' => 'rus',
                                 'numeric' => '643',
-                                'domain' => 'swanson.ru',
+                                'domain' => '',
                                 'regions' => ['eu'],
                                 'languages' => [
                                     'ru',
@@ -463,7 +463,7 @@ class Brandlight extends Integration
                             [
                                 'name' => 'Europe',
                                 'code' => 'eu',
-                                'domain' => 'swanson.eu.com',
+                                'domain' => '',
                                 'languages' => ['en'],
                                 'include_languages' => RegionsAlias::INCLUDE_CHILD_PRIMARY_LANGUAGES,
                             ],
@@ -503,7 +503,7 @@ class Brandlight extends Integration
                         ]
                     ],
                     Bootstrap::SLUG => [
-                        'localization>global_domains' => ['swanson.eu.com'],
+                        'localization>global_domains' => [''],
                         'localization>accept_languages' => [
                             'cs',
                             'da',
@@ -1050,9 +1050,9 @@ class Brandlight extends Integration
                 ],
 
                 // Dev sites
-                'dev.swanson.co.uk' => [
+                'dev.swanson.healthshop.co.uk' => [
                     Bootstrap::SLUG => [
-                        'localization>global_domains' => ['dev.swanson.co.uk'],
+                        'localization>global_domains' => ['dev.swanson.healthshop.co.uk'],
                         'localization>accept_languages' => [
                             'en'
                         ],
@@ -1069,7 +1069,7 @@ class Brandlight extends Integration
                                 'alpha2' => 'gb',
                                 'alpha3' => 'gbr',
                                 'numeric' => '826',
-                                'domain' => 'dev.swanson.co.uk',
+                                'domain' => 'dev.swanson.healthshop.co.uk',
                                 'regions' => ['eu'],
                                 'languages' => [
                                     'en'
@@ -1082,7 +1082,7 @@ class Brandlight extends Integration
                             [
                                 'name' => 'Europe',
                                 'code' => 'eu',
-                                'domain' => 'dev.swanson.co.uk',
+                                'domain' => 'dev.swanson.healthshop.co.uk',
                                 'languages' => ['en'],
                                 'include_languages' => RegionsAlias::INCLUDE_CHILD_PRIMARY_LANGUAGES,
                             ]
@@ -1490,7 +1490,7 @@ class Brandlight extends Integration
                                 'alpha2' => 'fr',
                                 'alpha3' => 'fra',
                                 'numeric' => '250',
-                                'domain' => 'swanson.fr',
+                                'domain' => '',
                                 'regions' => ['eu'],
                                 'languages' => [
                                     'fr',
@@ -1502,7 +1502,7 @@ class Brandlight extends Integration
                                 'alpha2' => 'de',
                                 'alpha3' => 'deu',
                                 'numeric' => '276',
-                                'domain' => 'swanson.co.de',
+                                'domain' => '',
                                 'regions' => ['eu'],
                                 'languages' => [
                                     'de',
@@ -1514,7 +1514,7 @@ class Brandlight extends Integration
                                 'alpha2' => 'it',
                                 'alpha3' => 'ita',
                                 'numeric' => '380',
-                                'domain' => 'swanson.it',
+                                'domain' => '',
                                 'regions' => ['eu'],
                                 'languages' => [
                                     'it',
@@ -1538,7 +1538,7 @@ class Brandlight extends Integration
                                 'alpha2' => 'gb',
                                 'alpha3' => 'gbr',
                                 'numeric' => '826',
-                                'domain' => 'swanson.co.uk',
+                                'domain' => 'swanson.healthshop.co.uk',
                                 'regions' => ['eu'],
                                 'languages' => [
                                     'en'
@@ -1549,7 +1549,7 @@ class Brandlight extends Integration
                                 'alpha2' => 'ru',
                                 'alpha3' => 'rus',
                                 'numeric' => '643',
-                                'domain' => 'swanson.ru',
+                                'domain' => '',
                                 'regions' => ['eu'],
                                 'languages' => [
                                     'ru',
@@ -1653,13 +1653,13 @@ class Brandlight extends Integration
                         'localization>global_domains' => ['dev.naturalfactors.co.uk'],
                         'localization>accept_languages' => [
                             'en',
-	                        'fr'
+                            'fr'
                         ],
                     ],
                     Languages::optionParent() => [
                         'all' => [
                             ['alpha1' => 'en', 'name' => 'English', 'native' => 'English', 'countries' => ['gb']],
-	                        ['alpha1' => 'fr', 'name' => 'French', 'native' => 'French', 'countries' => ['fr']],
+                            ['alpha1' => 'fr', 'name' => 'French', 'native' => 'French', 'countries' => ['fr']],
                         ]
                     ],
                     Countries::optionParent() => [
@@ -1673,21 +1673,21 @@ class Brandlight extends Integration
                                 'regions' => ['eu'],
                                 'languages' => [
                                     'en',
-	                                'fr'
+                                    'fr'
                                 ],
                             ],
-	                        [
-		                        'name' => 'France',
-		                        'alpha2' => 'fr',
-		                        'alpha3' => 'fra',
-		                        'numeric' => '250',
-		                        'domain' => '',
-		                        'regions' => ['eu'],
-		                        'languages' => [
-			                        'fr',
-			                        'en'
-		                        ],
-	                        ],
+                            [
+                                'name' => 'France',
+                                'alpha2' => 'fr',
+                                'alpha3' => 'fra',
+                                'numeric' => '250',
+                                'domain' => '',
+                                'regions' => ['eu'],
+                                'languages' => [
+                                    'fr',
+                                    'en'
+                                ],
+                            ],
                         ],
                     ],
                     Regions::optionParent() => [
