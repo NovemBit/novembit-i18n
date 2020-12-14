@@ -110,7 +110,7 @@ deploy:cloudron:production:swanson:
     - master
   when: manual
   script:
-    - cpush "swanson.co.uk"
+    - cpush "swanson.healthshop.co.uk"
 
 deploy:cloudron:production:healthshop:
   stage: deploy_prod
@@ -241,7 +241,7 @@ deploy:cloudron:dev:swanson:
     - develop
     - master
   script:
-    - cpush dev.swanson.co.uk
+    - cpush dev.swanson.healthshop.co.uk
 
 deploy:cloudron:dev:healthshop:
   stage: deploy_dev
