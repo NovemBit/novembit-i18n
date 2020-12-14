@@ -14,7 +14,6 @@ use NovemBit\wp\plugins\i18n\system\Integration;
 
 class Brandlight extends Integration
 {
-
     public static $rules = [
         [self::class, 'isBrandlightTheme']
     ];
