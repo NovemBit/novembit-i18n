@@ -104,7 +104,7 @@ deploy:cloudron:production:brandlight:
   script:
     - cpush "brandlight.org"
 
-deploy:cloudron:production:swanson:
+deploy:cloudron:production:swanson_healthshop:
   stage: deploy_prod
   only:
     - master
