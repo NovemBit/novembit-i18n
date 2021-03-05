@@ -7,12 +7,13 @@ use NovemBit\i18n\component\translation\method\Dummy;
 use NovemBit\i18n\component\translation\method\Google;
 use NovemBit\i18n\component\translation\method\Rest;
 use NovemBit\wp\plugins\i18n\Bootstrap;
+use NovemBit\wp\plugins\i18n\Integration;
 
 $classes = [
     Google::class => 'Google',
     Rest::class   => 'Rest',
 ];
-if(\NovemBit\wp\plugins\i18n\Integration::instance()->isDevMode()){
+if (Integration::instance()->isDevMode()) {
     $classes[Dummy::class] = 'Dev-Dummy';
 }
 
@@ -40,14 +41,20 @@ $config =
         'ssl'                    => new Option(
             [
                 'default' => 'true',
-                'type'    => Option::TYPE_BOOL
+                'type'    => Option::TYPE_BOOL,
+                'depends_on' => [
+                    [$class, Rest::class]
+                ]
             ]
         ),
         'request_timeout'        => new Option(
             [
                 'default' => 5,
                 'type'    => Option::TYPE_TEXT,
-                'markup'  => Option::MARKUP_NUMBER
+                'markup'  => Option::MARKUP_NUMBER,
+                'depends_on' => [
+                    [$class, Rest::class]
+                ]
             ]
         ),
         'api_limit_expire_delay' => new Option(
@@ -55,6 +62,9 @@ $config =
                 'default' => 3600,
                 'type'    => Option::TYPE_TEXT,
                 'markup'  => Option::MARKUP_NUMBER,
+                'depends_on' => [
+                    [$class, Google::class]
+                ]
             ]
         ),
         'api_key'                => new Option(
@@ -62,7 +72,8 @@ $config =
                 'default'    => 'xxx',
                 'type'       => Option::TYPE_TEXT,
                 'depends_on' => [
-                    [$class, Google::class]
+                    [$class, Google::class],
+                    [$class, Rest::class],
                 ]
             ]
         ),
@@ -70,7 +81,6 @@ $config =
         'exclusions'             => new Option(
             [
                 'default' => [
-                    "vitamin",
                     'Adidas',
                     'Terry Naturally',
                     'Twinlab',
