@@ -19,46 +19,84 @@ class Integration extends system\Integration
 
     ];
 
-    public $options = [];
+    private $performance_options = [];
+    public $performance;
+
+    private $global_options = [];
+    public $global;
+
+    private static $instance;
+
+    public static function instance(): self
+    {
+        if ( ! isset(self::$instance)) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
+
+    private function __construct()
+    {
+    }
 
     protected function init(): void
     {
-        $this->options = [
-            'performance' => [
-                'cache_pool' => [
-                    'type'  => new Option(
-                        [
-                            'default' => 'file',
-                            'type'    => Option::TYPE_TEXT,
-                            'method'  => Option::METHOD_SINGLE,
-                            'values'  => [
-                                'file'      => 'File cache',
-                                'memcached' => 'Memcached'
-                            ],
-                        ]
-                    ),
-                    'pools' => [
-                        'memcached' => [
-                            'host' => new Option(
-                                [
-                                    'default' => 'localhost',
-                                    'type'    => Option::TYPE_TEXT,
-                                    'method'  => Option::METHOD_SINGLE
-                                ]
-                            ),
-                            'port' => new Option(
-                                [
-                                    'default' => 11211,
-                                    'type'    => Option::TYPE_TEXT,
-                                    'markup'  => Option::MARKUP_NUMBER,
-                                    'method'  => Option::METHOD_SINGLE
-                                ]
-                            )
+        $this->performance_options = [
+            'cache_pool' => [
+                'type'      => new Option(
+                    [
+                        'default' => 'file',
+                        'label'   => 'Caching type',
+                        'type'    => Option::TYPE_TEXT,
+                        'method'  => Option::METHOD_SINGLE,
+                        'markup'  => Option::MARKUP_CHECKBOX,
+                        'values'  => [
+                            'file'      => 'File cache',
+                            'memcached' => 'Memcached'
                         ],
+                    ],
+                    $cache_pool
+                ),
+                'memcached' => new Option(
+                    [
+                        'type'        => Option::TYPE_GROUP,
+                        'label'       => 'Memcache Settings',
+                        'description' => 'Configure memcache server.',
+                        'template'    => [
+                            'host' => [
+                                'default' => 'localhost',
+                                'label'   => 'Memcached host',
+                                'type'    => Option::TYPE_TEXT,
+                                'method'  => Option::METHOD_SINGLE
+                            ],
+                            'port' => [
+                                'default' => 11211,
+                                'type'    => Option::TYPE_TEXT,
+                                'markup'  => Option::MARKUP_NUMBER,
+                                'method'  => Option::METHOD_SINGLE
+                            ]
+
+                        ],
+                        'depends_on'  => [
+                            [$cache_pool, 'memcached']
+                        ]
                     ]
-                ]
+                )
             ]
         ];
+        $this->global_options      = [
+            'dev_mode' => new Option(
+                [
+                    'label'       => 'Developer mode',
+                    'type'        => Option::TYPE_BOOL,
+                    'description' => 'Some additional tools for debugging and logging.'
+                ]
+            ),
+        ];
+
+        $this->global      = Option::expandOptions($this->global_options, Bootstrap::SLUG . '-global');
+        $this->performance = Option::expandOptions($this->performance_options, Bootstrap::SLUG . '-performance');
 
         $this->setBootstrapCachePool();
 
@@ -69,20 +107,21 @@ class Integration extends system\Integration
         }
     }
 
+    public function isDevMode(){
+        return $this->global['dev_mode'] ?? false;
+    }
     /**
      * @return void
      */
     private function setBootstrapCachePool(): void
     {
-        $options = Option::expandOptions($this->options, Bootstrap::SLUG);
-
-        $type = $options['performance']['cache_pool']['type'] ?? 'file';
+        $type = $this->performance['cache_pool']['type'] ?? 'file';
 
         if ($type === 'memcached' && class_exists('Memcached')) {
             $client = new \Memcached();
 
-            $host = $options['performance']['cache_pool']['pools']['memcached']['host'] ?? 'localhost';
-            $port = $options['performance']['cache_pool']['pools']['memcached']['port'] ?? 11211;
+            $host = $this->performance['cache_pool']['memcached']['host'] ?? 'localhost';
+            $port = $this->performance['cache_pool']['memcached']['port'] ?? 11211;
 
             $client->addServer($host, $port);
 
@@ -98,7 +137,7 @@ class Integration extends system\Integration
     }
 
     /**
-     * @param WP_Admin_Bar $admin_bar
+     * @param  WP_Admin_Bar  $admin_bar
      */
     public function adminBarMenu($admin_bar): void
     {
@@ -112,14 +151,14 @@ class Integration extends system\Integration
             )
         );
 
-        if(!Bootstrap::instance()->isRestrictedMode()) {
+        if ( ! Bootstrap::instance()->isRestrictedMode()) {
             $admin_bar->add_menu(
                 array(
-                    'id' => 'settings',
+                    'id'     => 'settings',
                     'parent' => Bootstrap::SLUG,
-                    'href' => admin_url('admin.php?page=' . Bootstrap::SLUG),
-                    'title' => 'Settings',
-                    'meta' => array(
+                    'href'   => admin_url('admin.php?page=' . Bootstrap::SLUG),
+                    'title'  => 'Settings',
+                    'meta'   => array(
                         'title' => 'Settings',
                     ),
                 )
@@ -156,15 +195,18 @@ class Integration extends system\Integration
 
     /**
      * @return void
+     * @throws \Exception
      */
     public function adminContentPerformance(): void
     {
         ?>
         <div class="wrap">
-
-            <h1>Performance</h1>
             <?php
-            Option::printForm(Bootstrap::SLUG, $this->options);
+            Option::printForm(
+                Bootstrap::SLUG . '-performance',
+                $this->performance_options,
+                ['title' => 'Performance']
+            );
             ?>
         </div>
         <?php
@@ -178,12 +220,20 @@ class Integration extends system\Integration
         ?>
         <div class="wrap">
             <h1>NovemBit i18n internationalization plugin.</h1>
-            <h4>Version: <?php echo Bootstrap::VERSION; ?></h4>
+            <h4>Version: <?php
+                echo Bootstrap::VERSION; ?></h4>
 
             <p>NovemBit-i18n is powerful WordPress framework to provide multilingual web site, and translates site
                 content without human intervention. Plugin to automatically translate your site. Just need to make the
                 right settings.</p>
 
+            <?php
+            Option::printForm(
+                Bootstrap::SLUG . '-global',
+                $this->global_options,
+                ['title' => 'Global configuration']
+            );
+            ?>
         </div>
         <?php
     }

@@ -12,7 +12,7 @@ $config =
             'user' => DB_USER,
             'password' => DB_PASSWORD,
             'host' => DB_HOST,
-            'driver' => 'pdo_mysql',
+            'driver' => extension_loaded('pdo_mysql') ? 'pdo_mysql' : 'mysqli',
             'charset' => 'utf8mb4'
         ]
     ];

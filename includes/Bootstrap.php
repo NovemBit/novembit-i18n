@@ -97,8 +97,10 @@ class Bootstrap
         }
     }
 
+
     /**
      * @return void
+     * @throws \Exception
      */
     private function initHooks(): void
     {
@@ -111,16 +113,8 @@ class Bootstrap
 
                 add_action('admin_notices', [Bootstrap::class, 'printNotices']);
 
-                $integration = new Integration();
+                Integration::instance()->run();
 
-                $integration->run();
-            },
-            10
-        );
-
-        add_action(
-            'init',
-            static function () {
                 Switcher::init();
                 Editor::init();
             }
